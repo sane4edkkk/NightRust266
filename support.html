@@ -533,7 +533,7 @@
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <form onsubmit="createTicket(event)">
+            <form onsubmit="handleCreateTicket(event)">
                 <div class="form-group">
                     <label class="form-label">Тема</label>
                     <input type="text" class="form-input" id="ticketTitle" required placeholder="Кратко опишите вашу проблему">
@@ -580,7 +580,7 @@
                     <div class="empty-state">
                         <i class="fas fa-ticket-alt"></i>
                         <p>У вас пока нет тикетов</p>
-                        <button class="create-ticket-btn" onclick="openCreateTicketModal()">
+                        <button class="create-ticket-btn" onclick="showCreateTicketModal()">
                             <i class="fas fa-plus"></i>
                             Создать тикет
                         </button>
@@ -661,41 +661,80 @@
         }
 
         function showCreateTicketModal() {
+            const modal = document.getElementById('createTicketModal');
+            if (!modal) {
+                // Создаем модальное окно, если его нет
+                const modalHTML = `
+                    <div class="modal" id="createTicketModal">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2 class="modal-title">Создать тикет</h2>
+                                <button class="close-modal" onclick="hideCreateTicketModal()">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <form id="createTicketForm" onsubmit="handleCreateTicket(event)">
+                                <div class="form-group">
+                                    <label class="form-label">Тема</label>
+                                    <input type="text" class="form-input" id="ticketTitle" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Описание проблемы</label>
+                                    <textarea class="form-input" id="ticketDescription" rows="4" required></textarea>
+                                </div>
+                                <button type="submit" class="submit-btn">
+                                    <i class="fas fa-paper-plane"></i>
+                                    Отправить
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                `;
+                document.body.insertAdjacentHTML('beforeend', modalHTML);
+            }
             document.getElementById('createTicketModal').classList.add('active');
         }
 
         function hideCreateTicketModal() {
-            document.getElementById('createTicketModal').classList.remove('active');
+            const modal = document.getElementById('createTicketModal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.getElementById('createTicketForm').reset();
+            }
         }
 
-        function createTicket(event) {
+        function handleCreateTicket(event) {
             event.preventDefault();
+            
             const user = JSON.parse(localStorage.getItem('user'));
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+
             const title = document.getElementById('ticketTitle').value;
             const description = document.getElementById('ticketDescription').value;
 
-            const tickets = JSON.parse(localStorage.getItem('tickets')) || [];
+            // Создаем новый тикет
             const newTicket = {
-                id: Date.now(),
-                userId: user.id,
+                id: Date.now().toString(),
                 title: title,
+                description: description,
+                userId: user.id,
+                authorName: user.nickname,
                 status: 'open',
-                date: new Date().toLocaleDateString(),
-                messages: [{
-                    author: user.nickname,
-                    text: description,
-                    time: new Date().toLocaleTimeString(),
-                    isAdmin: false
-                }]
+                dateCreated: new Date().toISOString(),
+                messages: []
             };
 
+            // Получаем существующие тикеты или создаем новый массив
+            const tickets = JSON.parse(localStorage.getItem('tickets')) || [];
             tickets.push(newTicket);
             localStorage.setItem('tickets', JSON.stringify(tickets));
+
+            // Закрываем модальное окно и обновляем список тикетов
             hideCreateTicketModal();
             loadTickets();
-
-            // Очищаем форму
-            event.target.reset();
         }
 
         function selectTicket(ticketId) {
@@ -759,6 +798,107 @@
                 const updatedTickets = tickets.filter(t => t.id !== ticketId);
                 localStorage.setItem('tickets', JSON.stringify(updatedTickets));
                 loadTickets(); // Перезагружаем список тикетов
+            }
+        }
+
+        function openTicketChat(ticketId) {
+            const tickets = JSON.parse(localStorage.getItem('tickets')) || [];
+            const ticket = tickets.find(t => t.id === ticketId);
+            if (!ticket) return;
+
+            const chatModal = document.createElement('div');
+            chatModal.className = 'modal active';
+            chatModal.id = 'ticketChatModal';
+            chatModal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title">${ticket.title}</h2>
+                        <button class="close-modal" onclick="closeTicketChat()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="chat-container">
+                        <div class="chat-messages" id="chatMessages">
+                            ${ticket.messages.map(msg => `
+                                <div class="chat-message ${msg.isAdmin ? 'admin-message' : 'user-message'}">
+                                    <div class="message-author">${msg.authorName}</div>
+                                    <div class="message-content">${msg.content}</div>
+                                    <div class="message-time">${new Date(msg.time).toLocaleString()}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <form id="chatForm" onsubmit="sendMessage(event, '${ticketId}')">
+                            <div class="chat-input-group">
+                                <textarea class="chat-input" id="messageInput" required 
+                                    placeholder="Введите сообщение..."></textarea>
+                                <button type="submit" class="send-message-btn">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(chatModal);
+        }
+
+        function closeTicketChat() {
+            const modal = document.getElementById('ticketChatModal');
+            if (modal) {
+                modal.remove();
+            }
+        }
+
+        function sendMessage(event, ticketId) {
+            event.preventDefault();
+            
+            const user = JSON.parse(localStorage.getItem('user'));
+            const messageInput = document.getElementById('messageInput');
+            const content = messageInput.value.trim();
+            
+            if (!content) return;
+
+            const tickets = JSON.parse(localStorage.getItem('tickets')) || [];
+            const ticketIndex = tickets.findIndex(t => t.id === ticketId);
+            
+            if (ticketIndex === -1) return;
+
+            const newMessage = {
+                id: Date.now().toString(),
+                content: content,
+                authorId: user.id,
+                authorName: user.nickname,
+                isAdmin: user.role === 'admin',
+                time: new Date().toISOString()
+            };
+
+            tickets[ticketIndex].messages.push(newMessage);
+            localStorage.setItem('tickets', JSON.stringify(tickets));
+
+            // Обновляем чат
+            const chatMessages = document.getElementById('chatMessages');
+            const messageElement = document.createElement('div');
+            messageElement.className = `chat-message ${newMessage.isAdmin ? 'admin-message' : 'user-message'}`;
+            messageElement.innerHTML = `
+                <div class="message-author">${newMessage.authorName}</div>
+                <div class="message-content">${newMessage.content}</div>
+                <div class="message-time">${new Date(newMessage.time).toLocaleString()}</div>
+            `;
+            chatMessages.appendChild(messageElement);
+            
+            // Очищаем поле ввода
+            messageInput.value = '';
+            
+            // Прокручиваем чат вниз
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function getStatusText(status) {
+            switch (status) {
+                case 'open': return 'Открыт';
+                case 'in-progress': return 'В работе';
+                case 'closed': return 'Закрыт';
+                default: return status;
             }
         }
     </script>
