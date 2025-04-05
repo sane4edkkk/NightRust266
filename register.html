@@ -13,12 +13,26 @@
             box-sizing: border-box;
         }
 
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background: #1a1a1a;
+            min-height: 100vh;
+            background: linear-gradient(-45deg, #1a1a1a, #242424, #2d1f3d, #1f2d3d);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
             color: white;
             line-height: 1.6;
-            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -31,10 +45,12 @@
         }
 
         .auth-card {
-            background: #242424;
+            background: rgba(36, 36, 36, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 16px;
             padding: 2rem;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         }
 
         .auth-header {
@@ -46,6 +62,9 @@
             font-size: 1.8rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, #6c5ce7, #a363d9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .auth-subtitle {
@@ -66,55 +85,74 @@
         .form-input {
             width: 100%;
             padding: 0.75rem;
-            background: #1a1a1a;
-            border: 1px solid #333;
+            background: rgba(26, 26, 26, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 8px;
             color: white;
             font-family: 'Inter', sans-serif;
-            transition: border-color 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .form-input:focus {
             outline: none;
             border-color: #6c5ce7;
+            box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.2);
+        }
+
+        .password-group {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .password-toggle:hover {
+            color: white;
         }
 
         .submit-btn {
             width: 100%;
             padding: 0.75rem;
-            background: #6c5ce7;
+            background: linear-gradient(45deg, #6c5ce7, #a363d9);
             color: white;
             border: none;
             border-radius: 8px;
             font-weight: 500;
             font-size: 1rem;
             cursor: pointer;
-            transition: background-color 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .submit-btn:hover {
-            background: #5f50e1;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(108, 92, 231, 0.3);
         }
 
-        .auth-footer {
-            text-align: center;
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .auth-links {
             margin-top: 1.5rem;
-            color: #999;
+            text-align: center;
+            font-size: 0.9rem;
         }
 
         .auth-link {
             color: #6c5ce7;
             text-decoration: none;
-            font-weight: 500;
             transition: color 0.3s ease;
         }
 
         .auth-link:hover {
-            color: #5f50e1;
+            color: #a363d9;
         }
 
         .error-message {
@@ -126,24 +164,13 @@
 
         .error-message.show {
             display: block;
+            animation: shake 0.5s ease;
         }
 
-        .password-toggle {
-            position: relative;
-        }
-
-        .password-toggle i {
-            position: absolute;
-            right: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #999;
-            cursor: pointer;
-            transition: color 0.3s ease;
-        }
-
-        .password-toggle i:hover {
-            color: white;
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
         }
     </style>
 </head>
@@ -169,18 +196,18 @@
 
                 <div class="form-group">
                     <label class="form-label">Пароль</label>
-                    <div class="password-toggle">
+                    <div class="password-group">
                         <input type="password" class="form-input" required placeholder="Создайте пароль" id="password">
-                        <i class="fas fa-eye" id="togglePassword"></i>
+                        <i class="fas fa-eye password-toggle" id="togglePassword"></i>
                     </div>
                     <div class="error-message" id="passwordError"></div>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">Подтверждение пароля</label>
-                    <div class="password-toggle">
+                    <div class="password-group">
                         <input type="password" class="form-input" required placeholder="Повторите пароль" id="confirmPassword">
-                        <i class="fas fa-eye" id="toggleConfirmPassword"></i>
+                        <i class="fas fa-eye password-toggle" id="toggleConfirmPassword"></i>
                     </div>
                     <div class="error-message" id="confirmPasswordError"></div>
                 </div>
@@ -191,7 +218,7 @@
                 </button>
             </form>
 
-            <div class="auth-footer">
+            <div class="auth-links">
                 Уже есть аккаунт? <a href="login.html" class="auth-link">Войти</a>
             </div>
         </div>
