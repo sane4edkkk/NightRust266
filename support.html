@@ -573,7 +573,7 @@
             const ticketsContainer = document.getElementById('ticketsContainer');
             
             // Фильтруем тикеты: для админа показываем все, для обычных пользователей только их тикеты
-            const filteredTickets = user.role === 'admin' ? tickets : tickets.filter(ticket => ticket.userId === user.id);
+            const filteredTickets = user.isAdmin ? tickets : tickets.filter(ticket => ticket.userId === user.id);
             
             if (filteredTickets.length === 0) {
                 ticketsContainer.innerHTML = `
@@ -592,10 +592,10 @@
             ticketsContainer.innerHTML = '';
             filteredTickets.forEach(ticket => {
                 const ticketElement = document.createElement('div');
-                ticketElement.className = 'ticket';
+                ticketElement.className = 'ticket-item';
                 ticketElement.innerHTML = `
                     <div class="ticket-header">
-                        <h3>${ticket.title}</h3>
+                        <h3 class="ticket-title">${ticket.title}</h3>
                         <span class="ticket-status ${ticket.status}">${getStatusText(ticket.status)}</span>
                     </div>
                     <p class="ticket-description">${ticket.description}</p>
@@ -609,7 +609,7 @@
                             ${new Date(ticket.dateCreated).toLocaleDateString()}
                         </span>
                     </div>
-                    ${user.role === 'admin' ? `
+                    ${user.isAdmin ? `
                         <div class="admin-controls">
                             <select onchange="updateTicketStatus('${ticket.id}', this.value)" class="status-select">
                                 <option value="open" ${ticket.status === 'open' ? 'selected' : ''}>Открыт</option>
@@ -724,7 +724,14 @@
                 authorName: user.nickname,
                 status: 'open',
                 dateCreated: new Date().toISOString(),
-                messages: []
+                messages: [{
+                    id: Date.now().toString(),
+                    content: description,
+                    authorId: user.id,
+                    authorName: user.nickname,
+                    isAdmin: user.isAdmin,
+                    time: new Date().toISOString()
+                }]
             };
 
             // Получаем существующие тикеты или создаем новый массив
@@ -868,7 +875,7 @@
                 content: content,
                 authorId: user.id,
                 authorName: user.nickname,
-                isAdmin: user.role === 'admin',
+                isAdmin: user.isAdmin,
                 time: new Date().toISOString()
             };
 
