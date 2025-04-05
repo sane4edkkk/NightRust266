@@ -256,19 +256,19 @@
             <form id="publishForm">
                 <div class="form-group">
                     <label class="form-label">Название плагина</label>
-                    <input type="text" class="form-input" required placeholder="Введите название плагина">
+                    <input type="text" name="pluginName" class="form-input" required placeholder="Введите название плагина">
                     <div class="error-message" id="nameError"></div>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">Описание</label>
-                    <textarea class="form-input" required placeholder="Опишите функционал вашего плагина"></textarea>
+                    <textarea name="description" class="form-input" required placeholder="Опишите функционал вашего плагина"></textarea>
                     <div class="error-message" id="descriptionError"></div>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">Команды</label>
-                    <textarea class="form-input" required placeholder="Укажите команды плагина, по одной на строку"></textarea>
+                    <textarea name="commands" class="form-input" required placeholder="Укажите команды плагина, по одной на строку"></textarea>
                     <div class="error-message" id="commandsError"></div>
                 </div>
 
@@ -315,6 +315,7 @@
             const user = JSON.parse(localStorage.getItem('user'));
             if (!user) {
                 window.location.href = 'login.html';
+                return;
             }
         });
 
@@ -402,28 +403,28 @@
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            const name = form.querySelector('input[type="text"]').value;
-            const description = form.querySelectorAll('textarea')[0].value;
-            const commands = form.querySelectorAll('textarea')[1].value;
+            const pluginNameInput = form.querySelector('input[name="pluginName"]');
+            const descriptionInput = form.querySelector('textarea[name="description"]');
+            const commandsInput = form.querySelector('textarea[name="commands"]');
             const file = fileInput.files[0];
 
             let isValid = true;
 
-            if (name.length < 3) {
+            if (!pluginNameInput.value || pluginNameInput.value.length < 3) {
                 showError('nameError', 'Название должно содержать минимум 3 символа');
                 isValid = false;
             } else {
                 hideError('nameError');
             }
 
-            if (description.length < 10) {
+            if (!descriptionInput.value || descriptionInput.value.length < 10) {
                 showError('descriptionError', 'Описание должно содержать минимум 10 символов');
                 isValid = false;
             } else {
                 hideError('descriptionError');
             }
 
-            if (!commands.trim()) {
+            if (!commandsInput.value.trim()) {
                 showError('commandsError', 'Укажите хотя бы одну команду');
                 isValid = false;
             } else {
@@ -448,15 +449,15 @@
                     // Создаем объект плагина
                     const plugin = {
                         id: Date.now(), // Уникальный идентификатор
-                        name: name,
-                        description: description,
-                        commands: commands.split('\n'),
+                        name: pluginNameInput.value,
+                        description: descriptionInput.value,
+                        commands: commandsInput.value.split('\n').filter(cmd => cmd.trim()),
                         fileName: file.name,
                         fileSize: formatFileSize(file.size),
                         downloads: 0,
                         rating: 0,
                         author: {
-                            nickname: user.nickname,
+                            nickname: user.nickname || user.email,
                             email: user.email,
                             isAdmin: user.isAdmin
                         },
@@ -478,6 +479,7 @@
                     // Перенаправляем на страницу плагинов
                     window.location.href = 'categories.html';
                 } catch (error) {
+                    console.error('Ошибка при публикации:', error);
                     showError('fileError', 'Ошибка при публикации. Попробуйте позже.');
                     submitBtn.disabled = false;
                     submitBtn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Опубликовать плагин';
