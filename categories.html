@@ -10,136 +10,120 @@
     <style>
         .categories-container {
             max-width: 1200px;
-            margin: 40px auto;
+            margin: 2rem auto;
             padding: 0 1rem;
         }
 
-        .category-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-
-        .category-header h1 {
-            color: var(--primary-color);
-            font-size: 2rem;
-        }
-
-        .category-list {
+        .category-grid {
             display: grid;
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
         }
 
-        .category-item {
-            background-color: white;
-            border-radius: var(--border-radius);
+        .category-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            overflow: hidden;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .category-header {
+            background: var(--primary-color);
+            color: white;
             padding: 1.5rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: var(--transition);
-        }
-
-        .category-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-        }
-
-        .category-title {
             display: flex;
             align-items: center;
             gap: 1rem;
-            margin-bottom: 1rem;
         }
 
-        .category-icon {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: var(--primary-color);
-            color: white;
-            border-radius: 50%;
-            font-size: 1.2rem;
+        .category-header i {
+            font-size: 2rem;
         }
 
-        .category-title h2 {
-            color: var(--text-color);
-            font-size: 1.25rem;
+        .category-header h2 {
             margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .category-content {
+            padding: 1.5rem;
         }
 
         .category-stats {
             display: flex;
             gap: 2rem;
-            color: #6b7280;
+            margin-top: 1rem;
+            color: #666;
             font-size: 0.9rem;
         }
 
-        .stat-item {
+        .category-stat {
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
 
         .category-description {
-            color: #6b7280;
+            color: #444;
             margin: 1rem 0;
             line-height: 1.5;
         }
 
-        .last-topic {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid #e5e7eb;
-        }
-
-        .last-topic-info {
-            flex: 1;
-        }
-
-        .last-topic-title {
+        .category-link {
+            display: inline-block;
             color: var(--primary-color);
             text-decoration: none;
+            margin-top: 1rem;
             font-weight: 500;
         }
 
-        .last-topic-title:hover {
+        .category-link:hover {
             text-decoration: underline;
         }
 
-        .last-topic-meta {
-            display: flex;
-            gap: 1rem;
-            color: #6b7280;
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
+        .page-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
         }
 
-        .user-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background-color: #e5e7eb;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #6b7280;
+        .page-header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
         }
 
-        @media (max-width: 768px) {
-            .category-stats {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
+        .page-header h1 {
+            margin: 0;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
 
-            .last-topic {
-                flex-direction: column;
-                align-items: flex-start;
-            }
+        .page-header p {
+            margin: 0;
+            opacity: 0.9;
+        }
+
+        .breadcrumbs {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .breadcrumbs a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .breadcrumbs a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -160,129 +144,117 @@
         </div>
     </nav>
 
-    <main class="categories-container">
-        <div class="category-header">
-            <h1>Категории</h1>
+    <header class="page-header">
+        <div class="page-header-content">
+            <h1>Категории форума</h1>
+            <p>Выберите интересующую вас тему для обсуждения</p>
+        </div>
+    </header>
+
+    <div class="categories-container">
+        <div class="breadcrumbs">
+            <a href="index.html">Главная</a> / Категории
         </div>
 
-        <div class="category-list">
-            <!-- Программирование -->
-            <div class="category-item">
-                <div class="category-title">
-                    <div class="category-icon">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <h2>Программирование</h2>
+        <div class="category-grid">
+            <!-- Общие обсуждения -->
+            <div class="category-card">
+                <div class="category-header">
+                    <i class="fas fa-comments"></i>
+                    <h2>Общие обсуждения</h2>
                 </div>
-                <div class="category-stats">
-                    <div class="stat-item">
-                        <i class="fas fa-comments"></i>
-                        <span>1,234 тем</span>
-                    </div>
-                    <div class="stat-item">
-                        <i class="fas fa-eye"></i>
-                        <span>5,678 просмотров</span>
-                    </div>
-                    <div class="stat-item">
-                        <i class="fas fa-users"></i>
-                        <span>890 участников</span>
-                    </div>
-                </div>
-                <p class="category-description">
-                    Обсуждение языков программирования, фреймворков, библиотек и инструментов разработки.
-                </p>
-                <div class="last-topic">
-                    <div class="user-avatar">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div class="last-topic-info">
-                        <a href="#" class="last-topic-title">Изучение JavaScript в 2024 году</a>
-                        <div class="last-topic-meta">
-                            <span><i class="fas fa-user"></i> Alex_Dev</span>
-                            <span><i class="fas fa-clock"></i> 2 часа назад</span>
+                <div class="category-content">
+                    <p class="category-description">
+                        Обсуждение различных тем, новости, события и общение на свободные темы.
+                    </p>
+                    <div class="category-stats">
+                        <div class="category-stat">
+                            <i class="fas fa-users"></i>
+                            <span>1.2K участников</span>
+                        </div>
+                        <div class="category-stat">
+                            <i class="fas fa-comment"></i>
+                            <span>5.6K сообщений</span>
                         </div>
                     </div>
+                    <a href="#" class="category-link">Перейти к обсуждениям →</a>
                 </div>
             </div>
 
-            <!-- Веб-разработка -->
-            <div class="category-item">
-                <div class="category-title">
-                    <div class="category-icon">
-                        <i class="fas fa-globe"></i>
-                    </div>
-                    <h2>Веб-разработка</h2>
+            <!-- Техническая поддержка -->
+            <div class="category-card">
+                <div class="category-header">
+                    <i class="fas fa-headset"></i>
+                    <h2>Техподдержка</h2>
                 </div>
-                <div class="category-stats">
-                    <div class="stat-item">
-                        <i class="fas fa-comments"></i>
-                        <span>2,567 тем</span>
-                    </div>
-                    <div class="stat-item">
-                        <i class="fas fa-eye"></i>
-                        <span>8,901 просмотров</span>
-                    </div>
-                    <div class="stat-item">
-                        <i class="fas fa-users"></i>
-                        <span>1,234 участников</span>
-                    </div>
-                </div>
-                <p class="category-description">
-                    Все о создании веб-сайтов: HTML, CSS, JavaScript, веб-дизайн и UX/UI.
-                </p>
-                <div class="last-topic">
-                    <div class="user-avatar">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div class="last-topic-info">
-                        <a href="#" class="last-topic-title">Тренды веб-дизайна 2024</a>
-                        <div class="last-topic-meta">
-                            <span><i class="fas fa-user"></i> WebMaster</span>
-                            <span><i class="fas fa-clock"></i> 5 часов назад</span>
+                <div class="category-content">
+                    <p class="category-description">
+                        Техническая поддержка пользователей, решение проблем и ответы на вопросы.
+                    </p>
+                    <div class="category-stats">
+                        <div class="category-stat">
+                            <i class="fas fa-users"></i>
+                            <span>856 участников</span>
+                        </div>
+                        <div class="category-stat">
+                            <i class="fas fa-comment"></i>
+                            <span>3.2K сообщений</span>
                         </div>
                     </div>
+                    <a href="#" class="category-link">Получить помощь →</a>
                 </div>
             </div>
 
-            <!-- Мобильная разработка -->
-            <div class="category-item">
-                <div class="category-title">
-                    <div class="category-icon">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <h2>Мобильная разработка</h2>
+            <!-- Новости и анонсы -->
+            <div class="category-card">
+                <div class="category-header">
+                    <i class="fas fa-newspaper"></i>
+                    <h2>Новости</h2>
                 </div>
-                <div class="category-stats">
-                    <div class="stat-item">
-                        <i class="fas fa-comments"></i>
-                        <span>987 тем</span>
-                    </div>
-                    <div class="stat-item">
-                        <i class="fas fa-eye"></i>
-                        <span>4,321 просмотров</span>
-                    </div>
-                    <div class="stat-item">
-                        <i class="fas fa-users"></i>
-                        <span>567 участников</span>
-                    </div>
-                </div>
-                <p class="category-description">
-                    Разработка приложений для iOS и Android, кроссплатформенная разработка.
-                </p>
-                <div class="last-topic">
-                    <div class="user-avatar">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div class="last-topic-info">
-                        <a href="#" class="last-topic-title">Flutter vs React Native в 2024</a>
-                        <div class="last-topic-meta">
-                            <span><i class="fas fa-user"></i> MobileDev</span>
-                            <span><i class="fas fa-clock"></i> 1 день назад</span>
+                <div class="category-content">
+                    <p class="category-description">
+                        Новости проекта, анонсы обновлений и важные объявления для пользователей.
+                    </p>
+                    <div class="category-stats">
+                        <div class="category-stat">
+                            <i class="fas fa-users"></i>
+                            <span>2.1K участников</span>
+                        </div>
+                        <div class="category-stat">
+                            <i class="fas fa-comment"></i>
+                            <span>4.8K сообщений</span>
                         </div>
                     </div>
+                    <a href="#" class="category-link">Читать новости →</a>
+                </div>
+            </div>
+
+            <!-- Настройки аккаунта -->
+            <div class="category-card">
+                <div class="category-header">
+                    <i class="fas fa-user-cog"></i>
+                    <h2>Настройки</h2>
+                </div>
+                <div class="category-content">
+                    <p class="category-description">
+                        Управление вашим профилем, настройки безопасности и персонализация аккаунта.
+                    </p>
+                    <div class="category-stats">
+                        <div class="category-stat">
+                            <i class="fas fa-user"></i>
+                            <span>Личный кабинет</span>
+                        </div>
+                        <div class="category-stat">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Безопасность</span>
+                        </div>
+                    </div>
+                    <a href="account-settings.html" class="category-link">Перейти к настройкам →</a>
                 </div>
             </div>
         </div>
-    </main>
+    </div>
+
+    <script src="auth.js"></script>
 </body>
 </html> 
