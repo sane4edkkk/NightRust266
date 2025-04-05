@@ -62,35 +62,25 @@
 
         .categories-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
         }
 
         .category-card {
             background: white;
-            border-radius: 16px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .category-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
         .category-header {
-            padding: 1.5rem;
+            padding: 1.25rem;
             font-size: 1.25rem;
             font-weight: 600;
             color: white;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-        }
-
-        .category-header i {
-            font-size: 1.25rem;
+            gap: 0.5rem;
         }
 
         /* Уникальные цвета для каждой категории */
@@ -111,25 +101,25 @@
         }
 
         .premium .category-header {
-            background: #ffeaa7;
-            color: #2d3436;
+            background: #ffd480;
         }
 
         .category-content {
-            padding: 1.5rem;
+            padding: 1.25rem;
         }
 
         .category-description {
             color: #64748b;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
             font-size: 0.95rem;
+            line-height: 1.5;
         }
 
         .category-stats {
             display: flex;
             align-items: center;
             gap: 1.5rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
             color: #64748b;
             font-size: 0.9rem;
         }
@@ -138,10 +128,11 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            color: #6c5ce7;
         }
 
         .stat-item i {
-            color: #6c5ce7;
+            font-size: 1rem;
         }
 
         .category-link {
@@ -151,20 +142,27 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            transition: gap 0.3s ease;
+            font-size: 0.95rem;
         }
 
         .category-link:hover {
-            gap: 0.75rem;
+            text-decoration: underline;
         }
 
         .category-link i {
             font-size: 0.8rem;
-            transition: transform 0.3s ease;
         }
 
-        .category-link:hover i {
-            transform: translateX(3px);
+        @media (max-width: 1024px) {
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -202,7 +200,7 @@
                         </div>
                     </div>
                     <a href="category-view.html?category=games" class="category-link">
-                        Перейти к играм <i class="fas fa-arrow-right"></i>
+                        Перейти к играм →
                     </a>
                 </div>
             </div>
@@ -228,7 +226,7 @@
                         </div>
                     </div>
                     <a href="category-view.html?category=plugins" class="category-link">
-                        Смотреть плагины <i class="fas fa-arrow-right"></i>
+                        Смотреть плагины →
                     </a>
                 </div>
             </div>
@@ -254,7 +252,7 @@
                         </div>
                     </div>
                     <a href="category-view.html?category=movies" class="category-link">
-                        Перейти к обсуждению <i class="fas fa-arrow-right"></i>
+                        Перейти к обсуждению →
                     </a>
                 </div>
             </div>
@@ -280,7 +278,7 @@
                         </div>
                     </div>
                     <a href="category-view.html?category=music" class="category-link">
-                        Слушать музыку <i class="fas fa-arrow-right"></i>
+                        Слушать музыку →
                     </a>
                 </div>
             </div>
@@ -306,7 +304,7 @@
                         </div>
                     </div>
                     <a href="category-view.html?category=premium" class="category-link">
-                        Выбрать тариф <i class="fas fa-arrow-right"></i>
+                        Выбрать тариф →
                     </a>
                 </div>
             </div>
