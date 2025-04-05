@@ -3,423 +3,371 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Плагины - ForumHub</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Просмотр категории - ForumHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            background-color: #1a1a1a;
-            font-family: 'Roboto', sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            color: #fff;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #1a1a1a;
+            color: white;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
         }
 
         .navbar {
-            background: #242424;
-            padding: 1rem 0;
-            border-bottom: 1px solid #333;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-
-        .logo {
-            color: #fff;
-            text-decoration: none;
-            font-size: 1.5rem;
-            font-weight: 500;
+            margin-bottom: 2rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid #333;
         }
 
         .nav-links {
             display: flex;
             gap: 2rem;
-            align-items: center;
         }
 
-        .nav-links a {
-            color: #fff;
+        .nav-link {
+            color: #999;
             text-decoration: none;
-            opacity: 0.8;
+            transition: color 0.3s ease;
         }
 
-        .nav-links a:hover {
-            opacity: 1;
-        }
-
-        .nav-links a.active {
-            opacity: 1;
-        }
-
-        .user-panel {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        .settings-btn, .logout-btn {
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            text-decoration: none;
-            color: #fff;
-        }
-
-        .settings-btn {
-            background: #333;
-        }
-
-        .logout-btn {
-            background: #444;
-        }
-
-        .category-header {
-            background: #242424;
+        .nav-link:hover {
             color: white;
-            padding: 2rem 0;
         }
 
-        .category-title {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+        .nav-link.active {
+            color: white;
+            font-weight: 500;
         }
 
-        .category-title i {
-            color: #4CAF50;
-        }
-
-        .category-description {
-            max-width: 1200px;
-            margin: 0.5rem auto 0;
-            padding: 0 1rem;
-            color: #888;
-        }
-
-        .main-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem 1rem;
-        }
-
-        .filters {
+        .content-filters {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 2rem;
-            background: #242424;
-            padding: 1rem;
-            border-radius: 4px;
         }
 
-        .sort-select {
-            padding: 0.5rem;
-            background: #333;
+        .filter-select {
+            background: #242424;
             border: none;
-            color: #fff;
-            border-radius: 4px;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
         }
 
         .filter-buttons {
             display: flex;
-            gap: 0.5rem;
-        }
-
-        .filter-button {
-            padding: 0.5rem 1.5rem;
-            border: none;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            background: #333;
-            color: #fff;
-        }
-
-        .filter-button.active {
-            background: #4CAF50;
-        }
-
-        .plugin-card {
-            background: #242424;
-            border-radius: 4px;
-            margin-bottom: 1rem;
-            padding: 1rem;
-        }
-
-        .plugin-header {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .plugin-type {
-            padding: 0.25rem 0.75rem;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        .type-free {
-            background: #4CAF50;
-            color: white;
-        }
-
-        .type-plugin {
-            background: #2196F3;
-            color: white;
-        }
-
-        .plugin-title {
-            font-size: 1.25rem;
-            margin: 0;
-            color: #fff;
-        }
-
-        .plugin-description {
-            color: #888;
-            margin-bottom: 1rem;
-        }
-
-        .plugin-meta {
-            display: flex;
-            align-items: center;
             gap: 1rem;
+        }
+
+        .filter-btn {
+            background: #242424;
+            color: #999;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active {
+            background: #6c5ce7;
+            color: white;
+        }
+
+        .content-card {
+            background: #242424;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .content-tags {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .content-tag {
+            background: #1a1a1a;
+            color: #999;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+        }
+
+        .content-title {
+            font-size: 1.5rem;
+            font-weight: 600;
             margin-bottom: 1rem;
         }
 
         .author-info {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            background: #1a1a1a;
+            padding: 1rem;
+            border-radius: 8px;
         }
 
         .author-avatar {
-            width: 24px;
-            height: 24px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
+            object-fit: cover;
         }
 
-        .date {
-            color: #888;
+        .author-details {
+            flex-grow: 1;
+        }
+
+        .author-name {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .author-role {
+            color: #999;
             font-size: 0.9rem;
         }
 
-        .file-info {
+        .admin-badge {
+            background: #ff4757;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        .content-meta {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .meta-item {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            color: #888;
+            color: #999;
             font-size: 0.9rem;
-            padding: 0.5rem;
-            background: #333;
-            border-radius: 4px;
-            margin-right: auto;
         }
 
-        .download-button {
+        .download-btn {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
             background: #4CAF50;
             color: white;
-            padding: 0.5rem 1.5rem;
-            border-radius: 4px;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
             text-decoration: none;
             font-weight: 500;
-            border: none;
-            cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
-        .download-button:hover {
+        .download-btn:hover {
             background: #45a049;
         }
 
-        .notification {
+        .error-popup {
+            display: none;
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: white;
+            background: #2d3436;
+            color: white;
             padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             z-index: 1000;
-            display: none;
+            max-width: 400px;
+            width: 90%;
         }
 
-        .notification.show {
+        .error-popup.show {
             display: block;
         }
 
-        .notification-title {
+        .error-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .error-title {
+            font-weight: 600;
             font-size: 1.1rem;
-            margin: 0 0 0.5rem 0;
-            color: #333;
         }
 
-        .notification-message {
-            color: #666;
-            margin: 0 0 1rem 0;
-        }
-
-        .notification-close {
-            display: block;
-            width: 100%;
-            padding: 0.5rem;
-            background: #eee;
+        .close-btn {
+            background: none;
             border: none;
-            border-radius: 4px;
+            color: white;
             cursor: pointer;
-            color: #333;
+            font-size: 1.2rem;
+        }
+
+        .error-message {
+            margin-bottom: 1rem;
+        }
+
+        .error-path {
+            background: #1a1a1a;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-family: monospace;
+            margin-bottom: 1rem;
+        }
+
+        .error-actions {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .error-ok {
+            background: #6c5ce7;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .error-ok:hover {
+            background: #5f50e1;
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="logo">ForumHub</a>
+    <div class="container">
+        <nav class="navbar">
             <div class="nav-links">
-                <a href="index.html">Главная</a>
-                <a href="#" class="active">Плагины</a>
-                <a href="#">Панель</a>
+                <a href="index.html" class="nav-link">Главная</a>
+                <a href="categories.html" class="nav-link">Плагины</a>
+                <a href="#" class="nav-link active">Панель</a>
             </div>
-            <div class="user-panel">
-                <a href="#" class="settings-btn"><i class="fas fa-cog"></i> Настройки</a>
-                <a href="#" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Выйти</a>
-            </div>
-        </div>
-    </nav>
+        </nav>
 
-    <header class="category-header">
-        <div class="category-title">
-            <i class="fas fa-code"></i>
-            <h1>Плагины</h1>
-        </div>
-        <p class="category-description">Различные плагины, скрипты, моды и дополнения для программ и игр.</p>
-    </header>
-
-    <div class="main-container">
-        <div class="filters">
-            <select class="sort-select">
-                <option value="newest">Сначала новые</option>
-                <option value="popular">По популярности</option>
-                <option value="downloaded">По загрузкам</option>
+        <div class="content-filters">
+            <select class="filter-select">
+                <option>Сначала новые</option>
+                <option>По популярности</option>
+                <option>По рейтингу</option>
             </select>
             <div class="filter-buttons">
-                <button class="filter-button active">Все</button>
-                <button class="filter-button">Бесплатные</button>
-                <button class="filter-button">Премиум</button>
+                <button class="filter-btn active">Все</button>
+                <button class="filter-btn">Бесплатные</button>
+                <button class="filter-btn">Премиум</button>
             </div>
         </div>
 
-        <div id="publicationsContainer">
-            <!-- Публикации будут добавляться динамически -->
+        <div class="content-card">
+            <div class="content-header">
+                <div class="content-tags">
+                    <span class="content-tag">БЕСПЛАТНО</span>
+                    <span class="content-tag">ПЛАГИН</span>
+                </div>
+            </div>
+            <h2 class="content-title">IQKITS</h2>
+            <div class="author-info">
+                <img src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y" alt="Аватар автора" class="author-avatar">
+                <div class="author-details">
+                    <a href="profile.html" class="author-name">sasaaleskevic65@gmail.com <span class="admin-badge">ADMIN</span></a>
+                    <div class="author-role">Администратор</div>
+                </div>
+            </div>
+            <div class="content-meta">
+                <div class="meta-item">
+                    <i class="fas fa-file"></i>
+                    <span>204 КБ</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-calendar"></i>
+                    <span>Сегодня, 12:34</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-download"></i>
+                    <span>1337 загрузок</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-star"></i>
+                    <span>4.8</span>
+                </div>
+            </div>
+            <a href="#" class="download-btn" onclick="downloadFile('plugin.zip')">
+                <i class="fas fa-download"></i> Скачать
+            </a>
         </div>
     </div>
 
-    <div class="notification" id="notification">
-        <h3 class="notification-title">Уведомление от сайта sane4edkkk.github.io</h3>
-        <p class="notification-message">Файл будет доступен для скачивания в ближайшее время!</p>
-        <button class="notification-close" onclick="closeNotification()">Закрыть</button>
+    <div class="error-popup" id="errorPopup">
+        <div class="error-header">
+            <div class="error-title">Ошибка</div>
+            <button class="close-btn" onclick="closeError()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="error-message">Архив поврежден или имеет неизвестный формат</div>
+        <div class="error-path" id="errorPath"></div>
+        <div class="error-actions">
+            <button class="error-ok" onclick="closeError()">OK</button>
+        </div>
     </div>
 
     <script>
-        // Инициализация администратора
-        const adminUser = {
-            email: 'sasaaleskevic65@gmail.com',
-            role: 'Администратор',
-            isAdmin: true
-        };
-        localStorage.setItem('user', JSON.stringify(adminUser));
-
-        // Загружаем публикации
-        function loadPublications() {
-            const publications = [
-                {
-                    title: 'IQKITS',
-                    description: 'ПИДОРСКАЯ ХУЙНЯ',
-                    author: 'sasaaleskevic65@gmail.com',
-                    date: '5 апреля 2025 г.',
-                    fileSize: '204 КБ'
-                }
-            ];
-            
-            const container = document.getElementById('publicationsContainer');
-            
-            publications.forEach(pub => {
-                const card = document.createElement('div');
-                card.className = 'plugin-card';
-                card.innerHTML = `
-                    <div class="plugin-header">
-                        <span class="plugin-type type-free">БЕСПЛАТНО</span>
-                        <span class="plugin-type type-plugin">ПЛАГИН</span>
-                        <h2 class="plugin-title">${pub.title}</h2>
-                    </div>
-                    <p class="plugin-description">${pub.description}</p>
-                    <div class="plugin-meta">
-                        <div class="author-info">
-                            <img src="https://www.gravatar.com/avatar/${md5(pub.author)}?d=identicon" class="author-avatar" alt="Author">
-                            <span>${pub.author}</span>
-                        </div>
-                        <span class="date">${pub.date}</span>
-                    </div>
-                    <div style="display: flex; align-items: center; justify-content: space-between;">
-                        <div class="file-info">
-                            <i class="fas fa-file-archive"></i>
-                            <span>${pub.fileSize}</span>
-                        </div>
-                        <button class="download-button" onclick="handleDownload(event)">
-                            <i class="fas fa-download"></i>
-                            Скачать
-                        </button>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
+        function downloadFile(filename) {
+            // В реальном приложении здесь будет логика загрузки файла
+            showError(filename);
         }
 
-        // Функция для создания MD5 хеша (для Gravatar)
-        function md5(string) {
-            return Array.from(new Uint8Array(new TextEncoder().encode(string)))
-                .map(b => b.toString(16).padStart(2, '0'))
-                .join('');
+        function showError(filename) {
+            const errorPopup = document.getElementById('errorPopup');
+            const errorPath = document.getElementById('errorPath');
+            errorPath.textContent = `C:\\Users\\New\\Downloads\\${filename}`;
+            errorPopup.classList.add('show');
         }
 
-        // Показать уведомление
-        function showNotification() {
-            document.getElementById('notification').classList.add('show');
+        function closeError() {
+            const errorPopup = document.getElementById('errorPopup');
+            errorPopup.classList.remove('show');
         }
 
-        // Закрыть уведомление
-        function closeNotification() {
-            document.getElementById('notification').classList.remove('show');
-        }
-
-        // Обработчик скачивания
-        function handleDownload(e) {
-            e.preventDefault();
-            showNotification();
-        }
-
-        // Загружаем публикации при загрузке страницы
-        loadPublications();
-
-        // Обработчики для кнопок фильтрации
-        document.querySelectorAll('.filter-button').forEach(button => {
-            button.addEventListener('click', function() {
-                document.querySelector('.filter-button.active').classList.remove('active');
-                this.classList.add('active');
-            });
+        // Закрыть окно ошибки при клике вне его
+        window.addEventListener('click', function(e) {
+            const errorPopup = document.getElementById('errorPopup');
+            if (e.target === errorPopup) {
+                closeError();
+            }
         });
     </script>
 </body>

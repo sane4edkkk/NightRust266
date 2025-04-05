@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль пользователя - ForumHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f5f7fa;
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .profile-header {
+            background: linear-gradient(135deg, #6c5ce7, #a363d9);
+            border-radius: 16px;
+            padding: 2rem;
+            color: white;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid white;
+            object-fit: cover;
+        }
+
+        .profile-info h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-badge {
+            display: inline-block;
+            background: #ff4757;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 1rem;
+        }
+
+        .profile-role {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: white;
+        }
+
+        .content-section {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2d3436;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .content-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .content-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .content-meta {
+            font-size: 0.9rem;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #6c5ce7;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background: #5f50e1;
+        }
+
+        .error-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #2d3436;
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .error-popup.show {
+            display: block;
+        }
+
+        .error-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .error-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .error-message {
+            margin-bottom: 1rem;
+        }
+
+        .error-path {
+            background: #1a1a1a;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-family: monospace;
+            margin-bottom: 1rem;
+        }
+
+        .error-actions {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .error-ok {
+            background: #6c5ce7;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .error-ok:hover {
+            background: #5f50e1;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="profile-header">
+            <img src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y" alt="Аватар пользователя" class="profile-avatar">
+            <div class="profile-info">
+                <h1>sasaaleskevic65@gmail.com <span class="profile-badge">ADMIN</span></h1>
+                <div class="profile-role">Администратор</div>
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <i class="fas fa-upload"></i>
+                        <span>15 публикаций</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-download"></i>
+                        <span>1337 загрузок</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-star"></i>
+                        <span>4.8 рейтинг</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <div class="section-header">
+                <h2 class="section-title">Публикации</h2>
+            </div>
+            <div class="content-grid">
+                <div class="content-card">
+                    <div class="content-title">IQKITS</div>
+                    <div class="content-meta">
+                        <span><i class="fas fa-file"></i> 204 КБ</span>
+                        <span><i class="fas fa-download"></i> 1337</span>
+                    </div>
+                    <a href="#" class="download-btn" onclick="downloadFile('plugin.zip')">
+                        <i class="fas fa-download"></i> Скачать
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="error-popup" id="errorPopup">
+        <div class="error-header">
+            <div class="error-title">Ошибка</div>
+            <button class="close-btn" onclick="closeError()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="error-message">Архив поврежден или имеет неизвестный формат</div>
+        <div class="error-path" id="errorPath"></div>
+        <div class="error-actions">
+            <button class="error-ok" onclick="closeError()">OK</button>
+        </div>
+    </div>
+
+    <script>
+        function downloadFile(filename) {
+            // В реальном приложении здесь будет логика загрузки файла
+            showError(filename);
+        }
+
+        function showError(filename) {
+            const errorPopup = document.getElementById('errorPopup');
+            const errorPath = document.getElementById('errorPath');
+            errorPath.textContent = `C:\\Users\\New\\Downloads\\${filename}`;
+            errorPopup.classList.add('show');
+        }
+
+        function closeError() {
+            const errorPopup = document.getElementById('errorPopup');
+            errorPopup.classList.remove('show');
+        }
+
+        // Закрыть окно ошибки при клике вне его
+        window.addEventListener('click', function(e) {
+            const errorPopup = document.getElementById('errorPopup');
+            if (e.target === errorPopup) {
+                closeError();
+            }
+        });
+    </script>
+</body>
+</html> 
