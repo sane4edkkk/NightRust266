@@ -38,12 +38,16 @@
         .nav-links {
             display: flex;
             gap: 2rem;
+            align-items: center;
         }
 
         .nav-link {
             color: #999;
             text-decoration: none;
             transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .nav-link:hover {
@@ -53,6 +57,32 @@
         .nav-link.active {
             color: white;
             font-weight: 500;
+        }
+
+        .nav-profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .profile-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .settings-link {
+            color: #999;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .settings-link:hover {
+            color: white;
         }
 
         .auth-buttons {
@@ -393,7 +423,15 @@
             <div class="nav-links">
                 <a href="index.html" class="nav-link">Главная</a>
                 <a href="#" class="nav-link active">Плагины</a>
-                <a href="profile.html" class="nav-link">Профиль</a>
+                <div class="nav-profile">
+                    <a href="profile.html" class="nav-link">
+                        <img src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y" alt="Аватар" class="profile-avatar">
+                        <span>Профиль</span>
+                    </a>
+                    <a href="settings.html" class="settings-link" title="Настройки">
+                        <i class="fas fa-cog"></i>
+                    </a>
+                </div>
             </div>
             <div class="auth-buttons">
                 <a href="login.html" class="auth-btn login-btn">Войти</a>
