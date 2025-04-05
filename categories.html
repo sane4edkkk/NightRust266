@@ -27,6 +27,7 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             transition: transform 0.3s, box-shadow 0.3s;
             overflow: hidden;
+            position: relative;
         }
 
         .category-card:hover {
@@ -124,6 +125,103 @@
 
         .breadcrumbs a:hover {
             text-decoration: underline;
+        }
+
+        /* Стили для тарифов */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .pricing-card {
+            background: #1a1a1a;
+            border-radius: 8px;
+            padding: 2rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-price {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-period {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .pricing-features {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 2rem 0;
+        }
+
+        .pricing-features li {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #ccc;
+        }
+
+        .pricing-features li i {
+            color: #4CAF50;
+        }
+
+        .pricing-button {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: #4CAF50;
+            color: white;
+            text-align: center;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .pricing-button:hover {
+            background: #45a049;
+        }
+
+        .featured-tag {
+            position: absolute;
+            top: 1rem;
+            right: -2rem;
+            background: #4CAF50;
+            color: white;
+            padding: 0.5rem 3rem;
+            transform: rotate(45deg);
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .payment-select {
+            width: 100%;
+            padding: 0.75rem;
+            background: #333;
+            border: 1px solid #444;
+            border-radius: 4px;
+            color: white;
+            margin-bottom: 1rem;
         }
     </style>
 </head>
@@ -252,9 +350,106 @@
                     <a href="account-settings.html" class="category-link">Перейти к настройкам →</a>
                 </div>
             </div>
+
+            <!-- Премиум категория -->
+            <div class="category-card">
+                <div class="category-header">
+                    <i class="fas fa-crown"></i>
+                    <h2>Премиум</h2>
+                </div>
+                <div class="category-content">
+                    <p class="category-description">
+                        Получите доступ к премиум возможностям и эксклюзивному контенту.
+                    </p>
+                    <div class="category-stats">
+                        <div class="category-stat">
+                            <i class="fas fa-star"></i>
+                            <span>Особый статус</span>
+                        </div>
+                        <div class="category-stat">
+                            <i class="fas fa-gem"></i>
+                            <span>Премиум функции</span>
+                        </div>
+                    </div>
+                    <a href="#pricing" class="category-link" onclick="showPricingModal()">Выбрать тариф →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Секция с тарифами -->
+        <div id="pricing" class="pricing-grid">
+            <div class="pricing-card">
+                <div class="pricing-header">
+                    <div class="pricing-name">Starter</div>
+                    <div class="pricing-price">505,66 ₽</div>
+                    <div class="pricing-period">за 3 дней</div>
+                </div>
+                <ul class="pricing-features">
+                    <li><i class="fas fa-check"></i> Доступ к ресурсам с пометкой Премиум</li>
+                    <li><i class="fas fa-check"></i> Безлимитные загрузки ресурсов</li>
+                    <li><i class="fas fa-check"></i> Баннер Starter</li>
+                    <li><i class="fas fa-check"></i> Уникальный цвет никнейма</li>
+                </ul>
+                <select class="payment-select">
+                    <option value="">Выберите способ оплаты</option>
+                    <option value="card">Банковская карта</option>
+                    <option value="qiwi">QIWI</option>
+                    <option value="crypto">Криптовалюта</option>
+                </select>
+                <button class="pricing-button">Купить</button>
+            </div>
+
+            <div class="pricing-card">
+                <div class="featured-tag">FEATURED</div>
+                <div class="pricing-header">
+                    <div class="pricing-name">Basic</div>
+                    <div class="pricing-price">758,50 ₽</div>
+                    <div class="pricing-period">за 14 дней</div>
+                </div>
+                <ul class="pricing-features">
+                    <li><i class="fas fa-check"></i> Доступ к ресурсам с пометкой Премиум</li>
+                    <li><i class="fas fa-check"></i> Безлимитные загрузки ресурсов</li>
+                    <li><i class="fas fa-check"></i> Баннер Basic</li>
+                    <li><i class="fas fa-check"></i> Уникальный цвет никнейма</li>
+                </ul>
+                <select class="payment-select">
+                    <option value="">Выберите способ оплаты</option>
+                    <option value="card">Банковская карта</option>
+                    <option value="qiwi">QIWI</option>
+                    <option value="crypto">Криптовалюта</option>
+                </select>
+                <button class="pricing-button">Купить</button>
+            </div>
+
+            <div class="pricing-card">
+                <div class="pricing-header">
+                    <div class="pricing-name">Pro</div>
+                    <div class="pricing-price">1 095,61 ₽</div>
+                    <div class="pricing-period">за 1 месяц</div>
+                </div>
+                <ul class="pricing-features">
+                    <li><i class="fas fa-check"></i> Доступ к ресурсам с пометкой Премиум</li>
+                    <li><i class="fas fa-check"></i> Безлимитные загрузки ресурсов</li>
+                    <li><i class="fas fa-check"></i> Баннер Pro</li>
+                    <li><i class="fas fa-check"></i> Уникальный цвет никнейма</li>
+                </ul>
+                <select class="payment-select">
+                    <option value="">Выберите способ оплаты</option>
+                    <option value="card">Банковская карта</option>
+                    <option value="qiwi">QIWI</option>
+                    <option value="crypto">Криптовалюта</option>
+                </select>
+                <button class="pricing-button">Купить</button>
+            </div>
         </div>
     </div>
 
     <script src="auth.js"></script>
+    <script>
+        function showPricingModal() {
+            const pricingSection = document.getElementById('pricing');
+            pricingSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
 </body>
 </html> 
