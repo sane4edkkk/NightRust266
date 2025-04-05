@@ -254,6 +254,38 @@
             background: #45a049;
         }
 
+        .delete-btn {
+            display: none; /* По умолчанию скрыта */
+            align-items: center;
+            gap: 0.5rem;
+            background: #dc3545;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-left: 0.5rem;
+        }
+
+        .delete-btn:hover {
+            background: #c82333;
+        }
+
+        .plugin-actions {
+            display: flex;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        /* Показываем кнопку удаления только администраторам */
+        body[data-is-admin="true"] .delete-btn {
+            display: inline-flex;
+        }
+
         .premium-card {
             background: linear-gradient(135deg, #242424, #2a2a2a);
             border-radius: 16px;
@@ -535,10 +567,15 @@
                             <span>4.8</span>
                         </div>
                     </div>
-                    <button class="download-btn" onclick="downloadPlugin('IQKITS.zip')">
-                        <i class="fas fa-download"></i>
-                        Скачать
-                    </button>
+                    <div class="plugin-actions">
+                        <button class="download-btn" onclick="downloadPlugin('IQKITS.zip')">
+                            <i class="fas fa-download"></i>
+                            Скачать
+                        </button>
+                        <button class="delete-btn" onclick="deletePlugin('IQKITS.zip', this)">
+                            <i class="fas fa-trash"></i> Удалить
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -576,10 +613,15 @@
                             <span>4.6</span>
                         </div>
                     </div>
-                    <button class="download-btn" onclick="downloadPlugin('RustEdit.zip')">
-                        <i class="fas fa-download"></i>
-                        Скачать
-                    </button>
+                    <div class="plugin-actions">
+                        <button class="download-btn" onclick="downloadPlugin('RustEdit.zip')">
+                            <i class="fas fa-download"></i>
+                            Скачать
+                        </button>
+                        <button class="delete-btn" onclick="deletePlugin('RustEdit.zip', this)">
+                            <i class="fas fa-trash"></i> Удалить
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -605,78 +647,39 @@
     </footer>
 
     <script>
-        function downloadPlugin(filename) {
-            const fileData = {
-                'IQKITS.zip': {
-                    url: '/plugins/IQKITS.zip',
-                    fallbackContent: 'data:application/zip;base64,UEsDBAoAAAAAAOZwt1QAAAAAAAAAAAAAAAAIAAAAcGx1Z2luL1BLAQIUAAoAAAAAAOZwt1QAAAAAAAAAAAAAAAAIAAAAAAAAAAAAEAAAAAAAAABwbHVnaW4vUEsFBgAAAAABAAEANgAAACQAAAAAAA=='
-                },
-                'RustEdit.zip': {
-                    url: '/plugins/RustEdit.zip',
-                    fallbackContent: 'data:application/zip;base64,UEsDBAoAAAAAAOZwt1QAAAAAAAAAAAAAAAAIAAAAcGx1Z2luL1BLAQIUAAoAAAAAAOZwt1QAAAAAAAAAAAAAAAAIAAAAAAAAAAAAEAAAAAAAAABwbHVnaW4vUEsFBgAAAAABAAEANgAAACQAAAAAAA=='
-                }
-            };
-
-            const fileInfo = fileData[filename];
-            if (!fileInfo) {
-                alert('Файл не найден');
-                return;
-            }
-
-            // Проверяем авторизацию
-            const isLoggedIn = localStorage.getItem('isLoggedIn');
-            if (!isLoggedIn) {
-                window.location.href = 'login.html';
-                return;
-            }
-
-            // Пробуем сначала загрузить файл по URL
-            fetch(fileInfo.url)
-                .then(response => response.blob())
-                .then(blob => {
-                    const url = window.URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.style.display = 'none';
-                    a.href = url;
-                    a.download = filename;
-                    document.body.appendChild(a);
-                    a.click();
-                    window.URL.revokeObjectURL(url);
-                    document.body.removeChild(a);
-                })
-                .catch(() => {
-                    // Если не удалось загрузить по URL, используем fallback content
-                    const a = document.createElement('a');
-                    a.style.display = 'none';
-                    a.href = fileInfo.fallbackContent;
-                    a.download = filename;
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                });
-        }
-
-        // Проверяем авторизацию при загрузке страницы
-        document.addEventListener('DOMContentLoaded', () => {
-            const isLoggedIn = localStorage.getItem('isLoggedIn');
-            const authButtons = document.querySelector('.auth-buttons');
-            
-            if (isLoggedIn) {
-                authButtons.innerHTML = `
-                    <a href="profile.html" class="auth-btn login-btn">
-                        <i class="fas fa-user"></i> Профиль
-                    </a>
-                    <a href="#" class="auth-btn register-btn" onclick="logout()">
-                        <i class="fas fa-sign-out-alt"></i> Выйти
-                    </a>
-                `;
+        // Проверяем, является ли пользователь администратором при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (user && user.isAdmin) {
+                document.body.setAttribute('data-is-admin', 'true');
             }
         });
 
-        function logout() {
-            localStorage.removeItem('isLoggedIn');
-            localStorage.removeItem('user');
-            window.location.reload();
+        function downloadPlugin(filename) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+            // Здесь будет логика скачивания
+            alert('Начинается скачивание файла: ' + filename);
+        }
+
+        function deletePlugin(filename, buttonElement) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user || !user.isAdmin) {
+                alert('Только администраторы могут удалять плагины');
+                return;
+            }
+
+            if (confirm('Вы уверены, что хотите удалить плагин "' + filename + '"? Это действие нельзя отменить.')) {
+                // В реальном приложении здесь будет запрос к серверу для удаления файла
+                const pluginCard = buttonElement.closest('.plugin-card');
+                if (pluginCard) {
+                    pluginCard.remove();
+                    alert('Плагин успешно удален');
+                }
+            }
         }
 
         function upgradeToPremium() {
