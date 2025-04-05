@@ -679,8 +679,8 @@
                 // Получаем текущие плагины
                 let plugins = JSON.parse(localStorage.getItem('plugins')) || [];
                 
-                // Удаляем плагин по ID
-                plugins = plugins.filter(plugin => plugin.id !== parseInt(pluginId));
+                // Удаляем плагин по ID (сравниваем как строки)
+                plugins = plugins.filter(plugin => String(plugin.id) !== String(pluginId));
                 
                 // Сохраняем обновленный список
                 localStorage.setItem('plugins', JSON.stringify(plugins));

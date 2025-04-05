@@ -408,6 +408,13 @@
             const commandsInput = form.querySelector('textarea[name="commands"]');
             const file = fileInput.files[0];
 
+            console.log('Form submitted with values:', {
+                name: pluginNameInput.value,
+                description: descriptionInput.value,
+                commands: commandsInput.value,
+                file: file ? file.name : 'No file'
+            });
+
             let isValid = true;
 
             if (!pluginNameInput.value || pluginNameInput.value.length < 3) {
@@ -438,6 +445,8 @@
                 hideError('fileError');
             }
 
+            console.log('Form validation result:', isValid);
+
             if (isValid) {
                 submitBtn.disabled = true;
                 submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Публикация...';
@@ -445,6 +454,7 @@
                 try {
                     // Получаем текущего пользователя
                     const user = JSON.parse(localStorage.getItem('user'));
+                    console.log('Current user:', user);
                     
                     // Создаем объект плагина
                     const plugin = {
@@ -464,14 +474,18 @@
                         datePublished: new Date().toISOString()
                     };
 
+                    console.log('Created plugin object:', plugin);
+
                     // Получаем существующие плагины или создаем пустой массив
                     let plugins = JSON.parse(localStorage.getItem('plugins')) || [];
+                    console.log('Current plugins:', plugins);
                     
                     // Добавляем новый плагин
                     plugins.push(plugin);
                     
                     // Сохраняем обновленный список плагинов
                     localStorage.setItem('plugins', JSON.stringify(plugins));
+                    console.log('Updated plugins list:', plugins);
 
                     // Имитируем задержку загрузки
                     await new Promise(resolve => setTimeout(resolve, 1500));
