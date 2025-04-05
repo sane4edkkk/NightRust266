@@ -563,6 +563,20 @@
             // Заполняем форму редактирования
             document.getElementById('editNickname').value = user.nickname;
             document.getElementById('editEmail').value = user.email;
+
+            // Показываем админ-панель если пользователь админ
+            const adminPanel = document.querySelector('.admin-panel');
+            if (adminPanel && user.role === 'admin') {
+                adminPanel.style.display = 'block';
+            }
+
+            // Добавляем специальный значок для админа
+            if (user.role === 'admin') {
+                const adminBadge = document.createElement('span');
+                adminBadge.className = 'admin-badge';
+                adminBadge.innerHTML = '<i class="fas fa-shield-alt"></i> Администратор';
+                document.querySelector('.profile-header').appendChild(adminBadge);
+            }
         }
 
         function loadUserActivity(user) {
