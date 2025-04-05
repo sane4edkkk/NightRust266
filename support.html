@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Техподдержка - ForestDesign</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00a651;
+            --primary-dark: #008c44;
+            --secondary: #2c3e50;
+            --accent: #3498db;
+            --background: #0f172a;
+            --surface: #1e293b;
+            --surface-light: #334155;
+            --text: #f8fafc;
+            --text-secondary: #94a3b8;
+            --success: #22c55e;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .navbar-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .logo-icon {
+            font-size: 1.75rem;
+            color: var(--primary);
+            filter: drop-shadow(0 0 8px rgba(0, 166, 81, 0.3));
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-link:hover {
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-link.active {
+            color: var(--text);
+            background: var(--primary);
+        }
+
+        .main-content {
+            margin-top: 6rem;
+            padding: 2rem 0;
+        }
+
+        .support-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .support-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .support-description {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .support-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+        }
+
+        .tickets-list {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            height: calc(100vh - 15rem);
+            overflow-y: auto;
+        }
+
+        .chat-section {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 15rem);
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title i {
+            color: var(--primary);
+        }
+
+        .ticket-item {
+            padding: 1rem;
+            background: var(--surface-light);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .ticket-item:hover {
+            transform: translateX(5px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .ticket-item.active {
+            background: var(--primary);
+        }
+
+        .ticket-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .ticket-title {
+            font-weight: 500;
+        }
+
+        .ticket-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            background: var(--surface);
+        }
+
+        .ticket-status.open {
+            background: var(--success);
+            color: white;
+        }
+
+        .ticket-status.closed {
+            background: var(--error);
+            color: white;
+        }
+
+        .ticket-meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .chat-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+            padding-right: 1rem;
+        }
+
+        .message {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .message-content {
+            flex-grow: 1;
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .message-author {
+            font-weight: 500;
+        }
+
+        .message-time {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .message-text {
+            background: var(--surface-light);
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .message.admin .message-avatar {
+            background: var(--accent);
+        }
+
+        .message.admin .message-text {
+            background: rgba(52, 152, 219, 0.2);
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 1rem;
+            margin-top: auto;
+        }
+
+        .message-input {
+            flex-grow: 1;
+            background: var(--surface-light);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            resize: none;
+            height: 100px;
+        }
+
+        .message-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .send-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .send-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .create-ticket-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: 0 4px 12px rgba(0, 166, 81, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .create-ticket-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 166, 81, 0.4);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 23, 42, 0.9);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 600px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: var(--text);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .form-input {
+            width: 100%;
+            background: var(--surface-light);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        textarea.form-input {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-left: auto;
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-content">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-tree logo-icon"></i>
+                    <span class="logo-text">ForestDesign</span>
+                </a>
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">
+                        <i class="fas fa-home"></i>
+                        Форум
+                    </a>
+                    <a href="plugins.html" class="nav-link">
+                        <i class="fas fa-puzzle-piece"></i>
+                        Плагины
+                    </a>
+                    <a href="support.html" class="nav-link active">
+                        <i class="fas fa-headset"></i>
+                        Поддержка
+                    </a>
+                    <div class="user-menu" id="userMenu">
+                        <!-- Динамическое добавление меню пользователя -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="support-header">
+                <h1 class="support-title">Техническая поддержка</h1>
+                <p class="support-description">
+                    Нужна помощь? Создайте тикет, и наша команда поддержки ответит вам в кратчайшие сроки
+                </p>
+            </div>
+
+            <div class="support-grid">
+                <div class="tickets-list">
+                    <h2 class="section-title">
+                        <i class="fas fa-ticket"></i>
+                        Мои тикеты
+                    </h2>
+                    <div id="ticketsList">
+                        <!-- Тикеты будут добавлены через JavaScript -->
+                    </div>
+                </div>
+
+                <div class="chat-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-comments"></i>
+                        Чат поддержки
+                    </h2>
+                    <div class="chat-messages" id="chatMessages">
+                        <!-- Сообщения будут добавлены через JavaScript -->
+                    </div>
+                    <div class="chat-input">
+                        <textarea class="message-input" placeholder="Введите ваше сообщение..." id="messageInput"></textarea>
+                        <button class="send-button" onclick="sendMessage()">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <button class="create-ticket-btn" onclick="showCreateTicketModal()">
+        <i class="fas fa-plus"></i>
+        Создать тикет
+    </button>
+
+    <div class="modal" id="createTicketModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Создать тикет</h2>
+                <button class="close-modal" onclick="hideCreateTicketModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form onsubmit="createTicket(event)">
+                <div class="form-group">
+                    <label class="form-label">Тема</label>
+                    <input type="text" class="form-input" id="ticketTitle" required placeholder="Кратко опишите вашу проблему">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Описание</label>
+                    <textarea class="form-input" id="ticketDescription" required placeholder="Подробно опишите вашу проблему..."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-paper-plane"></i>
+                    Отправить
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            loadTickets();
+            loadMessages();
+        });
+
+        function loadTickets() {
+            const tickets = JSON.parse(localStorage.getItem('tickets')) || [];
+            const user = JSON.parse(localStorage.getItem('user'));
+            const userTickets = tickets.filter(t => t.userId === user.id);
+
+            const ticketsList = document.getElementById('ticketsList');
+            ticketsList.innerHTML = userTickets.map(ticket => `
+                <div class="ticket-item" onclick="selectTicket(${ticket.id})">
+                    <div class="ticket-header">
+                        <div class="ticket-title">${ticket.title}</div>
+                        <span class="ticket-status ${ticket.status}">${ticket.status}</span>
+                    </div>
+                    <div class="ticket-meta">
+                        <span><i class="fas fa-clock"></i> ${ticket.date}</span>
+                        <span><i class="fas fa-message"></i> ${ticket.messages.length} сообщений</span>
+                    </div>
+                </div>
+            `).join('');
+
+            if (userTickets.length === 0) {
+                ticketsList.innerHTML = `
+                    <div style="text-align: center; color: var(--text-secondary);">
+                        <i class="fas fa-ticket" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                        <p>У вас пока нет тикетов</p>
+                    </div>
+                `;
+            }
+        }
+
+        function loadMessages() {
+            const selectedTicket = JSON.parse(localStorage.getItem('selectedTicket'));
+            if (!selectedTicket) {
+                document.getElementById('chatMessages').innerHTML = `
+                    <div style="text-align: center; color: var(--text-secondary); margin-top: 2rem;">
+                        <i class="fas fa-comments" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                        <p>Выберите тикет для просмотра сообщений</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const messages = selectedTicket.messages;
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML = messages.map(message => `
+                <div class="message ${message.isAdmin ? 'admin' : ''}">
+                    <div class="message-avatar">${message.author.substring(0, 2).toUpperCase()}</div>
+                    <div class="message-content">
+                        <div class="message-header">
+                            <span class="message-author">${message.author}</span>
+                            <span class="message-time">${message.time}</span>
+                        </div>
+                        <div class="message-text">${message.text}</div>
+                    </div>
+                </div>
+            `).join('');
+
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function showCreateTicketModal() {
+            document.getElementById('createTicketModal').classList.add('active');
+        }
+
+        function hideCreateTicketModal() {
+            document.getElementById('createTicketModal').classList.remove('active');
+        }
+
+        function createTicket(event) {
+            event.preventDefault();
+            const user = JSON.parse(localStorage.getItem('user'));
+            const title = document.getElementById('ticketTitle').value;
+            const description = document.getElementById('ticketDescription').value;
+
+            const tickets = JSON.parse(localStorage.getItem('tickets')) || [];
+            const newTicket = {
+                id: Date.now(),
+                userId: user.id,
+                title: title,
+                status: 'open',
+                date: new Date().toLocaleDateString(),
+                messages: [{
+                    author: user.nickname,
+                    text: description,
+                    time: new Date().toLocaleTimeString(),
+                    isAdmin: false
+                }]
+            };
+
+            tickets.push(newTicket);
+            localStorage.setItem('tickets', JSON.stringify(tickets));
+            hideCreateTicketModal();
+            loadTickets();
+
+            // Очищаем форму
+            event.target.reset();
+        }
+
+        function selectTicket(ticketId) {
+            const tickets = JSON.parse(localStorage.getItem('tickets')) || [];
+            const selectedTicket = tickets.find(t => t.id === ticketId);
+            localStorage.setItem('selectedTicket', JSON.stringify(selectedTicket));
+            loadMessages();
+
+            // Обновляем активный класс
+            document.querySelectorAll('.ticket-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+        }
+
+        function sendMessage() {
+            const user = JSON.parse(localStorage.getItem('user'));
+            const messageInput = document.getElementById('messageInput');
+            const message = messageInput.value.trim();
+
+            if (!message) return;
+
+            const selectedTicket = JSON.parse(localStorage.getItem('selectedTicket'));
+            if (!selectedTicket) {
+                alert('Пожалуйста, выберите тикет');
+                return;
+            }
+
+            const tickets = JSON.parse(localStorage.getItem('tickets')) || [];
+            const ticketIndex = tickets.findIndex(t => t.id === selectedTicket.id);
+
+            const newMessage = {
+                author: user.nickname,
+                text: message,
+                time: new Date().toLocaleTimeString(),
+                isAdmin: user.isAdmin
+            };
+
+            tickets[ticketIndex].messages.push(newMessage);
+            localStorage.setItem('tickets', JSON.stringify(tickets));
+            localStorage.setItem('selectedTicket', JSON.stringify(tickets[ticketIndex]));
+
+            messageInput.value = '';
+            loadMessages();
+        }
+    </script>
+</body>
+</html> 
