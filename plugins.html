@@ -547,6 +547,22 @@
         document.addEventListener('DOMContentLoaded', function() {
             loadPlugins();
             setupPriceVisibility();
+            
+            // Проверяем наличие плагинов при первой загрузке
+            const plugins = JSON.parse(localStorage.getItem('plugins')) || [];
+            if (plugins.length === 0) {
+                const grid = document.getElementById('pluginsGrid');
+                grid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--text-secondary);">
+                        <i class="fas fa-puzzle-piece" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
+                        <p>Пока нет добавленных плагинов</p>
+                        <button class="add-plugin-btn" style="margin-top: 1rem;" onclick="openAddPluginModal()">
+                            <i class="fas fa-plus"></i>
+                            Добавить первый плагин
+                        </button>
+                    </div>
+                `;
+            }
         });
 
         // Показ/скрытие поля цены в зависимости от типа плагина
@@ -607,34 +623,41 @@
             }
 
             try {
-                // Создаем объект плагина
-                const plugin = {
-                    id: Date.now().toString(),
-                    title,
-                    category,
-                    type,
-                    price: parseInt(price),
-                    description,
-                    author: user.nickname,
-                    authorId: user.id,
-                    fileName: file.name,
-                    fileSize: file.size,
-                    dateAdded: new Date().toISOString()
+                // Читаем файл как ArrayBuffer
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    // Создаем объект плагина
+                    const plugin = {
+                        id: Date.now().toString(),
+                        title,
+                        category,
+                        type,
+                        price: parseInt(price),
+                        description,
+                        author: user.nickname,
+                        authorId: user.id,
+                        fileName: file.name,
+                        fileSize: file.size,
+                        fileData: e.target.result, // Сохраняем содержимое файла
+                        dateAdded: new Date().toISOString(),
+                        downloads: 0
+                    };
+
+                    // Получаем существующие плагины из localStorage
+                    let plugins = JSON.parse(localStorage.getItem('plugins')) || [];
+                    
+                    // Добавляем новый плагин
+                    plugins.push(plugin);
+                    
+                    // Сохраняем обновленный список плагинов
+                    localStorage.setItem('plugins', JSON.stringify(plugins));
+
+                    // Обновляем отображение
+                    loadPlugins();
+                    closeAddPluginModal();
                 };
 
-                // Сохраняем файл в FileSystem API
-                const pluginBlob = new Blob([file], { type: file.type });
-                const pluginUrl = URL.createObjectURL(pluginBlob);
-                plugin.fileUrl = pluginUrl;
-
-                // Сохраняем плагин
-                const plugins = JSON.parse(localStorage.getItem('plugins')) || [];
-                plugins.push(plugin);
-                localStorage.setItem('plugins', JSON.stringify(plugins));
-
-                // Обновляем отображение
-                loadPlugins();
-                closeAddPluginModal();
+                reader.readAsDataURL(file); // Читаем файл как Data URL
             } catch (error) {
                 console.error('Ошибка при добавлении плагина:', error);
                 alert('Произошла ошибка при добавлении плагина. Попробуйте еще раз.');
@@ -763,15 +786,18 @@
 
                 // Создаем ссылку для скачивания
                 const link = document.createElement('a');
-                link.href = plugin.fileUrl;
+                link.href = plugin.fileData; // Используем сохраненные данные файла
                 link.download = plugin.fileName;
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
 
-                // Добавляем статистику скачивания
+                // Обновляем статистику скачиваний
                 plugin.downloads = (plugin.downloads || 0) + 1;
                 localStorage.setItem('plugins', JSON.stringify(plugins));
+                
+                // Обновляем отображение для обновления счетчика скачиваний
+                loadPlugins();
             } catch (error) {
                 console.error('Ошибка при скачивании плагина:', error);
                 alert('Произошла ошибка при скачивании плагина. Попробуйте еще раз.');
