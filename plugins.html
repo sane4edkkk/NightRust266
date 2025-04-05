@@ -428,6 +428,24 @@
             color: var(--text-secondary);
             font-size: 0.8rem;
         }
+
+        .plugin-info {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .plugin-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .plugin-stat i {
+            font-size: 1rem;
+        }
     </style>
 </head>
 <body>
@@ -512,7 +530,7 @@
                         <label class="file-input-label">
                             <i class="fas fa-cloud-upload-alt"></i>
                             <span>Перетащите файл сюда или нажмите для выбора</span>
-                            <input type="file" class="file-input" id="pluginFile" accept=".jar,.zip" required>
+                            <input type="file" class="file-input" id="pluginFile" accept=".jar,.zip,.cs,.dll" required>
                         </label>
                     </div>
                 </div>
@@ -567,6 +585,20 @@
             const description = document.getElementById('pluginDescription').value;
             const file = document.getElementById('pluginFile').files[0];
 
+            // Проверка размера файла (максимум 50MB)
+            if (file.size > 50 * 1024 * 1024) {
+                alert('Файл слишком большой. Максимальный размер: 50MB');
+                return;
+            }
+
+            // Проверка типа файла
+            const allowedTypes = ['.jar', '.zip', '.cs', '.dll'];
+            const fileExtension = '.' + file.name.split('.').pop().toLowerCase();
+            if (!allowedTypes.includes(fileExtension)) {
+                alert('Неподдерживаемый тип файла. Разрешены только .jar, .zip, .cs и .dll');
+                return;
+            }
+
             // Получаем текущего пользователя
             const user = JSON.parse(localStorage.getItem('user'));
             if (!user) {
@@ -574,9 +606,8 @@
                 return;
             }
 
-            // Конвертируем файл в base64
-            const reader = new FileReader();
-            reader.onload = function(e) {
+            try {
+                // Создаем объект плагина
                 const plugin = {
                     id: Date.now().toString(),
                     title,
@@ -587,9 +618,14 @@
                     author: user.nickname,
                     authorId: user.id,
                     fileName: file.name,
-                    fileData: e.target.result,
+                    fileSize: file.size,
                     dateAdded: new Date().toISOString()
                 };
+
+                // Сохраняем файл в FileSystem API
+                const pluginBlob = new Blob([file], { type: file.type });
+                const pluginUrl = URL.createObjectURL(pluginBlob);
+                plugin.fileUrl = pluginUrl;
 
                 // Сохраняем плагин
                 const plugins = JSON.parse(localStorage.getItem('plugins')) || [];
@@ -599,8 +635,10 @@
                 // Обновляем отображение
                 loadPlugins();
                 closeAddPluginModal();
-            };
-            reader.readAsDataURL(file);
+            } catch (error) {
+                console.error('Ошибка при добавлении плагина:', error);
+                alert('Произошла ошибка при добавлении плагина. Попробуйте еще раз.');
+            }
         }
 
         function loadPlugins() {
@@ -622,6 +660,9 @@
                 ? '<span class="plugin-price price-free">Бесплатно</span>'
                 : `<span class="plugin-price price-paid">${plugin.price} ₽</span>`;
 
+            const fileSize = formatFileSize(plugin.fileSize);
+            const downloads = plugin.downloads || 0;
+
             card.innerHTML = `
                 <div class="plugin-header">
                     <div>
@@ -633,6 +674,14 @@
                     </div>
                 </div>
                 <p class="plugin-description">${plugin.description}</p>
+                <div class="plugin-info">
+                    <span class="plugin-stat">
+                        <i class="fas fa-file"></i> ${fileSize}
+                    </span>
+                    <span class="plugin-stat">
+                        <i class="fas fa-download"></i> ${downloads} скачиваний
+                    </span>
+                </div>
                 <div class="plugin-footer">
                     <div class="plugin-author">
                         <i class="fas fa-user"></i>
@@ -654,6 +703,14 @@
             `;
 
             return card;
+        }
+
+        function formatFileSize(bytes) {
+            if (!bytes) return '0 B';
+            const k = 1024;
+            const sizes = ['B', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
         }
 
         function getCategoryName(category) {
@@ -690,24 +747,35 @@
         }
 
         function downloadPlugin(pluginId) {
-            const plugins = JSON.parse(localStorage.getItem('plugins')) || [];
-            const plugin = plugins.find(p => p.id === pluginId);
-            
-            if (!plugin) return;
+            try {
+                const plugins = JSON.parse(localStorage.getItem('plugins')) || [];
+                const plugin = plugins.find(p => p.id === pluginId);
+                
+                if (!plugin) {
+                    alert('Плагин не найден');
+                    return;
+                }
 
-            if (plugin.type === 'paid') {
-                // Здесь должна быть логика оплаты
-                alert('Для скачивания платного плагина необходимо произвести оплату');
-                return;
+                if (plugin.type === 'paid') {
+                    alert('Для скачивания платного плагина необходимо произвести оплату');
+                    return;
+                }
+
+                // Создаем ссылку для скачивания
+                const link = document.createElement('a');
+                link.href = plugin.fileUrl;
+                link.download = plugin.fileName;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                // Добавляем статистику скачивания
+                plugin.downloads = (plugin.downloads || 0) + 1;
+                localStorage.setItem('plugins', JSON.stringify(plugins));
+            } catch (error) {
+                console.error('Ошибка при скачивании плагина:', error);
+                alert('Произошла ошибка при скачивании плагина. Попробуйте еще раз.');
             }
-
-            // Создаем ссылку для скачивания
-            const link = document.createElement('a');
-            link.href = plugin.fileData;
-            link.download = plugin.fileName;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
         }
 
         function showPluginInfo(pluginId) {
