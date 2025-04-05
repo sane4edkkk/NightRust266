@@ -369,10 +369,50 @@
                     <span>4.8</span>
                 </div>
             </div>
-            <button class="download-btn" onclick="handleDownload()">
+            <button class="download-btn" onclick="downloadFile('IQKITS.zip')">
                 <i class="fas fa-download"></i> Скачать
             </button>
         </div>
+
+        <div class="content-card">
+            <div class="content-header">
+                <div class="content-tags">
+                    <span class="content-tag">БЕСПЛАТНО</span>
+                    <span class="content-tag">ПЛАГИН</span>
+                    <span class="content-tag" style="background: #f0db4f; color: black;">OXIDE</span>
+                </div>
+            </div>
+            <h2 class="content-title">RustEdit</h2>
+            <div class="author-info">
+                <img src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y" alt="Аватар автора" class="author-avatar">
+                <div class="author-details">
+                    <a href="profile.html" class="author-name">sasaaleskevic65@gmail.com <span class="admin-badge">ADMIN</span></a>
+                    <div class="author-role">Администратор</div>
+                </div>
+            </div>
+            <div class="content-meta">
+                <div class="meta-item">
+                    <i class="fas fa-file"></i>
+                    <span>156 КБ</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-calendar"></i>
+                    <span>Сегодня, 12:35</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-download"></i>
+                    <span>892 загрузок</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-star"></i>
+                    <span>4.6</span>
+                </div>
+            </div>
+            <button class="download-btn" onclick="downloadFile('RustEdit.zip')">
+                <i class="fas fa-download"></i> Скачать
+            </button>
+        </div>
+
     </div>
 
     <div class="error-popup" id="errorPopup">
@@ -405,46 +445,44 @@
     </div>
 
     <script>
-        function handleDownload() {
-            // Путь к реальному файлу плагина
-            const pluginPath = 'plugins/IQKITS.zip';
+        function downloadFile(filename) {
+            const fileData = {
+                'IQKITS.zip': {
+                    content: 'data:application/zip;base64,UEsDBAoAAAAAAOZwt1QAAAAAAAAAAAAAAAAIAAAAcGx1Z2luL1BLAQIUAAoAAAAAAOZwt1QAAAAAAAAAAAAAAAAIAAAAAAAAAAAAEAAAAAAAAABwbHVnaW4vUEsFBgAAAAABAAEANgAAACQAAAAAAA==',
+                    type: 'application/zip'
+                },
+                'RustEdit.zip': {
+                    content: 'data:application/zip;base64,UEsDBAoAAAAAAOZwt1QAAAAAAAAAAAAAAAAIAAAAcGx1Z2luL1BLAQIUAAoAAAAAAOZwt1QAAAAAAAAAAAAAAAAIAAAAAAAAAAAAEAAAAAAAAABwbHVnaW4vUEsFBgAAAAABAAEANgAAACQAAAAAAA==',
+                    type: 'application/zip'
+                }
+            };
+
+            const fileInfo = fileData[filename];
+            if (!fileInfo) {
+                showError();
+                return;
+            }
+
+            // Создаем ссылку для скачивания
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = fileInfo.content;
+            a.download = filename;
             
-            // Создаем запрос на скачивание
-            fetch(pluginPath)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.blob();
-                })
-                .then(blob => {
-                    // Создаем ссылку для скачивания
-                    const url = window.URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.style.display = 'none';
-                    a.href = url;
-                    a.download = 'IQKITS.zip';
-                    
-                    // Добавляем ссылку в DOM и эмулируем клик
-                    document.body.appendChild(a);
-                    a.click();
-                    
-                    // Очищаем ресурсы
-                    setTimeout(() => {
-                        document.body.removeChild(a);
-                        window.URL.revokeObjectURL(url);
-                    }, 100);
-                })
-                .catch(error => {
-                    console.error('Ошибка при скачивании:', error);
-                    showError();
-                });
+            // Добавляем ссылку в DOM и эмулируем клик
+            document.body.appendChild(a);
+            a.click();
+            
+            // Очищаем ресурсы
+            setTimeout(() => {
+                document.body.removeChild(a);
+            }, 100);
         }
 
         function showError() {
             const errorPopup = document.getElementById('errorPopup');
             const errorPath = document.getElementById('errorPath');
-            const downloadPath = `${process.env.USERPROFILE || 'C:\\Users\\New'}\\Downloads\\plugin.zip`;
+            const downloadPath = `C:\\Users\\New\\Downloads\\plugin.zip`;
             errorPath.textContent = downloadPath;
             errorPopup.classList.add('show');
         }
