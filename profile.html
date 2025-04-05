@@ -50,7 +50,7 @@
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 2rem;
         }
@@ -122,14 +122,14 @@
             margin-bottom: 2rem;
             border: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
-            gap: 2rem;
             align-items: center;
+            gap: 2rem;
         }
 
         .profile-avatar {
-            width: 128px;
-            height: 128px;
-            border-radius: 16px;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
             background: var(--primary);
             display: flex;
             align-items: center;
@@ -147,74 +147,59 @@
             font-size: 2rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .profile-role {
-            display: inline-block;
-            padding: 0.25rem 1rem;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            background: var(--primary);
-            color: white;
-        }
-
-        .profile-stats {
+        .profile-meta {
             display: flex;
             gap: 2rem;
-            margin-top: 1rem;
-        }
-
-        .stat-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
             color: var(--text-secondary);
+            margin-bottom: 1rem;
         }
 
-        .stat-item i {
-            color: var(--primary);
-            font-size: 1.25rem;
-        }
-
-        .stat-value {
-            font-weight: 600;
-            color: var(--text);
-        }
-
-        .profile-tabs {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .tab-button {
-            padding: 0.75rem 1.5rem;
-            border: none;
-            background: var(--surface);
-            color: var(--text);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
+        .meta-item {
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
 
-        .tab-button:hover {
-            background: var(--surface-light);
+        .profile-actions {
+            display: flex;
+            gap: 1rem;
         }
 
-        .tab-button.active {
+        .profile-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: none;
+        }
+
+        .edit-btn {
             background: var(--primary);
+            color: white;
         }
 
-        .tab-button i {
-            font-size: 1.1rem;
+        .edit-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .logout-btn {
+            background: var(--surface-light);
+            color: var(--text);
+        }
+
+        .logout-btn:hover {
+            background: var(--error);
+            transform: translateY(-2px);
         }
 
         .profile-content {
@@ -223,7 +208,7 @@
             gap: 2rem;
         }
 
-        .content-section {
+        .profile-section {
             background: var(--surface);
             border-radius: 16px;
             padding: 2rem;
@@ -243,121 +228,169 @@
             color: var(--primary);
         }
 
-        .activity-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
         .activity-item {
-            display: flex;
-            gap: 1rem;
             padding: 1rem;
             background: var(--surface-light);
             border-radius: 8px;
-            transition: all 0.3s ease;
+            margin-bottom: 1rem;
         }
 
-        .activity-item:hover {
-            transform: translateX(5px);
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .activity-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            background: var(--primary);
+        .activity-header {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-        }
-
-        .activity-content {
-            flex-grow: 1;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
         }
 
         .activity-title {
             font-weight: 500;
-            margin-bottom: 0.25rem;
         }
 
-        .activity-meta {
+        .activity-time {
             color: var(--text-secondary);
             font-size: 0.9rem;
-            display: flex;
+        }
+
+        .activity-description {
+            color: var(--text-secondary);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 1rem;
         }
 
-        .plugin-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .plugin-item {
-            display: flex;
-            gap: 1rem;
-            padding: 1rem;
+        .stat-card {
             background: var(--surface-light);
             border-radius: 8px;
-            transition: all 0.3s ease;
+            padding: 1rem;
+            text-align: center;
         }
 
-        .plugin-item:hover {
-            transform: translateX(5px);
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .plugin-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 8px;
-            background: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
+        .stat-value {
             font-size: 1.5rem;
-        }
-
-        .plugin-content {
-            flex-grow: 1;
-        }
-
-        .plugin-title {
-            font-weight: 500;
+            font-weight: 600;
             margin-bottom: 0.25rem;
+            color: var(--primary);
         }
 
-        .plugin-meta {
-            display: flex;
-            gap: 1rem;
+        .stat-label {
             color: var(--text-secondary);
             font-size: 0.9rem;
         }
 
-        .edit-profile-btn {
+        .modal {
+            display: none;
             position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background: var(--primary);
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 500;
-            display: flex;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 23, 42, 0.9);
+            z-index: 1000;
             align-items: center;
-            gap: 0.75rem;
-            box-shadow: 0 4px 12px rgba(0, 166, 81, 0.3);
-            transition: all 0.3s ease;
+            justify-content: center;
         }
 
-        .edit-profile-btn:hover {
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 500px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: var(--text);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .form-input {
+            width: 100%;
+            background: var(--surface-light);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .submit-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-left: auto;
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-dark);
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0, 166, 81, 0.4);
+        }
+
+        .error-message {
+            color: var(--error);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
         }
     </style>
 </head>
@@ -382,9 +415,10 @@
                         <i class="fas fa-headset"></i>
                         Поддержка
                     </a>
-                    <div class="user-menu" id="userMenu">
-                        <!-- Динамическое добавление меню пользователя -->
-                    </div>
+                    <a href="profile.html" class="nav-link active">
+                        <i class="fas fa-user"></i>
+                        Профиль
+                    </a>
                 </div>
             </div>
         </div>
@@ -397,79 +431,106 @@
                     <!-- Инициалы будут добавлены через JavaScript -->
                 </div>
                 <div class="profile-info">
-                    <div class="profile-name">
-                        <span id="profileName"><!-- Имя будет добавлено через JavaScript --></span>
-                        <span class="profile-role" id="profileRole"><!-- Роль будет добавлена через JavaScript --></span>
-                    </div>
-                    <div class="profile-stats">
-                        <div class="stat-item">
-                            <i class="fas fa-puzzle-piece"></i>
-                            <div>
-                                <span class="stat-value" id="pluginsCount">0</span>
-                                <span>плагинов</span>
-                            </div>
+                    <h1 class="profile-name" id="profileName">
+                        <!-- Имя пользователя будет добавлено через JavaScript -->
+                    </h1>
+                    <div class="profile-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-envelope"></i>
+                            <span id="profileEmail"></span>
                         </div>
-                        <div class="stat-item">
-                            <i class="fas fa-message"></i>
-                            <div>
-                                <span class="stat-value" id="postsCount">0</span>
-                                <span>сообщений</span>
-                            </div>
-                        </div>
-                        <div class="stat-item">
+                        <div class="meta-item">
                             <i class="fas fa-calendar"></i>
-                            <div>
-                                <span class="stat-value" id="joinDate"><!-- Дата будет добавлена через JavaScript --></span>
-                                <span>дата регистрации</span>
-                            </div>
+                            <span id="profileDate"></span>
                         </div>
+                        <div class="meta-item">
+                            <i class="fas fa-user-shield"></i>
+                            <span id="profileRole"></span>
+                        </div>
+                    </div>
+                    <div class="profile-actions">
+                        <button class="profile-btn edit-btn" onclick="showEditModal()">
+                            <i class="fas fa-edit"></i>
+                            Редактировать профиль
+                        </button>
+                        <button class="profile-btn logout-btn" onclick="handleLogout()">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Выйти
+                        </button>
                     </div>
                 </div>
             </div>
 
-            <div class="profile-tabs">
-                <button class="tab-button active">
-                    <i class="fas fa-clock"></i>
-                    Активность
-                </button>
-                <button class="tab-button">
-                    <i class="fas fa-puzzle-piece"></i>
-                    Плагины
-                </button>
-                <button class="tab-button">
-                    <i class="fas fa-message"></i>
-                    Сообщения
-                </button>
-            </div>
-
             <div class="profile-content">
-                <div class="content-section">
+                <div class="profile-section">
                     <h2 class="section-title">
-                        <i class="fas fa-clock"></i>
+                        <i class="fas fa-history"></i>
                         Последняя активность
                     </h2>
-                    <div class="activity-list" id="activityList">
+                    <div id="activityList">
                         <!-- Активность будет добавлена через JavaScript -->
                     </div>
                 </div>
 
-                <div class="content-section">
+                <div class="profile-section">
                     <h2 class="section-title">
-                        <i class="fas fa-puzzle-piece"></i>
-                        Популярные плагины
+                        <i class="fas fa-chart-bar"></i>
+                        Статистика
                     </h2>
-                    <div class="plugin-list" id="pluginList">
-                        <!-- Плагины будут добавлены через JavaScript -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="pluginsCount">0</div>
+                            <div class="stat-label">Плагинов</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="postsCount">0</div>
+                            <div class="stat-label">Сообщений</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="ticketsCount">0</div>
+                            <div class="stat-label">Тикетов</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="likesCount">0</div>
+                            <div class="stat-label">Лайков</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </main>
 
-    <a href="edit-profile.html" class="edit-profile-btn">
-        <i class="fas fa-edit"></i>
-        Редактировать профиль
-    </a>
+    <div class="modal" id="editProfileModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Редактировать профиль</h2>
+                <button class="close-modal" onclick="hideEditModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form onsubmit="handleProfileUpdate(event)">
+                <div class="form-group">
+                    <label class="form-label">Никнейм</label>
+                    <input type="text" class="form-input" id="editNickname" required>
+                    <div class="error-message" id="nicknameError"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" id="editEmail" required>
+                    <div class="error-message" id="emailError"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Новый пароль (необязательно)</label>
+                    <input type="password" class="form-input" id="editPassword">
+                    <div class="error-message" id="passwordError"></div>
+                </div>
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-save"></i>
+                    Сохранить изменения
+                </button>
+            </form>
+        </div>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -479,105 +540,135 @@
                 return;
             }
 
-            // Загружаем информацию профиля
-            loadProfile(user);
-            // Загружаем активность
-            loadActivity();
-            // Загружаем плагины
-            loadPlugins(user);
+            // Загружаем данные пользователя
+            loadUserData(user);
+            loadUserActivity(user);
+            loadUserStats(user);
         });
 
-        function loadProfile(user) {
+        function loadUserData(user) {
             // Устанавливаем инициалы в аватар
             const initials = user.nickname.substring(0, 2).toUpperCase();
             document.getElementById('profileAvatar').textContent = initials;
 
-            // Устанавливаем имя и роль
+            // Заполняем информацию профиля
             document.getElementById('profileName').textContent = user.nickname;
+            document.getElementById('profileEmail').textContent = user.email;
             document.getElementById('profileRole').textContent = user.isAdmin ? 'Администратор' : 'Пользователь';
-
-            // Загружаем статистику
-            const plugins = JSON.parse(localStorage.getItem('plugins')) || [];
-            const userPlugins = plugins.filter(p => p.author.id === user.id);
-            document.getElementById('pluginsCount').textContent = userPlugins.length;
             
-            // Временные данные для демонстрации
-            document.getElementById('postsCount').textContent = '42';
-            document.getElementById('joinDate').textContent = '01.03.2024';
+            // Форматируем дату регистрации
+            const regDate = new Date(user.registrationDate);
+            document.getElementById('profileDate').textContent = `Регистрация: ${regDate.toLocaleDateString()}`;
+
+            // Заполняем форму редактирования
+            document.getElementById('editNickname').value = user.nickname;
+            document.getElementById('editEmail').value = user.email;
         }
 
-        function loadActivity() {
-            const activities = [
-                {
-                    type: 'plugin',
-                    title: 'Опубликовал новый плагин',
-                    description: 'JumpLoot',
-                    date: '2 часа назад',
-                    icon: 'fas fa-puzzle-piece'
-                },
-                {
-                    type: 'post',
-                    title: 'Ответил в теме',
-                    description: 'Как создать свой первый плагин?',
-                    date: '5 часов назад',
-                    icon: 'fas fa-message'
-                },
-                {
-                    type: 'like',
-                    title: 'Оценил плагин',
-                    description: 'AutoLoot',
-                    date: '1 день назад',
-                    icon: 'fas fa-heart'
-                }
-            ];
+        function loadUserActivity(user) {
+            // Получаем активность пользователя
+            const tickets = JSON.parse(localStorage.getItem('tickets')) || [];
+            const userTickets = tickets.filter(t => t.userId === user.id);
 
             const activityList = document.getElementById('activityList');
-            activityList.innerHTML = activities.map(activity => `
-                <div class="activity-item">
-                    <div class="activity-icon">
-                        <i class="${activity.icon}"></i>
+            if (userTickets.length === 0) {
+                activityList.innerHTML = `
+                    <div style="text-align: center; color: var(--text-secondary); padding: 2rem;">
+                        <i class="fas fa-history" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                        <p>Нет активности</p>
                     </div>
-                    <div class="activity-content">
-                        <div class="activity-title">${activity.title}</div>
-                        <div class="activity-meta">
-                            <span>${activity.description}</span>
-                            <span>${activity.date}</span>
-                        </div>
+                `;
+                return;
+            }
+
+            activityList.innerHTML = userTickets.map(ticket => `
+                <div class="activity-item">
+                    <div class="activity-header">
+                        <div class="activity-title">${ticket.title}</div>
+                        <div class="activity-time">${ticket.date}</div>
+                    </div>
+                    <div class="activity-description">
+                        Создан тикет в техподдержку
                     </div>
                 </div>
             `).join('');
         }
 
-        function loadPlugins(user) {
-            const plugins = JSON.parse(localStorage.getItem('plugins')) || [];
-            const userPlugins = plugins.filter(p => p.author.id === user.id)
-                .sort((a, b) => (b.downloads || 0) - (a.downloads || 0))
-                .slice(0, 3);
+        function loadUserStats(user) {
+            // Получаем статистику пользователя
+            const tickets = JSON.parse(localStorage.getItem('tickets')) || [];
+            const userTickets = tickets.filter(t => t.userId === user.id);
 
-            const pluginList = document.getElementById('pluginList');
-            pluginList.innerHTML = userPlugins.map(plugin => `
-                <div class="plugin-item">
-                    <div class="plugin-icon">
-                        <i class="fas fa-puzzle-piece"></i>
-                    </div>
-                    <div class="plugin-content">
-                        <div class="plugin-title">${plugin.name}</div>
-                        <div class="plugin-meta">
-                            <span><i class="fas fa-download"></i> ${plugin.downloads || 0}</span>
-                            <span><i class="fas fa-star"></i> ${plugin.rating || '0.0'}</span>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
+            // Обновляем счетчики
+            document.getElementById('ticketsCount').textContent = userTickets.length;
+            document.getElementById('pluginsCount').textContent = '0'; // TODO: Добавить подсчет плагинов
+            document.getElementById('postsCount').textContent = '0'; // TODO: Добавить подсчет сообщений
+            document.getElementById('likesCount').textContent = '0'; // TODO: Добавить подсчет лайков
+        }
 
-            if (userPlugins.length === 0) {
-                pluginList.innerHTML = `
-                    <div style="text-align: center; color: var(--text-secondary);">
-                        <i class="fas fa-box-open" style="font-size: 2rem; margin-bottom: 1rem;"></i>
-                        <p>Нет опубликованных плагинов</p>
-                    </div>
-                `;
+        function showEditModal() {
+            document.getElementById('editProfileModal').classList.add('active');
+        }
+
+        function hideEditModal() {
+            document.getElementById('editProfileModal').classList.remove('active');
+        }
+
+        function handleProfileUpdate(event) {
+            event.preventDefault();
+            
+            const nickname = document.getElementById('editNickname').value;
+            const email = document.getElementById('editEmail').value;
+            const password = document.getElementById('editPassword').value;
+            
+            // Очищаем предыдущие ошибки
+            document.querySelectorAll('.error-message').forEach(error => {
+                error.classList.remove('show');
+            });
+
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const currentUser = JSON.parse(localStorage.getItem('user'));
+            
+            // Проверяем, не занят ли никнейм или email другим пользователем
+            const isNicknameExists = users.some(u => u.id !== currentUser.id && u.nickname === nickname);
+            const isEmailExists = users.some(u => u.id !== currentUser.id && u.email === email);
+
+            if (isNicknameExists) {
+                document.getElementById('nicknameError').textContent = 'Этот никнейм уже занят';
+                document.getElementById('nicknameError').classList.add('show');
+                return;
             }
+
+            if (isEmailExists) {
+                document.getElementById('emailError').textContent = 'Этот email уже занят';
+                document.getElementById('emailError').classList.add('show');
+                return;
+            }
+
+            // Обновляем данные пользователя
+            const userIndex = users.findIndex(u => u.id === currentUser.id);
+            users[userIndex] = {
+                ...users[userIndex],
+                nickname,
+                email,
+                ...(password && { password })
+            };
+
+            localStorage.setItem('users', JSON.stringify(users));
+            localStorage.setItem('user', JSON.stringify(users[userIndex]));
+
+            // Перезагружаем данные профиля
+            loadUserData(users[userIndex]);
+            hideEditModal();
+
+            // Показываем уведомление об успешном обновлении
+            alert('Профиль успешно обновлен');
+        }
+
+        function handleLogout() {
+            localStorage.removeItem('user');
+            localStorage.removeItem('rememberToken');
+            window.location.href = 'login.html';
         }
     </script>
 </body>
