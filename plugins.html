@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Плагины - ForestDesign</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00a651;
+            --primary-dark: #008c44;
+            --secondary: #2c3e50;
+            --accent: #3498db;
+            --background: #0f172a;
+            --surface: #1e293b;
+            --surface-light: #334155;
+            --text: #f8fafc;
+            --text-secondary: #94a3b8;
+            --success: #22c55e;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .navbar-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .logo-icon {
+            font-size: 1.75rem;
+            color: var(--primary);
+            filter: drop-shadow(0 0 8px rgba(0, 166, 81, 0.3));
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-link:hover {
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-link.active {
+            color: var(--text);
+            background: var(--primary);
+        }
+
+        .main-content {
+            margin-top: 6rem;
+            padding: 2rem 0;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .add-plugin-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .add-plugin-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .plugins-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .plugin-card {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .plugin-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary);
+        }
+
+        .plugin-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .plugin-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .plugin-info {
+            flex-grow: 1;
+        }
+
+        .plugin-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .plugin-meta {
+            display: flex;
+            gap: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .plugin-description {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .plugin-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .plugin-btn {
+            flex: 1;
+            padding: 0.5rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .download-btn {
+            background: var(--primary);
+            color: white;
+        }
+
+        .download-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .view-btn {
+            background: var(--surface-light);
+            color: var(--text);
+        }
+
+        .view-btn:hover {
+            background: var(--accent);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 23, 42, 0.9);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 600px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: var(--text);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .form-input {
+            width: 100%;
+            background: var(--surface-light);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        textarea.form-input {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            margin-top: 0.5rem;
+        }
+
+        .file-input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file-input-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--surface-light);
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .file-input-btn:hover {
+            border-color: var(--primary);
+            color: var(--text);
+        }
+
+        .submit-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-left: auto;
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .error-message {
+            color: var(--error);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .categories {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--surface);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .empty-state p {
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-content">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-tree logo-icon"></i>
+                    <span class="logo-text">ForestDesign</span>
+                </a>
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">
+                        <i class="fas fa-home"></i>
+                        Форум
+                    </a>
+                    <a href="plugins.html" class="nav-link active">
+                        <i class="fas fa-puzzle-piece"></i>
+                        Плагины
+                    </a>
+                    <a href="support.html" class="nav-link">
+                        <i class="fas fa-headset"></i>
+                        Поддержка
+                    </a>
+                    <a href="profile.html" class="nav-link">
+                        <i class="fas fa-user"></i>
+                        Профиль
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title">Плагины</h1>
+                <button class="add-plugin-btn" onclick="showAddPluginModal()">
+                    <i class="fas fa-plus"></i>
+                    Добавить плагин
+                </button>
+            </div>
+
+            <div class="categories">
+                <button class="category-btn active" onclick="filterPlugins('all')">Все плагины</button>
+                <button class="category-btn" onclick="filterPlugins('admin')">Админ плагины</button>
+                <button class="category-btn" onclick="filterPlugins('economy')">Экономика</button>
+                <button class="category-btn" onclick="filterPlugins('protection')">Защита</button>
+                <button class="category-btn" onclick="filterPlugins('other')">Прочее</button>
+            </div>
+
+            <div class="plugins-grid" id="pluginsGrid">
+                <!-- Плагины будут добавлены через JavaScript -->
+            </div>
+        </div>
+    </main>
+
+    <div class="modal" id="addPluginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Добавить плагин</h2>
+                <button class="close-modal" onclick="hideAddPluginModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="addPluginForm" onsubmit="handleAddPlugin(event)">
+                <div class="form-group">
+                    <label class="form-label">Название плагина</label>
+                    <input type="text" class="form-input" id="pluginTitle" required>
+                    <div class="error-message" id="titleError"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Категория</label>
+                    <select class="form-input" id="pluginCategory" required>
+                        <option value="admin">Админ плагины</option>
+                        <option value="economy">Экономика</option>
+                        <option value="protection">Защита</option>
+                        <option value="other">Прочее</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Описание</label>
+                    <textarea class="form-input" id="pluginDescription" required></textarea>
+                    <div class="error-message" id="descriptionError"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Файл плагина</label>
+                    <div class="file-input-wrapper">
+                        <input type="file" class="file-input" id="pluginFile" accept=".jar,.dll,.so" required>
+                        <div class="file-input-btn" id="fileInputBtn">
+                            <i class="fas fa-upload"></i>
+                            Выберите файл плагина
+                        </div>
+                    </div>
+                    <div class="error-message" id="fileError"></div>
+                </div>
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-plus"></i>
+                    Опубликовать плагин
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            loadPlugins();
+        });
+
+        // Обработка загрузки файла
+        document.getElementById('pluginFile').addEventListener('change', function(e) {
+            const fileName = e.target.files[0]?.name || 'Выберите файл плагина';
+            document.getElementById('fileInputBtn').innerHTML = `
+                <i class="fas fa-file"></i>
+                ${fileName}
+            `;
+        });
+
+        function loadPlugins(category = 'all') {
+            const plugins = JSON.parse(localStorage.getItem('plugins')) || [];
+            const grid = document.getElementById('pluginsGrid');
+
+            const filteredPlugins = category === 'all' 
+                ? plugins 
+                : plugins.filter(p => p.category === category);
+
+            if (filteredPlugins.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-puzzle-piece"></i>
+                        <p>Плагинов пока нет</p>
+                        <button class="add-plugin-btn" onclick="showAddPluginModal()">
+                            <i class="fas fa-plus"></i>
+                            Добавить первый плагин
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filteredPlugins.map(plugin => `
+                <div class="plugin-card">
+                    <div class="plugin-header">
+                        <div class="plugin-icon">
+                            <i class="fas fa-puzzle-piece"></i>
+                        </div>
+                        <div class="plugin-info">
+                            <h3 class="plugin-title">${plugin.title}</h3>
+                            <div class="plugin-meta">
+                                <span><i class="fas fa-user"></i> ${plugin.author}</span>
+                                <span><i class="fas fa-calendar"></i> ${new Date(plugin.date).toLocaleDateString()}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="plugin-description">${plugin.description}</p>
+                    <div class="plugin-actions">
+                        <button class="plugin-btn download-btn" onclick="downloadPlugin('${plugin.id}')">
+                            <i class="fas fa-download"></i>
+                            Скачать
+                        </button>
+                        <button class="plugin-btn view-btn" onclick="viewPlugin('${plugin.id}')">
+                            <i class="fas fa-eye"></i>
+                            Подробнее
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterPlugins(category) {
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            loadPlugins(category);
+        }
+
+        function showAddPluginModal() {
+            document.getElementById('addPluginModal').classList.add('active');
+        }
+
+        function hideAddPluginModal() {
+            document.getElementById('addPluginModal').classList.remove('active');
+            document.getElementById('addPluginForm').reset();
+            document.getElementById('fileInputBtn').innerHTML = `
+                <i class="fas fa-upload"></i>
+                Выберите файл плагина
+            `;
+        }
+
+        function handleAddPlugin(event) {
+            event.preventDefault();
+            
+            const title = document.getElementById('pluginTitle').value;
+            const category = document.getElementById('pluginCategory').value;
+            const description = document.getElementById('pluginDescription').value;
+            const file = document.getElementById('pluginFile').files[0];
+
+            if (!file) {
+                document.getElementById('fileError').textContent = 'Выберите файл плагина';
+                document.getElementById('fileError').classList.add('show');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const user = JSON.parse(localStorage.getItem('user'));
+                const plugins = JSON.parse(localStorage.getItem('plugins')) || [];
+
+                const newPlugin = {
+                    id: Date.now().toString(),
+                    title,
+                    category,
+                    description,
+                    author: user.nickname,
+                    authorId: user.id,
+                    date: new Date().toISOString(),
+                    file: {
+                        name: file.name,
+                        content: e.target.result
+                    }
+                };
+
+                plugins.push(newPlugin);
+                localStorage.setItem('plugins', JSON.stringify(plugins));
+
+                hideAddPluginModal();
+                loadPlugins();
+            };
+
+            reader.readAsDataURL(file);
+        }
+
+        function downloadPlugin(pluginId) {
+            const plugins = JSON.parse(localStorage.getItem('plugins')) || [];
+            const plugin = plugins.find(p => p.id === pluginId);
+
+            if (!plugin || !plugin.file) {
+                alert('Ошибка: файл плагина не найден');
+                return;
+            }
+
+            const link = document.createElement('a');
+            link.href = plugin.file.content;
+            link.download = plugin.file.name;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function viewPlugin(pluginId) {
+            // TODO: Реализовать просмотр подробной информации о плагине
+            alert('Функция просмотра подробной информации в разработке');
+        }
+    </script>
+</body>
+</html> 
