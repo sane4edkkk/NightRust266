@@ -41,90 +41,67 @@
             background: rgba(30, 41, 59, 0.95);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 2rem;
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 1000;
-            padding: 1rem 0;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .navbar-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .logo {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            text-decoration: none;
-            color: var(--text);
-        }
-
-        .logo-icon {
-            font-size: 1.75rem;
-            color: var(--primary);
-            filter: drop-shadow(0 0 8px rgba(0, 166, 81, 0.3));
-        }
-
-        .logo-text {
             font-size: 1.5rem;
             font-weight: 700;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 1.5rem;
-            align-items: center;
-        }
-
-        .nav-link {
-            color: var(--text-secondary);
+            color: var(--text);
             text-decoration: none;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
 
-        .nav-link:hover {
+        .logo i {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
             color: var(--text);
-            background: rgba(255, 255, 255, 0.1);
         }
 
-        .nav-link.active {
-            color: var(--text);
-            background: var(--primary);
+        .nav-links a.active {
+            color: var(--primary);
         }
 
-        .main-content {
-            margin-top: 6rem;
-            padding: 2rem 0;
+        .container {
+            max-width: 1200px;
+            margin: 6rem auto 2rem;
+            padding: 0 2rem;
         }
 
-        .page-header {
+        .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 2rem;
         }
 
-        .page-title {
+        .header h1 {
             font-size: 2rem;
-            font-weight: 700;
             background: linear-gradient(135deg, var(--primary), var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -149,6 +126,30 @@
             transform: translateY(-2px);
         }
 
+        .categories {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            background: var(--surface);
+            color: var(--text-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
         .plugins-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -157,51 +158,54 @@
 
         .plugin-card {
             background: var(--surface);
-            border-radius: 16px;
-            padding: 1.5rem;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
             transition: all 0.3s ease;
         }
 
         .plugin-card:hover {
-            transform: translateY(-4px);
-            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         }
 
         .plugin-header {
             display: flex;
-            align-items: center;
-            gap: 1rem;
+            justify-content: space-between;
+            align-items: flex-start;
             margin-bottom: 1rem;
-        }
-
-        .plugin-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            background: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: white;
-        }
-
-        .plugin-info {
-            flex-grow: 1;
         }
 
         .plugin-title {
             font-size: 1.25rem;
             font-weight: 600;
-            margin-bottom: 0.25rem;
+            color: var(--text);
+            margin-bottom: 0.5rem;
         }
 
-        .plugin-meta {
-            display: flex;
-            gap: 1rem;
+        .plugin-category {
+            font-size: 0.8rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            background: var(--surface-light);
             color: var(--text-secondary);
+        }
+
+        .plugin-price {
             font-size: 0.9rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            margin-left: 0.5rem;
+        }
+
+        .price-free {
+            background: var(--success);
+            color: white;
+        }
+
+        .price-paid {
+            background: var(--warning);
+            color: white;
         }
 
         .plugin-description {
@@ -213,41 +217,57 @@
             overflow: hidden;
         }
 
+        .plugin-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .plugin-author {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
         .plugin-actions {
             display: flex;
             gap: 0.5rem;
         }
 
         .plugin-btn {
-            flex: 1;
-            padding: 0.5rem;
-            border-radius: 8px;
-            border: none;
-            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 0.5rem;
         }
 
         .download-btn {
             background: var(--primary);
             color: white;
+            border: none;
         }
 
         .download-btn:hover {
             background: var(--primary-dark);
         }
 
-        .view-btn {
+        .info-btn {
             background: var(--surface-light);
             color: var(--text);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .view-btn:hover {
-            background: var(--accent);
+        .info-btn:hover {
+            background: var(--surface);
         }
 
         .modal {
@@ -257,10 +277,12 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(15, 23, 42, 0.9);
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(8px);
             z-index: 1000;
             align-items: center;
             justify-content: center;
+            padding: 2rem;
         }
 
         .modal.active {
@@ -273,7 +295,7 @@
             padding: 2rem;
             width: 100%;
             max-width: 600px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
         }
 
         .modal-header {
@@ -292,8 +314,8 @@
             background: none;
             border: none;
             color: var(--text-secondary);
-            font-size: 1.5rem;
             cursor: pointer;
+            font-size: 1.5rem;
             transition: color 0.3s ease;
         }
 
@@ -311,7 +333,9 @@
             color: var(--text-secondary);
         }
 
-        .form-input {
+        .form-input,
+        .form-select,
+        .form-textarea {
             width: 100%;
             background: var(--surface-light);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -319,187 +343,112 @@
             padding: 0.75rem 1rem;
             border-radius: 8px;
             font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
         }
 
-        .form-input:focus {
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
             outline: none;
             border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(0, 166, 81, 0.2);
         }
 
-        textarea.form-input {
-            min-height: 120px;
+        .form-textarea {
             resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1rem;
+            padding-right: 2.5rem;
         }
 
         .file-input-wrapper {
             position: relative;
-            margin-top: 0.5rem;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
         }
 
-        .file-input {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            cursor: pointer;
-        }
-
-        .file-input-btn {
-            width: 100%;
-            padding: 0.75rem;
+        .file-input-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
             background: var(--surface-light);
             border: 1px dashed rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
             color: var(--text-secondary);
-            text-align: center;
+            padding: 2rem;
+            border-radius: 8px;
+            cursor: pointer;
             transition: all 0.3s ease;
         }
 
-        .file-input-btn:hover {
+        .file-input-label:hover {
             border-color: var(--primary);
             color: var(--text);
         }
 
-        .submit-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 500;
+        .file-input {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
             cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-left: auto;
-        }
-
-        .submit-btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-
-        .error-message {
-            color: var(--error);
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-            display: none;
-        }
-
-        .error-message.show {
-            display: block;
-            animation: shake 0.5s ease;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-        }
-
-        .categories {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .category-btn {
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: var(--surface);
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .category-btn:hover,
-        .category-btn.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 4rem 2rem;
-            color: var(--text-secondary);
-        }
-
-        .empty-state i {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: var(--primary);
-        }
-
-        .empty-state p {
-            margin-bottom: 1.5rem;
+            width: 100%;
+            height: 100%;
         }
     </style>
 </head>
 <body>
     <nav class="navbar">
-        <div class="container">
-            <div class="navbar-content">
-                <a href="index.html" class="logo">
-                    <i class="fas fa-tree logo-icon"></i>
-                    <span class="logo-text">ForestDesign</span>
-                </a>
-                <div class="nav-links">
-                    <a href="index.html" class="nav-link">
-                        <i class="fas fa-home"></i>
-                        Форум
-                    </a>
-                    <a href="plugins.html" class="nav-link active">
-                        <i class="fas fa-puzzle-piece"></i>
-                        Плагины
-                    </a>
-                    <a href="support.html" class="nav-link">
-                        <i class="fas fa-headset"></i>
-                        Поддержка
-                    </a>
-                    <a href="profile.html" class="nav-link">
-                        <i class="fas fa-user"></i>
-                        Профиль
-                    </a>
-                </div>
-            </div>
+        <a href="index.html" class="logo">
+            <i class="fas fa-tree"></i>
+            ForestDesign
+        </a>
+        <div class="nav-links">
+            <a href="index.html">Форум</a>
+            <a href="plugins.html" class="active">Плагины</a>
+            <a href="support.html">Поддержка</a>
+            <a href="profile.html">Профиль</a>
         </div>
     </nav>
 
-    <main class="main-content">
-        <div class="container">
-            <div class="page-header">
-                <h1 class="page-title">Плагины</h1>
-                <button class="add-plugin-btn" onclick="showAddPluginModal()">
-                    <i class="fas fa-plus"></i>
-                    Добавить плагин
-                </button>
-            </div>
-
-            <div class="categories">
-                <button class="category-btn active" onclick="filterPlugins('all')">Все плагины</button>
-                <button class="category-btn" onclick="filterPlugins('admin')">Админ плагины</button>
-                <button class="category-btn" onclick="filterPlugins('economy')">Экономика</button>
-                <button class="category-btn" onclick="filterPlugins('protection')">Защита</button>
-                <button class="category-btn" onclick="filterPlugins('other')">Прочее</button>
-            </div>
-
-            <div class="plugins-grid" id="pluginsGrid">
-                <!-- Плагины будут добавлены через JavaScript -->
-            </div>
+    <div class="container">
+        <div class="header">
+            <h1>Плагины</h1>
+            <button class="add-plugin-btn" onclick="openAddPluginModal()">
+                <i class="fas fa-plus"></i>
+                Добавить плагин
+            </button>
         </div>
-    </main>
 
+        <div class="categories">
+            <button class="category-btn active" onclick="filterPlugins('all')">Все</button>
+            <button class="category-btn" onclick="filterPlugins('admin')">Админ плагины</button>
+            <button class="category-btn" onclick="filterPlugins('economy')">Экономика</button>
+            <button class="category-btn" onclick="filterPlugins('protection')">Защита</button>
+            <button class="category-btn" onclick="filterPlugins('free')">Бесплатные</button>
+            <button class="category-btn" onclick="filterPlugins('paid')">Платные</button>
+            <button class="category-btn" onclick="filterPlugins('other')">Другое</button>
+        </div>
+
+        <div class="plugins-grid" id="pluginsGrid">
+            <!-- Плагины будут добавляться здесь динамически -->
+        </div>
+    </div>
+
+    <!-- Модальное окно добавления плагина -->
     <div class="modal" id="addPluginModal">
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title">Добавить плагин</h2>
-                <button class="close-modal" onclick="hideAddPluginModal()">
+                <button class="close-modal" onclick="closeAddPluginModal()">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
@@ -507,196 +456,233 @@
                 <div class="form-group">
                     <label class="form-label">Название плагина</label>
                     <input type="text" class="form-input" id="pluginTitle" required>
-                    <div class="error-message" id="titleError"></div>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Категория</label>
-                    <select class="form-input" id="pluginCategory" required>
+                    <select class="form-select" id="pluginCategory" required>
                         <option value="admin">Админ плагины</option>
                         <option value="economy">Экономика</option>
                         <option value="protection">Защита</option>
-                        <option value="other">Прочее</option>
+                        <option value="other">Другое</option>
                     </select>
                 </div>
                 <div class="form-group">
+                    <label class="form-label">Тип</label>
+                    <select class="form-select" id="pluginType" required>
+                        <option value="free">Бесплатный</option>
+                        <option value="paid">Платный</option>
+                    </select>
+                </div>
+                <div class="form-group" id="priceGroup" style="display: none;">
+                    <label class="form-label">Цена (₽)</label>
+                    <input type="number" class="form-input" id="pluginPrice" min="1">
+                </div>
+                <div class="form-group">
                     <label class="form-label">Описание</label>
-                    <textarea class="form-input" id="pluginDescription" required></textarea>
-                    <div class="error-message" id="descriptionError"></div>
+                    <textarea class="form-textarea" id="pluginDescription" required></textarea>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Файл плагина</label>
                     <div class="file-input-wrapper">
-                        <input type="file" class="file-input" id="pluginFile" accept=".jar,.dll,.so" required>
-                        <div class="file-input-btn" id="fileInputBtn">
-                            <i class="fas fa-upload"></i>
-                            Выберите файл плагина
-                        </div>
+                        <label class="file-input-label">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <span>Перетащите файл сюда или нажмите для выбора</span>
+                            <input type="file" class="file-input" id="pluginFile" accept=".jar,.zip" required>
+                        </label>
                     </div>
-                    <div class="error-message" id="fileError"></div>
                 </div>
-                <button type="submit" class="submit-btn">
+                <button type="submit" class="add-plugin-btn" style="width: 100%;">
                     <i class="fas fa-plus"></i>
-                    Опубликовать плагин
+                    Добавить плагин
                 </button>
             </form>
         </div>
     </div>
 
     <script>
+        // Загрузка плагинов при загрузке страницы
         document.addEventListener('DOMContentLoaded', function() {
+            loadPlugins();
+            setupPriceVisibility();
+        });
+
+        // Показ/скрытие поля цены в зависимости от типа плагина
+        document.getElementById('pluginType').addEventListener('change', setupPriceVisibility);
+
+        function setupPriceVisibility() {
+            const typeSelect = document.getElementById('pluginType');
+            const priceGroup = document.getElementById('priceGroup');
+            const priceInput = document.getElementById('pluginPrice');
+
+            if (typeSelect.value === 'paid') {
+                priceGroup.style.display = 'block';
+                priceInput.required = true;
+            } else {
+                priceGroup.style.display = 'none';
+                priceInput.required = false;
+            }
+        }
+
+        function openAddPluginModal() {
+            document.getElementById('addPluginModal').classList.add('active');
+        }
+
+        function closeAddPluginModal() {
+            document.getElementById('addPluginModal').classList.remove('active');
+            document.getElementById('addPluginForm').reset();
+        }
+
+        function handleAddPlugin(event) {
+            event.preventDefault();
+
+            const title = document.getElementById('pluginTitle').value;
+            const category = document.getElementById('pluginCategory').value;
+            const type = document.getElementById('pluginType').value;
+            const price = type === 'paid' ? document.getElementById('pluginPrice').value : 0;
+            const description = document.getElementById('pluginDescription').value;
+            const file = document.getElementById('pluginFile').files[0];
+
+            // Получаем текущего пользователя
             const user = JSON.parse(localStorage.getItem('user'));
             if (!user) {
-                window.location.href = 'login.html';
+                alert('Необходимо войти в аккаунт');
                 return;
             }
 
+            const plugin = {
+                id: Date.now().toString(),
+                title,
+                category,
+                type,
+                price: parseInt(price),
+                description,
+                author: user.nickname,
+                authorId: user.id,
+                fileName: file.name,
+                dateAdded: new Date().toISOString()
+            };
+
+            // Сохраняем плагин
+            const plugins = JSON.parse(localStorage.getItem('plugins')) || [];
+            plugins.push(plugin);
+            localStorage.setItem('plugins', JSON.stringify(plugins));
+
+            // Обновляем отображение
             loadPlugins();
-        });
+            closeAddPluginModal();
+        }
 
-        // Обработка загрузки файла
-        document.getElementById('pluginFile').addEventListener('change', function(e) {
-            const fileName = e.target.files[0]?.name || 'Выберите файл плагина';
-            document.getElementById('fileInputBtn').innerHTML = `
-                <i class="fas fa-file"></i>
-                ${fileName}
-            `;
-        });
-
-        function loadPlugins(category = 'all') {
+        function loadPlugins() {
             const plugins = JSON.parse(localStorage.getItem('plugins')) || [];
             const grid = document.getElementById('pluginsGrid');
+            grid.innerHTML = '';
 
-            const filteredPlugins = category === 'all' 
-                ? plugins 
-                : plugins.filter(p => p.category === category);
+            plugins.forEach(plugin => {
+                const card = createPluginCard(plugin);
+                grid.appendChild(card);
+            });
+        }
 
-            if (filteredPlugins.length === 0) {
-                grid.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-puzzle-piece"></i>
-                        <p>Плагинов пока нет</p>
-                        <button class="add-plugin-btn" onclick="showAddPluginModal()">
-                            <i class="fas fa-plus"></i>
-                            Добавить первый плагин
-                        </button>
+        function createPluginCard(plugin) {
+            const card = document.createElement('div');
+            card.className = 'plugin-card';
+            
+            const priceDisplay = plugin.type === 'free' 
+                ? '<span class="plugin-price price-free">Бесплатно</span>'
+                : `<span class="plugin-price price-paid">${plugin.price} ₽</span>`;
+
+            card.innerHTML = `
+                <div class="plugin-header">
+                    <div>
+                        <h3 class="plugin-title">${plugin.title}</h3>
+                        <span class="plugin-category">${getCategoryName(plugin.category)}</span>
+                        ${priceDisplay}
                     </div>
-                `;
-                return;
-            }
-
-            grid.innerHTML = filteredPlugins.map(plugin => `
-                <div class="plugin-card">
-                    <div class="plugin-header">
-                        <div class="plugin-icon">
-                            <i class="fas fa-puzzle-piece"></i>
-                        </div>
-                        <div class="plugin-info">
-                            <h3 class="plugin-title">${plugin.title}</h3>
-                            <div class="plugin-meta">
-                                <span><i class="fas fa-user"></i> ${plugin.author}</span>
-                                <span><i class="fas fa-calendar"></i> ${new Date(plugin.date).toLocaleDateString()}</span>
-                            </div>
-                        </div>
+                </div>
+                <p class="plugin-description">${plugin.description}</p>
+                <div class="plugin-footer">
+                    <div class="plugin-author">
+                        <i class="fas fa-user"></i>
+                        ${plugin.author}
                     </div>
-                    <p class="plugin-description">${plugin.description}</p>
                     <div class="plugin-actions">
                         <button class="plugin-btn download-btn" onclick="downloadPlugin('${plugin.id}')">
                             <i class="fas fa-download"></i>
                             Скачать
                         </button>
-                        <button class="plugin-btn view-btn" onclick="viewPlugin('${plugin.id}')">
-                            <i class="fas fa-eye"></i>
-                            Подробнее
+                        <button class="plugin-btn info-btn" onclick="showPluginInfo('${plugin.id}')">
+                            <i class="fas fa-info-circle"></i>
                         </button>
                     </div>
                 </div>
-            `).join('');
+            `;
+
+            return card;
+        }
+
+        function getCategoryName(category) {
+            const categories = {
+                'admin': 'Админ плагины',
+                'economy': 'Экономика',
+                'protection': 'Защита',
+                'other': 'Другое'
+            };
+            return categories[category] || category;
         }
 
         function filterPlugins(category) {
-            document.querySelectorAll('.category-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
+            const buttons = document.querySelectorAll('.category-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
-            loadPlugins(category);
-        }
 
-        function showAddPluginModal() {
-            document.getElementById('addPluginModal').classList.add('active');
-        }
+            const plugins = JSON.parse(localStorage.getItem('plugins')) || [];
+            const grid = document.getElementById('pluginsGrid');
+            grid.innerHTML = '';
 
-        function hideAddPluginModal() {
-            document.getElementById('addPluginModal').classList.remove('active');
-            document.getElementById('addPluginForm').reset();
-            document.getElementById('fileInputBtn').innerHTML = `
-                <i class="fas fa-upload"></i>
-                Выберите файл плагина
-            `;
-        }
+            const filteredPlugins = category === 'all' 
+                ? plugins 
+                : plugins.filter(plugin => 
+                    category === 'free' ? plugin.type === 'free' :
+                    category === 'paid' ? plugin.type === 'paid' :
+                    plugin.category === category
+                );
 
-        function handleAddPlugin(event) {
-            event.preventDefault();
-            
-            const title = document.getElementById('pluginTitle').value;
-            const category = document.getElementById('pluginCategory').value;
-            const description = document.getElementById('pluginDescription').value;
-            const file = document.getElementById('pluginFile').files[0];
-
-            if (!file) {
-                document.getElementById('fileError').textContent = 'Выберите файл плагина';
-                document.getElementById('fileError').classList.add('show');
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const user = JSON.parse(localStorage.getItem('user'));
-                const plugins = JSON.parse(localStorage.getItem('plugins')) || [];
-
-                const newPlugin = {
-                    id: Date.now().toString(),
-                    title,
-                    category,
-                    description,
-                    author: user.nickname,
-                    authorId: user.id,
-                    date: new Date().toISOString(),
-                    file: {
-                        name: file.name,
-                        content: e.target.result
-                    }
-                };
-
-                plugins.push(newPlugin);
-                localStorage.setItem('plugins', JSON.stringify(plugins));
-
-                hideAddPluginModal();
-                loadPlugins();
-            };
-
-            reader.readAsDataURL(file);
+            filteredPlugins.forEach(plugin => {
+                const card = createPluginCard(plugin);
+                grid.appendChild(card);
+            });
         }
 
         function downloadPlugin(pluginId) {
             const plugins = JSON.parse(localStorage.getItem('plugins')) || [];
             const plugin = plugins.find(p => p.id === pluginId);
+            
+            if (!plugin) return;
 
-            if (!plugin || !plugin.file) {
-                alert('Ошибка: файл плагина не найден');
+            if (plugin.type === 'paid') {
+                // Здесь должна быть логика оплаты
+                alert('Для скачивания платного плагина необходимо произвести оплату');
                 return;
             }
 
-            const link = document.createElement('a');
-            link.href = plugin.file.content;
-            link.download = plugin.file.name;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            // Имитация скачивания
+            alert('Начинается скачивание плагина: ' + plugin.title);
         }
 
-        function viewPlugin(pluginId) {
-            // TODO: Реализовать просмотр подробной информации о плагине
-            alert('Функция просмотра подробной информации в разработке');
+        function showPluginInfo(pluginId) {
+            const plugins = JSON.parse(localStorage.getItem('plugins')) || [];
+            const plugin = plugins.find(p => p.id === pluginId);
+            
+            if (!plugin) return;
+
+            alert(`
+                Название: ${plugin.title}
+                Категория: ${getCategoryName(plugin.category)}
+                Тип: ${plugin.type === 'free' ? 'Бесплатный' : 'Платный'}
+                ${plugin.type === 'paid' ? 'Цена: ' + plugin.price + ' ₽' : ''}
+                Автор: ${plugin.author}
+                Дата добавления: ${new Date(plugin.dateAdded).toLocaleDateString()}
+            `);
         }
     </script>
 </body>
