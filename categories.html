@@ -8,6 +8,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        body {
+            background-color: #f5f5f5;
+            font-family: 'Roboto', sans-serif;
+        }
+
         .categories-container {
             max-width: 1200px;
             margin: 2rem auto;
@@ -128,6 +133,29 @@
         }
 
         /* Стили для тарифов */
+        .pricing-section {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid #eee;
+        }
+
+        .pricing-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-title h2 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-title p {
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
         .pricing-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -222,6 +250,12 @@
             border-radius: 4px;
             color: white;
             margin-bottom: 1rem;
+        }
+
+        @media (max-width: 1024px) {
+            .pricing-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
         }
     </style>
 </head>
@@ -377,69 +411,76 @@
         </div>
 
         <!-- Секция с тарифами -->
-        <div id="pricing" class="pricing-grid">
-            <div class="pricing-card">
-                <div class="pricing-header">
-                    <div class="pricing-name">Starter</div>
-                    <div class="pricing-price">505,66 ₽</div>
-                    <div class="pricing-period">за 3 дней</div>
-                </div>
-                <ul class="pricing-features">
-                    <li><i class="fas fa-check"></i> Доступ к ресурсам с пометкой Премиум</li>
-                    <li><i class="fas fa-check"></i> Безлимитные загрузки ресурсов</li>
-                    <li><i class="fas fa-check"></i> Баннер Starter</li>
-                    <li><i class="fas fa-check"></i> Уникальный цвет никнейма</li>
-                </ul>
-                <select class="payment-select">
-                    <option value="">Выберите способ оплаты</option>
-                    <option value="card">Банковская карта</option>
-                    <option value="qiwi">QIWI</option>
-                    <option value="crypto">Криптовалюта</option>
-                </select>
-                <button class="pricing-button">Купить</button>
+        <div class="pricing-section">
+            <div class="pricing-title">
+                <h2>Выберите тариф, который подходит именно вам.</h2>
+                <p>Получите доступ к премиум возможностям и станьте частью элитного сообщества</p>
             </div>
-
-            <div class="pricing-card">
-                <div class="featured-tag">FEATURED</div>
-                <div class="pricing-header">
-                    <div class="pricing-name">Basic</div>
-                    <div class="pricing-price">758,50 ₽</div>
-                    <div class="pricing-period">за 14 дней</div>
+            
+            <div id="pricing" class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <div class="pricing-name">Starter</div>
+                        <div class="pricing-price">505,66 ₽</div>
+                        <div class="pricing-period">за 3 дней</div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Доступ к ресурсам с пометкой Премиум</li>
+                        <li><i class="fas fa-check"></i> Безлимитные загрузки ресурсов</li>
+                        <li><i class="fas fa-check"></i> Баннер Starter</li>
+                        <li><i class="fas fa-check"></i> Уникальный цвет никнейма</li>
+                    </ul>
+                    <select class="payment-select">
+                        <option value="">Выберите способ оплаты</option>
+                        <option value="card">Банковская карта</option>
+                        <option value="qiwi">QIWI</option>
+                        <option value="crypto">Криптовалюта</option>
+                    </select>
+                    <button class="pricing-button">Купить</button>
                 </div>
-                <ul class="pricing-features">
-                    <li><i class="fas fa-check"></i> Доступ к ресурсам с пометкой Премиум</li>
-                    <li><i class="fas fa-check"></i> Безлимитные загрузки ресурсов</li>
-                    <li><i class="fas fa-check"></i> Баннер Basic</li>
-                    <li><i class="fas fa-check"></i> Уникальный цвет никнейма</li>
-                </ul>
-                <select class="payment-select">
-                    <option value="">Выберите способ оплаты</option>
-                    <option value="card">Банковская карта</option>
-                    <option value="qiwi">QIWI</option>
-                    <option value="crypto">Криптовалюта</option>
-                </select>
-                <button class="pricing-button">Купить</button>
-            </div>
 
-            <div class="pricing-card">
-                <div class="pricing-header">
-                    <div class="pricing-name">Pro</div>
-                    <div class="pricing-price">1 095,61 ₽</div>
-                    <div class="pricing-period">за 1 месяц</div>
+                <div class="pricing-card">
+                    <div class="featured-tag">FEATURED</div>
+                    <div class="pricing-header">
+                        <div class="pricing-name">Basic</div>
+                        <div class="pricing-price">758,50 ₽</div>
+                        <div class="pricing-period">за 14 дней</div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Доступ к ресурсам с пометкой Премиум</li>
+                        <li><i class="fas fa-check"></i> Безлимитные загрузки ресурсов</li>
+                        <li><i class="fas fa-check"></i> Баннер Basic</li>
+                        <li><i class="fas fa-check"></i> Уникальный цвет никнейма</li>
+                    </ul>
+                    <select class="payment-select">
+                        <option value="">Выберите способ оплаты</option>
+                        <option value="card">Банковская карта</option>
+                        <option value="qiwi">QIWI</option>
+                        <option value="crypto">Криптовалюта</option>
+                    </select>
+                    <button class="pricing-button">Купить</button>
                 </div>
-                <ul class="pricing-features">
-                    <li><i class="fas fa-check"></i> Доступ к ресурсам с пометкой Премиум</li>
-                    <li><i class="fas fa-check"></i> Безлимитные загрузки ресурсов</li>
-                    <li><i class="fas fa-check"></i> Баннер Pro</li>
-                    <li><i class="fas fa-check"></i> Уникальный цвет никнейма</li>
-                </ul>
-                <select class="payment-select">
-                    <option value="">Выберите способ оплаты</option>
-                    <option value="card">Банковская карта</option>
-                    <option value="qiwi">QIWI</option>
-                    <option value="crypto">Криптовалюта</option>
-                </select>
-                <button class="pricing-button">Купить</button>
+
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <div class="pricing-name">Pro</div>
+                        <div class="pricing-price">1 095,61 ₽</div>
+                        <div class="pricing-period">за 1 месяц</div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Доступ к ресурсам с пометкой Премиум</li>
+                        <li><i class="fas fa-check"></i> Безлимитные загрузки ресурсов</li>
+                        <li><i class="fas fa-check"></i> Баннер Pro</li>
+                        <li><i class="fas fa-check"></i> Уникальный цвет никнейма</li>
+                    </ul>
+                    <select class="payment-select">
+                        <option value="">Выберите способ оплаты</option>
+                        <option value="card">Банковская карта</option>
+                        <option value="qiwi">QIWI</option>
+                        <option value="crypto">Криптовалюта</option>
+                    </select>
+                    <button class="pricing-button">Купить</button>
+                </div>
             </div>
         </div>
     </div>
