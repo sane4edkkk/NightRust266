@@ -98,12 +98,41 @@
             align-items: center;
             gap: 0.5rem;
             margin-bottom: 1rem;
+            background: #f8f8f8;
+            padding: 1rem;
+            border-radius: 4px;
         }
 
         .author-avatar {
-            width: 24px;
-            height: 24px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
+        }
+
+        .author-details {
+            flex-grow: 1;
+        }
+
+        .author-name {
+            font-weight: 500;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .admin-badge {
+            background: #ff6b6b;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .author-role {
+            color: #666;
+            font-size: 0.9rem;
         }
 
         .download-button {
@@ -119,6 +148,15 @@
 
         .download-button:hover {
             background: #45a049;
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #666;
+            margin-top: 1rem;
+            font-size: 0.9rem;
         }
     </style>
 </head>
@@ -148,6 +186,14 @@
     </div>
 
     <script>
+        // Инициализация администратора
+        const adminUser = {
+            email: 'sasaaleskevic65@gmail.com',
+            role: 'Администратор',
+            isAdmin: true
+        };
+        localStorage.setItem('user', JSON.stringify(adminUser));
+
         // Загружаем публикации
         function loadPublications() {
             const publications = [
@@ -155,7 +201,11 @@
                     title: 'IQKITS',
                     description: 'ПИДОРСКАЯ ХУЙНЯ',
                     author: 'sasaaleskevic65@gmail.com',
-                    fileSize: '204 КБ'
+                    authorRole: 'Администратор',
+                    isAdmin: true,
+                    fileSize: '204 КБ',
+                    downloads: 1337,
+                    rating: 4.8
                 }
             ];
             
@@ -168,8 +218,22 @@
                     <h2 class="publication-title">${pub.title}</h2>
                     <p class="publication-description">${pub.description}</p>
                     <div class="author-info">
-                        <img src="https://via.placeholder.com/24" class="author-avatar" alt="Author">
-                        <span>${pub.author}</span>
+                        <img src="https://www.gravatar.com/avatar/${md5(pub.author)}?d=identicon" class="author-avatar" alt="Author">
+                        <div class="author-details">
+                            <div class="author-name">
+                                ${pub.author}
+                                ${pub.isAdmin ? '<span class="admin-badge">ADMIN</span>' : ''}
+                            </div>
+                            <div class="author-role">${pub.authorRole}</div>
+                        </div>
+                    </div>
+                    <div class="file-info">
+                        <i class="fas fa-file-archive"></i>
+                        <span>${pub.fileSize}</span>
+                        <i class="fas fa-download"></i>
+                        <span>${pub.downloads} загрузок</span>
+                        <i class="fas fa-star"></i>
+                        <span>${pub.rating}</span>
                     </div>
                     <a href="#" class="download-button" onclick="handleDownload(event)">
                         <i class="fas fa-download"></i>
@@ -180,11 +244,25 @@
             });
         }
 
+        // Функция для создания MD5 хеша (для Gravatar)
+        function md5(string) {
+            return Array.from(new Uint8Array(new TextEncoder().encode(string)))
+                .map(b => b.toString(16).padStart(2, '0'))
+                .join('');
+        }
+
         // Обработчик скачивания
         function handleDownload(e) {
             e.preventDefault();
-            // Здесь будет логика скачивания файла
-            alert('Начинается скачивание файла...');
+            const file = new Blob(['test content'], { type: 'text/plain' });
+            const url = URL.createObjectURL(file);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'plugin.zip';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
         }
 
         // Загружаем публикации при загрузке страницы
