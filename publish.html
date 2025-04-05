@@ -289,17 +289,36 @@
             // Получаем существующие публикации
             const publications = JSON.parse(localStorage.getItem('publications')) || [];
             
-            // Добавляем новую публикацию
-            publications.push(publication);
-            
-            // Сохраняем обновленный список
-            localStorage.setItem('publications', JSON.stringify(publications));
+            // Добавляем файл, если он есть
+            const fileInput = document.getElementById('fileInput');
+            if (fileInput.files[0]) {
+                const file = fileInput.files[0];
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    publication.fileUrl = e.target.result;
+                    publication.fileName = file.name;
+                    publication.fileSize = file.size;
+                    
+                    // Добавляем новую публикацию
+                    publications.push(publication);
+                    
+                    // Сохраняем обновленный список
+                    localStorage.setItem('publications', JSON.stringify(publications));
 
-            // Показываем уведомление
-            alert('Публикация успешно создана!');
-            
-            // Перенаправляем на страницу категории
-            window.location.href = `category-view.html?category=${publication.category}`;
+                    // Показываем уведомление
+                    alert('Публикация успешно создана!');
+                    
+                    // Перенаправляем на страницу категории
+                    window.location.href = `category-view.html?category=${publication.category}`;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                // Если файла нет, просто сохраняем публикацию
+                publications.push(publication);
+                localStorage.setItem('publications', JSON.stringify(publications));
+                alert('Публикация успешно создана!');
+                window.location.href = `category-view.html?category=${publication.category}`;
+            }
         }
 
         // Drag and drop функционал
