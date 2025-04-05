@@ -337,6 +337,54 @@
             color: #999;
             font-size: 0.9rem;
         }
+
+        .footer {
+            margin-top: 4rem;
+            padding: 2rem 0;
+            border-top: 1px solid #333;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .copyright {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            color: #999;
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-link:hover {
+            color: white;
+        }
+
+        .social-link.vk:hover {
+            color: #45668e;
+        }
+
+        .social-link.telegram:hover {
+            color: #0088cc;
+        }
+
+        .social-link.discord:hover {
+            color: #7289da;
+        }
     </style>
 </head>
 <body>
@@ -498,6 +546,25 @@
             </div>
         </div>
     </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="copyright">
+                © 2024 ForestDesign. Все права защищены / All rights reserved.
+            </div>
+            <div class="social-links">
+                <a href="https://vk.com/forestdesign" target="_blank" class="social-link vk">
+                    <i class="fab fa-vk"></i>
+                </a>
+                <a href="https://t.me/forestdesign" target="_blank" class="social-link telegram">
+                    <i class="fab fa-telegram"></i>
+                </a>
+                <a href="https://discord.gg/forestdesign" target="_blank" class="social-link discord">
+                    <i class="fab fa-discord"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
 
     <script>
         function downloadPlugin(filename) {
