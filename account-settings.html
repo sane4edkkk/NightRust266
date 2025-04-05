@@ -237,7 +237,7 @@
                 <div class="form-group">
                     <label>Имя пользователя:</label>
                     <div style="display: flex; gap: 1rem; align-items: center;">
-                        <input type="text" class="form-control" value="alekssanek1020" readonly>
+                        <input type="text" class="form-control username-edit" value="alekssanek1020" readonly>
                         <button type="button" class="btn-edit">Изменить</button>
                     </div>
                 </div>
@@ -276,19 +276,19 @@
                     <div class="banner-preview">
                         <img src="forest-banner.jpg" alt="Баннер профиля">
                     </div>
-                    <button type="button" class="btn-edit">Редактировать баннер профиля</button>
+                    <button type="button" class="btn-edit banner-edit">Редактировать баннер профиля</button>
                 </div>
 
                 <div class="form-group">
                     <label>Дата рождения:</label>
                     <div style="display: flex; gap: 1rem;">
-                        <select class="form-control" style="width: 100px;">
+                        <select class="form-control" style="width: 100px;" name="day">
                             <option>День</option>
                         </select>
-                        <select class="form-control" style="width: 150px;">
+                        <select class="form-control" style="width: 150px;" name="month">
                             <option>Месяц</option>
                         </select>
-                        <select class="form-control" style="width: 100px;">
+                        <select class="form-control" style="width: 100px;" name="year">
                             <option>Год</option>
                         </select>
                     </div>
@@ -314,27 +314,141 @@
             if (!userData) return;
 
             // Заполняем данные пользователя
-            document.querySelector('input[type="text"]').value = userData.username;
-            document.querySelector('input[type="email"]').value = userData.email;
-            document.querySelector('.avatar-preview').textContent = userData.avatar;
+            document.querySelector('input[type="text"]').value = userData.username || '';
+            document.querySelector('input[type="email"]').value = userData.email || '';
+            document.querySelector('.avatar-preview').textContent = userData.avatar || 'FR';
 
-            // Обработчик выхода
-            document.querySelector('a[href="#"]').addEventListener('click', function(e) {
-                if (e.target.closest('li')?.querySelector('i.fa-sign-out-alt')) {
-                    e.preventDefault();
-                    localStorage.removeItem('isLoggedIn');
-                    localStorage.removeItem('user');
-                    window.location.href = 'login.html';
-                }
+            // Заполняем дату рождения
+            if (userData.birthDate) {
+                const [day, month, year] = userData.birthDate.split('.');
+                document.querySelector('select[name="day"]').value = day;
+                document.querySelector('select[name="month"]').value = month;
+                document.querySelector('select[name="year"]').value = year;
+            }
+
+            // Заполняем баннер если есть
+            if (userData.banner) {
+                document.querySelector('.banner-preview img').src = userData.banner;
+            }
+
+            // Обработчик изменения имени пользователя
+            document.querySelector('.username-edit').addEventListener('click', function() {
+                const input = document.querySelector('input[type="text"]');
+                input.readOnly = false;
+                input.focus();
+                
+                input.addEventListener('blur', function() {
+                    userData.username = this.value;
+                    localStorage.setItem('user', JSON.stringify(userData));
+                    input.readOnly = true;
+                    updateNavigation();
+                });
             });
 
-            // Обновляем отображение навигации
-            const authButtons = document.querySelector('.auth-buttons');
-            if (authButtons) {
-                authButtons.innerHTML = `
-                    <span style="color: #fff; margin-right: 10px;">Привет, ${userData.username}</span>
-                    <a href="#" class="login-btn" onclick="logout()">Выйти</a>
-                `;
+            // Обработчик изменения аватара
+            document.querySelector('.avatar-preview').addEventListener('click', function() {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = 'image/*';
+                
+                input.onchange = function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(event) {
+                            const avatarPreview = document.querySelector('.avatar-preview');
+                            avatarPreview.innerHTML = `<img src="${event.target.result}" style="width: 100%; height: 100%; object-fit: cover;">`;
+                            userData.avatarImage = event.target.result;
+                            localStorage.setItem('user', JSON.stringify(userData));
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                };
+                
+                input.click();
+            });
+
+            // Обработчик изменения баннера
+            document.querySelector('.banner-edit').addEventListener('click', function() {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = 'image/*';
+                
+                input.onchange = function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(event) {
+                            document.querySelector('.banner-preview img').src = event.target.result;
+                            userData.banner = event.target.result;
+                            localStorage.setItem('user', JSON.stringify(userData));
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                };
+                
+                input.click();
+            });
+
+            // Обработчик изменения даты рождения
+            const dateSelects = document.querySelectorAll('.birth-date select');
+            dateSelects.forEach(select => {
+                select.addEventListener('change', function() {
+                    const day = document.querySelector('select[name="day"]').value;
+                    const month = document.querySelector('select[name="month"]').value;
+                    const year = document.querySelector('select[name="year"]').value;
+                    
+                    if (day && month && year) {
+                        userData.birthDate = `${day}.${month}.${year}`;
+                        localStorage.setItem('user', JSON.stringify(userData));
+                    }
+                });
+            });
+
+            // Обновление навигации
+            function updateNavigation() {
+                const authButtons = document.querySelector('.auth-buttons');
+                if (authButtons) {
+                    authButtons.innerHTML = `
+                        <span style="color: #fff; margin-right: 10px;">Привет, ${userData.username}</span>
+                        <a href="#" class="login-btn" onclick="logout()">Выйти</a>
+                    `;
+                }
+            }
+
+            // Инициализация навигации
+            updateNavigation();
+
+            // Заполнение селектов датой
+            const daySelect = document.querySelector('select[name="day"]');
+            const monthSelect = document.querySelector('select[name="month"]');
+            const yearSelect = document.querySelector('select[name="year"]');
+
+            // Заполняем дни
+            for (let i = 1; i <= 31; i++) {
+                const option = document.createElement('option');
+                option.value = i.toString().padStart(2, '0');
+                option.textContent = i;
+                daySelect.appendChild(option);
+            }
+
+            // Заполняем месяцы
+            const months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 
+                          'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+            months.forEach((month, index) => {
+                const option = document.createElement('option');
+                option.value = (index + 1).toString().padStart(2, '0');
+                option.textContent = month;
+                monthSelect.appendChild(option);
+            });
+
+            // Заполняем годы
+            const currentYear = new Date().getFullYear();
+            for (let i = currentYear; i >= currentYear - 100; i--) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = i;
+                yearSelect.appendChild(option);
             }
         });
 

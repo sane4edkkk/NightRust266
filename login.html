@@ -280,7 +280,21 @@
 
             // Функция для сохранения данных пользователя
             function saveUserData(userData) {
-                localStorage.setItem('user', JSON.stringify(userData));
+                // Добавляем дополнительные поля если их нет
+                const defaultData = {
+                    username: 'alekssanek1020',
+                    email: userData.email,
+                    avatar: 'FR',
+                    birthDate: '',
+                    banner: 'forest-banner.jpg',
+                    avatarImage: null,
+                    settings: {
+                        emailNotifications: false
+                    }
+                };
+
+                // Сохраняем данные
+                localStorage.setItem('user', JSON.stringify(defaultData));
                 localStorage.setItem('isLoggedIn', 'true');
             }
 
@@ -308,12 +322,9 @@
                     return;
                 }
 
-                // Имитация проверки учетных данных
-                // В реальном приложении здесь будет запрос к серверу
+                // Создаем объект с данными пользователя
                 const userData = {
-                    username: 'alekssanek1020',
-                    email: email,
-                    avatar: 'FR'
+                    email: email
                 };
 
                 // Сохраняем данные пользователя
