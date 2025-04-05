@@ -3,10 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Плагины - ForumHub</title>
+    <title>ForestDesign - Плагины и моды</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        :root {
+            --primary-color: #2ecc71;
+            --primary-dark: #27ae60;
+            --secondary-color: #34495e;
+            --accent-color: #3498db;
+            --background: #1a1a1a;
+            --surface: #242424;
+            --surface-light: #2a2a2a;
+            --text: #ffffff;
+            --text-secondary: #b3b3b3;
+            --success: #2ecc71;
+            --error: #e74c3c;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -15,24 +29,55 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: #1a1a1a;
-            color: white;
+            background: var(--background);
+            color: var(--text);
             line-height: 1.6;
+            min-height: 100vh;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 0 2rem;
         }
 
         .navbar {
+            background: rgba(36, 36, 36, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .navbar-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
-            padding: 1rem 0;
-            border-bottom: 1px solid #333;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .logo-icon {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .logo-text {
+            font-size: 1.25rem;
+            font-weight: 600;
         }
 
         .nav-links {
@@ -42,108 +87,105 @@
         }
 
         .nav-link {
-            color: #999;
+            color: var(--text-secondary);
             text-decoration: none;
-            transition: color 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
         }
 
         .nav-link:hover {
-            color: white;
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .nav-link.active {
-            color: white;
-            font-weight: 500;
+            color: var(--text);
+            background: var(--primary-color);
         }
 
-        .nav-profile {
+        .main-content {
+            margin-top: 6rem;
+            padding: 2rem 0;
+        }
+
+        .categories-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .categories-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .categories-description {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .category-filters {
             display: flex;
-            align-items: center;
             gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
-        .profile-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .settings-link {
-            color: #999;
-            text-decoration: none;
-            transition: color 0.3s ease;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-        }
-
-        .settings-link:hover {
-            color: white;
-        }
-
-        .auth-buttons {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .auth-btn {
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .login-btn {
-            background: transparent;
-            color: white;
-            border: 1px solid #6c5ce7;
-        }
-
-        .login-btn:hover {
-            background: rgba(108, 92, 231, 0.1);
-        }
-
-        .register-btn {
-            background: #6c5ce7;
-            color: white;
+        .category-btn {
+            padding: 0.75rem 1.5rem;
             border: none;
+            background: var(--surface);
+            color: var(--text);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
         }
 
-        .register-btn:hover {
-            background: #5f50e1;
+        .category-btn:hover {
+            background: var(--surface-light);
+            transform: translateY(-2px);
+        }
+
+        .category-btn.active {
+            background: var(--primary-color);
         }
 
         .plugins-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
             margin-top: 2rem;
         }
 
         .plugin-card {
-            background: #242424;
-            border-radius: 12px;
+            background: var(--surface);
+            border-radius: 16px;
             overflow: hidden;
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .plugin-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
         }
 
         .plugin-header {
-            background: linear-gradient(135deg, #6c5ce7, #a363d9);
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
             padding: 1.5rem;
             position: relative;
         }
 
         .plugin-title {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
         }
@@ -166,286 +208,112 @@
         }
 
         .plugin-description {
-            color: #ccc;
+            color: var(--text-secondary);
             margin-bottom: 1.5rem;
             font-size: 0.95rem;
-        }
-
-        .plugin-author {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid #333;
-        }
-
-        .author-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .author-info {
-            flex-grow: 1;
-        }
-
-        .author-name {
-            font-weight: 500;
-            color: white;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .admin-badge {
-            background: #ff4757;
-            color: white;
-            padding: 0.25rem 0.5rem;
-            border-radius: 50px;
-            font-size: 0.7rem;
-            font-weight: 600;
-        }
-
-        .author-role {
-            color: #999;
-            font-size: 0.9rem;
+            line-height: 1.6;
         }
 
         .plugin-meta {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            color: #999;
-            font-size: 0.9rem;
+            padding: 1rem;
+            background: var(--surface-light);
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
         }
 
         .meta-item {
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            color: var(--text-secondary);
         }
 
         .meta-item i {
-            color: #6c5ce7;
-        }
-
-        .download-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: #4CAF50;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 500;
-            margin-top: 1rem;
-            border: none;
-            cursor: pointer;
-            width: 100%;
-            justify-content: center;
-            transition: background-color 0.3s ease;
-        }
-
-        .download-btn:hover {
-            background: #45a049;
-        }
-
-        .delete-btn {
-            display: none; /* По умолчанию скрыта */
-            align-items: center;
-            gap: 0.5rem;
-            background: #dc3545;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: background-color 0.3s ease;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-            margin-left: 0.5rem;
-        }
-
-        .delete-btn:hover {
-            background: #c82333;
+            color: var(--primary-color);
         }
 
         .plugin-actions {
             display: flex;
-            align-items: center;
-            margin-top: 1rem;
-        }
-
-        /* Показываем кнопку удаления только администраторам */
-        body[data-is-admin="true"] .delete-btn {
-            display: inline-flex;
-        }
-
-        .premium-card {
-            background: linear-gradient(135deg, #242424, #2a2a2a);
-            border-radius: 16px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            border: 1px solid #333;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .premium-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #ffd700, #ffa500);
-        }
-
-        .premium-header {
-            display: flex;
-            align-items: center;
             gap: 1rem;
-            margin-bottom: 1.5rem;
         }
 
-        .premium-icon {
-            font-size: 2rem;
-            color: #ffd700;
-        }
-
-        .premium-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            background: linear-gradient(90deg, #ffd700, #ffa500);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .premium-features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .premium-feature {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.05);
+        .action-btn {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
             border-radius: 8px;
-        }
-
-        .feature-icon {
-            width: 40px;
-            height: 40px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(255, 215, 0, 0.1);
-            border-radius: 8px;
-            color: #ffd700;
+            gap: 0.5rem;
         }
 
-        .feature-text {
-            flex-grow: 1;
-        }
-
-        .feature-title {
-            font-weight: 500;
-            margin-bottom: 0.25rem;
-        }
-
-        .feature-description {
-            font-size: 0.9rem;
-            color: #999;
-        }
-
-        .premium-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.75rem;
-            background: linear-gradient(90deg, #ffd700, #ffa500);
-            color: #1a1a1a;
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: transform 0.3s ease;
-        }
-
-        .premium-button:hover {
-            transform: translateY(-2px);
-        }
-
-        .premium-price {
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .price-amount {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #ffd700;
-        }
-
-        .price-period {
-            color: #999;
-            font-size: 0.9rem;
-        }
-
-        .footer {
-            margin-top: 4rem;
-            padding: 2rem 0;
-            border-top: 1px solid #333;
-            text-align: center;
-        }
-
-        .footer-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .copyright {
-            color: #999;
-            font-size: 0.9rem;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1.5rem;
-            margin-top: 1rem;
-        }
-
-        .social-link {
-            color: #999;
-            text-decoration: none;
-            font-size: 1.5rem;
-            transition: color 0.3s ease;
-        }
-
-        .social-link:hover {
+        .download-btn {
+            background: var(--primary-color);
             color: white;
         }
 
-        .social-link.vk:hover {
-            color: #45668e;
+        .download-btn:hover {
+            background: var(--primary-dark);
         }
 
-        .social-link.telegram:hover {
-            color: #0088cc;
+        .delete-btn {
+            background: var(--error);
+            color: white;
         }
 
-        .social-link.discord:hover {
-            color: #7289da;
+        .delete-btn:hover {
+            background: #c0392b;
+        }
+
+        .publish-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .publish-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(46, 204, 113, 0.4);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .plugin-card {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            background: var(--surface);
+            color: var(--text);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            animation: slideIn 0.3s ease-out;
         }
 
         @keyframes slideIn {
@@ -460,153 +328,90 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <nav class="navbar">
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="index.html" class="logo">
+                <i class="fas fa-tree logo-icon"></i>
+                <span class="logo-text">ForestDesign</span>
+            </a>
             <div class="nav-links">
                 <a href="index.html" class="nav-link">Главная</a>
                 <a href="#" class="nav-link active">Плагины</a>
+                <a href="oxide.html" class="nav-link">Oxide</a>
+                <a href="support.html" class="nav-link">Поддержка</a>
             </div>
             <div class="auth-buttons" id="authButtons">
-                <!-- Кнопки будут добавляться динамически через JavaScript -->
-            </div>
-        </nav>
-
-        <div class="premium-card">
-            <div class="premium-header">
-                <i class="fas fa-crown premium-icon"></i>
-                <h2 class="premium-title">Премиум доступ</h2>
-            </div>
-            
-            <div class="premium-features">
-                <div class="premium-feature">
-                    <div class="feature-icon">
-                        <i class="fas fa-download"></i>
-                    </div>
-                    <div class="feature-text">
-                        <h3 class="feature-title">Безлимитные загрузки</h3>
-                        <p class="feature-description">Скачивайте плагины без ограничений</p>
-                    </div>
-                </div>
-                
-                <div class="premium-feature">
-                    <div class="feature-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <div class="feature-text">
-                        <h3 class="feature-title">Ранний доступ</h3>
-                        <p class="feature-description">Получайте новые плагины первыми</p>
-                    </div>
-                </div>
-                
-                <div class="premium-feature">
-                    <div class="feature-icon">
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <div class="feature-text">
-                        <h3 class="feature-title">Премиум статус</h3>
-                        <p class="feature-description">Особый значок рядом с именем</p>
-                    </div>
-                </div>
-                
-                <div class="premium-feature">
-                    <div class="feature-icon">
-                        <i class="fas fa-headset"></i>
-                    </div>
-                    <div class="feature-text">
-                        <h3 class="feature-title">Приоритетная поддержка</h3>
-                        <p class="feature-description">Быстрые ответы на ваши вопросы</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="premium-price">
-                <div class="price-amount">$9.99</div>
-                <div class="price-period">в месяц</div>
-            </div>
-
-            <div style="text-align: center;">
-                <a href="#" class="premium-button" onclick="upgradeToPremium()">
-                    <i class="fas fa-crown"></i>
-                    Получить премиум
-                </a>
+                <!-- Динамическое добавление кнопок авторизации -->
             </div>
         </div>
+    </nav>
 
-        <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
-            <a href="publish.html" class="premium-button" style="background: #4CAF50;">
-                <i class="fas fa-plus"></i>
-                Опубликовать плагин
-            </a>
-        </div>
-
-        <div class="plugins-grid">
-            <!-- Плагины будут добавляться динамически через JavaScript -->
-        </div>
-    </div>
-
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="copyright">
-                © 2024 ForestDesign. Все права защищены / All rights reserved.
+    <main class="main-content">
+        <div class="container">
+            <div class="categories-header">
+                <h1 class="categories-title">Плагины и моды</h1>
+                <p class="categories-description">
+                    Откройте для себя коллекцию качественных плагинов и модов для ваших проектов
+                </p>
             </div>
-            <div class="social-links">
-                <a href="https://vk.com/forestdesign" target="_blank" class="social-link vk">
-                    <i class="fab fa-vk"></i>
-                </a>
-                <a href="https://t.me/forestdesign" target="_blank" class="social-link telegram">
-                    <i class="fab fa-telegram"></i>
-                </a>
-                <a href="https://discord.gg/forestdesign" target="_blank" class="social-link discord">
-                    <i class="fab fa-discord"></i>
-                </a>
+
+            <div class="category-filters">
+                <button class="category-btn active">Все</button>
+                <button class="category-btn">Плагины</button>
+                <button class="category-btn">Моды</button>
+                <button class="category-btn">Oxide</button>
+                <button class="category-btn">Скрипты</button>
+            </div>
+
+            <div class="plugins-grid" id="pluginsGrid">
+                <!-- Динамическая загрузка плагинов -->
             </div>
         </div>
-    </footer>
+    </main>
+
+    <a href="publish.html" class="publish-btn">
+        <i class="fas fa-plus"></i>
+        Опубликовать
+    </a>
 
     <script>
-        // Проверяем авторизацию при загрузке страницы
+        // Проверка авторизации при загрузке страницы
         document.addEventListener('DOMContentLoaded', function() {
             const user = JSON.parse(localStorage.getItem('user'));
             const authButtons = document.getElementById('authButtons');
 
             if (user) {
-                // Если пользователь авторизован
                 document.body.setAttribute('data-is-admin', user.isAdmin ? 'true' : 'false');
                 authButtons.innerHTML = `
                     <div class="nav-profile">
                         <a href="profile.html" class="nav-link">
-                            <img src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y" alt="Аватар" class="profile-avatar">
+                            <i class="fas fa-user"></i>
                             <span>${user.nickname || 'Профиль'}</span>
-                        </a>
-                        <a href="settings.html" class="settings-link" title="Настройки">
-                            <i class="fas fa-cog"></i>
                         </a>
                         <a href="#" class="nav-link" onclick="logout()">
                             <i class="fas fa-sign-out-alt"></i>
-                            <span>Выйти</span>
                         </a>
                     </div>
                 `;
             } else {
-                // Если пользователь не авторизован
                 authButtons.innerHTML = `
-                    <a href="login.html" class="auth-btn login-btn">Войти</a>
-                    <a href="register.html" class="auth-btn register-btn">Регистрация</a>
+                    <a href="login.html" class="nav-link">Войти</a>
+                    <a href="register.html" class="nav-link">Регистрация</a>
                 `;
             }
 
-            // Загружаем и отображаем плагины
             loadPlugins();
         });
 
         function loadPlugins() {
-            const pluginsGrid = document.querySelector('.plugins-grid');
+            const pluginsGrid = document.getElementById('pluginsGrid');
             const plugins = JSON.parse(localStorage.getItem('plugins')) || [];
 
             if (plugins.length === 0) {
                 pluginsGrid.innerHTML = `
-                    <div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: #999;">
-                        Пока нет опубликованных плагинов
+                    <div style="grid-column: 1/-1; text-align: center; padding: 4rem; color: var(--text-secondary);">
+                        <i class="fas fa-box-open" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                        <p>Пока нет опубликованных плагинов</p>
                     </div>
                 `;
                 return;
@@ -619,26 +424,10 @@
                             <span class="plugin-tag">БЕСПЛАТНО</span>
                             <span class="plugin-tag">НОВЫЙ</span>
                         </div>
-                        <h2 class="plugin-title">
-                            <a href="plugin-details.html?id=${plugin.id}" style="color: white; text-decoration: none;">
-                                ${plugin.name}
-                            </a>
-                        </h2>
+                        <h2 class="plugin-title">${plugin.name}</h2>
                     </div>
                     <div class="plugin-content">
-                        <div class="plugin-description">
-                            ${plugin.description}
-                        </div>
-                        <div class="plugin-author">
-                            <img src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y" alt="Аватар автора" class="author-avatar">
-                            <div class="author-info">
-                                <a href="profile.html" class="author-name">
-                                    ${plugin.author.nickname}
-                                    ${plugin.author.isAdmin ? '<span class="admin-badge">ADMIN</span>' : ''}
-                                </a>
-                                <div class="author-role">${plugin.author.isAdmin ? 'Администратор' : 'Пользователь'}</div>
-                            </div>
-                        </div>
+                        <p class="plugin-description">${plugin.description}</p>
                         <div class="plugin-meta">
                             <div class="meta-item">
                                 <i class="fas fa-file"></i>
@@ -646,30 +435,27 @@
                             </div>
                             <div class="meta-item">
                                 <i class="fas fa-download"></i>
-                                <span>${plugin.downloads} загрузок</span>
+                                <span>${plugin.downloads || 0}</span>
                             </div>
                             <div class="meta-item">
                                 <i class="fas fa-star"></i>
-                                <span>${plugin.rating}</span>
+                                <span>${plugin.rating || '0.0'}</span>
                             </div>
                         </div>
                         <div class="plugin-actions">
-                            <button class="download-btn" onclick="downloadPlugin('${plugin.fileName}')">
+                            <button class="action-btn download-btn" onclick="downloadPlugin('${plugin.fileName}')">
                                 <i class="fas fa-download"></i>
                                 Скачать
                             </button>
-                            <button class="delete-btn" onclick="deletePlugin('${plugin.id}', this)">
-                                <i class="fas fa-trash"></i> Удалить
-                            </button>
+                            ${user && user.isAdmin ? `
+                                <button class="action-btn delete-btn" onclick="deletePlugin('${plugin.id}')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            ` : ''}
                         </div>
                     </div>
                 </div>
             `).join('');
-        }
-
-        function logout() {
-            localStorage.removeItem('user');
-            window.location.reload();
         }
 
         function downloadPlugin(filename) {
@@ -679,7 +465,6 @@
                 return;
             }
 
-            // Получаем список плагинов
             const plugins = JSON.parse(localStorage.getItem('plugins')) || [];
             const plugin = plugins.find(p => p.filename === filename);
             
@@ -689,7 +474,6 @@
             }
 
             try {
-                // Создаем Blob из base64 данных
                 const byteCharacters = atob(plugin.fileContent.split(',')[1]);
                 const byteNumbers = new Array(byteCharacters.length);
                 for (let i = 0; i < byteCharacters.length; i++) {
@@ -698,92 +482,62 @@
                 const byteArray = new Uint8Array(byteNumbers);
                 const blob = new Blob([byteArray], { type: 'application/octet-stream' });
 
-                // Создаем ссылку для скачивания
                 const downloadLink = document.createElement('a');
                 downloadLink.href = URL.createObjectURL(blob);
                 downloadLink.download = filename;
-
-                // Добавляем ссылку в документ (невидимую)
                 document.body.appendChild(downloadLink);
-                
-                // Симулируем клик
                 downloadLink.click();
-
-                // Удаляем ссылку и освобождаем URL
                 document.body.removeChild(downloadLink);
                 URL.revokeObjectURL(downloadLink.href);
 
-                // Обновляем счетчик скачиваний
                 plugin.downloads = (plugin.downloads || 0) + 1;
                 localStorage.setItem('plugins', JSON.stringify(plugins));
 
-                // Показываем уведомление об успешном скачивании
-                showNotification(`Скачивание файла ${filename} началось`, 'success');
+                showNotification('Скачивание началось');
+                loadPlugins(); // Обновляем отображение для обновления счетчика скачиваний
             } catch (error) {
                 console.error('Ошибка при скачивании:', error);
                 showNotification('Ошибка при скачивании файла', 'error');
             }
         }
 
-        function showNotification(message, type = 'info') {
+        function showNotification(message, type = 'success') {
             const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
+            notification.className = 'notification';
             notification.textContent = message;
-            
-            // Стили для уведомления
-            notification.style.position = 'fixed';
-            notification.style.top = '20px';
-            notification.style.right = '20px';
-            notification.style.padding = '15px 25px';
-            notification.style.borderRadius = '8px';
-            notification.style.backgroundColor = type === 'success' ? '#4CAF50' : '#f44336';
-            notification.style.color = 'white';
-            notification.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
-            notification.style.zIndex = '1000';
-            notification.style.animation = 'slideIn 0.5s ease-out';
+            notification.style.backgroundColor = type === 'success' ? 'var(--success)' : 'var(--error)';
             
             document.body.appendChild(notification);
             
-            // Удаляем уведомление через 3 секунды
             setTimeout(() => {
-                notification.style.animation = 'slideOut 0.5s ease-out';
+                notification.style.animation = 'slideOut 0.3s ease-out';
                 setTimeout(() => {
                     document.body.removeChild(notification);
-                }, 500);
+                }, 300);
             }, 3000);
         }
 
-        function deletePlugin(pluginId, buttonElement) {
+        function deletePlugin(pluginId) {
             const user = JSON.parse(localStorage.getItem('user'));
             if (!user || !user.isAdmin) {
-                alert('Только администраторы могут удалять плагины');
+                showNotification('Только администраторы могут удалять плагины', 'error');
                 return;
             }
 
-            if (confirm('Вы уверены, что хотите удалить этот плагин? Это действие нельзя отменить.')) {
-                // Получаем текущие плагины
+            if (confirm('Вы уверены, что хотите удалить этот плагин?')) {
                 let plugins = JSON.parse(localStorage.getItem('plugins')) || [];
-                
-                // Удаляем плагин по ID (сравниваем как строки)
                 plugins = plugins.filter(plugin => String(plugin.id) !== String(pluginId));
-                
-                // Сохраняем обновленный список
                 localStorage.setItem('plugins', JSON.stringify(plugins));
-                
-                // Обновляем отображение
                 loadPlugins();
+                showNotification('Плагин успешно удален');
             }
         }
 
-        function upgradeToPremium() {
-            const user = JSON.parse(localStorage.getItem('user'));
-            if (!user) {
-                window.location.href = 'login.html';
-                return;
-            }
-
-            alert('Функция оплаты находится в разработке. Скоро будет доступна!');
+        function logout() {
+            localStorage.removeItem('user');
+            window.location.reload();
         }
     </script>
 </body>
+</html> 
 </html> 
