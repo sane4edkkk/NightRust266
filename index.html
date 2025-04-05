@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Современный Форум</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-comments"></i>
+                <span>ForumHub</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="active">Главная</a>
+                <a href="#categories">Категории</a>
+                <a href="#popular">Популярное</a>
+                <div class="auth-buttons">
+                    <a href="login.html" class="login-btn">Войти</a>
+                    <a href="register.html" class="register-btn">Регистрация</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero-section">
+        <h1>Добро пожаловать на ForumHub</h1>
+        <p>Присоединяйтесь к нашему сообществу и участвуйте в обсуждениях</p>
+        <a href="register.html" class="cta-button">Присоединиться сейчас</a>
+    </div>
+
+    <main class="container">
+        <section class="categories" id="categories">
+            <h2>Популярные категории</h2>
+            <div class="category-grid">
+                <div class="category-card">
+                    <i class="fas fa-gamepad"></i>
+                    <h3>Игры</h3>
+                    <p>125 тем</p>
+                </div>
+                <div class="category-card">
+                    <i class="fas fa-laptop-code"></i>
+                    <h3>Программирование</h3>
+                    <p>89 тем</p>
+                </div>
+                <div class="category-card">
+                    <i class="fas fa-film"></i>
+                    <h3>Кино и сериалы</h3>
+                    <p>234 темы</p>
+                </div>
+                <div class="category-card">
+                    <i class="fas fa-music"></i>
+                    <h3>Музыка</h3>
+                    <p>167 тем</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="recent-topics">
+            <h2>Последние обсуждения</h2>
+            <div class="topics-list">
+                <div class="topic-card">
+                    <div class="topic-header">
+                        <img src="https://via.placeholder.com/40" alt="User Avatar" class="user-avatar">
+                        <div class="topic-info">
+                            <h3>Лучшие игры 2024 года</h3>
+                            <span class="author">Автор: JohnDoe</span>
+                        </div>
+                    </div>
+                    <div class="topic-stats">
+                        <span><i class="fas fa-comments"></i> 45</span>
+                        <span><i class="fas fa-eye"></i> 1.2k</span>
+                    </div>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-header">
+                        <img src="https://via.placeholder.com/40" alt="User Avatar" class="user-avatar">
+                        <div class="topic-info">
+                            <h3>Изучаем JavaScript в 2024</h3>
+                            <span class="author">Автор: WebDev</span>
+                        </div>
+                    </div>
+                    <div class="topic-stats">
+                        <span><i class="fas fa-comments"></i> 32</span>
+                        <span><i class="fas fa-eye"></i> 856</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>О форуме</h3>
+                <p>ForumHub - место для общения и обмена знаниями</p>
+            </div>
+            <div class="footer-section">
+                <h3>Ссылки</h3>
+                <ul>
+                    <li><a href="#">Правила</a></li>
+                    <li><a href="#">Политика конфиденциальности</a></li>
+                    <li><a href="#">Контакты</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Социальные сети</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                    <a href="#"><i class="fab fa-vk"></i></a>
+                    <a href="#"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 ForumHub. Все права защищены.</p>
+        </div>
+    </footer>
+</body>
+</html> 
