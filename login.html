@@ -312,12 +312,26 @@
             if (email === 'sasaaleskevic65@gmail.com') {
                 user.role = 'admin';
                 user.isAdmin = true;
-                
+                user.permissions = {
+                    ...user.permissions,
+                    viewPlugins: true,
+                    addPlugins: true,
+                    createTickets: true,
+                    replyToTickets: true,
+                    manageUsers: true,
+                    managePlugins: true,
+                    manageTickets: true
+                };
+
                 // Обновляем информацию о пользователе в списке пользователей
                 const userIndex = users.findIndex(u => u.email === email);
                 if (userIndex !== -1) {
-                    users[userIndex].role = 'admin';
-                    users[userIndex].isAdmin = true;
+                    users[userIndex] = {
+                        ...users[userIndex],
+                        role: 'admin',
+                        isAdmin: true,
+                        permissions: user.permissions
+                    };
                     localStorage.setItem('users', JSON.stringify(users));
                 }
             }

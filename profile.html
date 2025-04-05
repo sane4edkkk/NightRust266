@@ -684,6 +684,70 @@
             localStorage.removeItem('rememberToken');
             window.location.href = 'login.html';
         }
+
+        function loadUserProfile() {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Проверяем и устанавливаем права администратора
+            if (user.email === 'sasaaleskevic65@gmail.com') {
+                user.role = 'admin';
+                user.isAdmin = true;
+                user.permissions = {
+                    ...user.permissions,
+                    viewPlugins: true,
+                    addPlugins: true,
+                    createTickets: true,
+                    replyToTickets: true,
+                    manageUsers: true,
+                    managePlugins: true,
+                    manageTickets: true
+                };
+
+                // Обновляем информацию в localStorage
+                localStorage.setItem('user', JSON.stringify(user));
+
+                // Обновляем информацию в списке пользователей
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                const userIndex = users.findIndex(u => u.email === user.email);
+                if (userIndex !== -1) {
+                    users[userIndex] = {
+                        ...users[userIndex],
+                        role: 'admin',
+                        isAdmin: true,
+                        permissions: user.permissions
+                    };
+                    localStorage.setItem('users', JSON.stringify(users));
+                }
+            }
+
+            // Обновляем отображение профиля
+            document.querySelector('.profile-name').textContent = user.nickname;
+            document.querySelector('.profile-email').textContent = user.email;
+            document.querySelector('.profile-role').textContent = user.role === 'admin' ? 'Администратор' : 'Пользователь';
+            document.querySelector('.profile-date').textContent = new Date(user.registrationDate).toLocaleDateString();
+
+            // Показываем админ-панель если пользователь админ
+            const adminPanel = document.querySelector('.admin-panel');
+            if (adminPanel && user.isAdmin) {
+                adminPanel.style.display = 'block';
+            }
+
+            // Добавляем значок администратора
+            if (user.isAdmin) {
+                const profileHeader = document.querySelector('.profile-header');
+                const adminBadge = document.createElement('div');
+                adminBadge.className = 'admin-badge';
+                adminBadge.innerHTML = `
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Администратор</span>
+                `;
+                profileHeader.appendChild(adminBadge);
+            }
+        }
     </script>
 </body>
 </html> 
