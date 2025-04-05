@@ -157,8 +157,13 @@
 
             <form id="registerForm">
                 <div class="form-group">
-                    <label class="form-label">Email</label>
-                    <input type="email" class="form-input" required placeholder="Введите ваш email">
+                    <label for="nickname">Никнейм</label>
+                    <input type="text" id="nickname" name="nickname" required>
+                    <div class="error-message" id="nicknameError"></div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
                     <div class="error-message" id="emailError"></div>
                 </div>
 
@@ -228,12 +233,21 @@
             passwordError.classList.remove('show');
             confirmPasswordError.classList.remove('show');
 
-            const email = form.querySelector('input[type="email"]').value;
+            const nickname = document.getElementById('nickname').value;
+            const email = document.getElementById('email').value;
             const password = form.querySelector('#password').value;
             const confirmPassword = form.querySelector('#confirmPassword').value;
 
             // Валидация
             let isValid = true;
+
+            // Проверка никнейма
+            if (nickname.length < 3 || nickname.length > 20) {
+                showError('nicknameError', 'Никнейм должен быть от 3 до 20 символов');
+                isValid = false;
+            } else {
+                hideError('nicknameError');
+            }
 
             if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
                 emailError.textContent = 'Введите корректный email адрес';
@@ -263,11 +277,12 @@
                     await new Promise(resolve => setTimeout(resolve, 1500));
                     
                     // Сохраняем данные пользователя
-                    localStorage.setItem('isLoggedIn', 'true');
-                    localStorage.setItem('user', JSON.stringify({
-                        email: email,
+                    const userData = {
+                        nickname: document.getElementById('nickname').value,
+                        email: document.getElementById('email').value,
                         isAdmin: false
-                    }));
+                    };
+                    localStorage.setItem('user', JSON.stringify(userData));
 
                     // Перенаправляем на главную страницу
                     window.location.href = 'index.html';

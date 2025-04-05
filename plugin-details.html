@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Описание плагина - ForumHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #1a1a1a;
+            color: white;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid #333;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #999;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-link:hover {
+            color: white;
+        }
+
+        .plugin-details {
+            background: #242424;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .plugin-header {
+            background: linear-gradient(135deg, #6c5ce7, #a363d9);
+            padding: 2rem;
+            position: relative;
+        }
+
+        .plugin-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .plugin-meta {
+            display: flex;
+            gap: 2rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .plugin-content {
+            padding: 2rem;
+        }
+
+        .content-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #6c5ce7;
+        }
+
+        .description {
+            color: #ccc;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .commands-list {
+            background: #1a1a1a;
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .command-item {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #333;
+        }
+
+        .command-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .command-name {
+            font-family: 'Courier New', monospace;
+            background: #333;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+
+        .command-description {
+            color: #ccc;
+        }
+
+        .plugin-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: rgba(108, 92, 231, 0.1);
+            border-radius: 8px;
+        }
+
+        .author-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .author-info {
+            flex-grow: 1;
+        }
+
+        .author-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .author-role {
+            color: #999;
+        }
+
+        .admin-badge {
+            background: #ff4757;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        .download-section {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #4CAF50;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background: #45a049;
+        }
+
+        .delete-btn {
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            background: #dc3545;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .delete-btn:hover {
+            background: #c82333;
+        }
+
+        body[data-is-admin="true"] .delete-btn {
+            display: inline-flex;
+        }
+
+        .footer {
+            margin-top: 4rem;
+            padding: 2rem 0;
+            border-top: 1px solid #333;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .copyright {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            color: #999;
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-link:hover {
+            color: white;
+        }
+
+        .social-link.vk:hover {
+            color: #45668e;
+        }
+
+        .social-link.telegram:hover {
+            color: #0088cc;
+        }
+
+        .social-link.discord:hover {
+            color: #7289da;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Главная</a>
+                <a href="categories.html" class="nav-link">Плагины</a>
+                <a href="profile.html" class="nav-link">Профиль</a>
+            </div>
+        </nav>
+
+        <div class="plugin-details">
+            <div class="plugin-header">
+                <h1 class="plugin-title">IQKITS</h1>
+                <div class="plugin-meta">
+                    <div class="meta-item">
+                        <i class="fas fa-file"></i>
+                        <span>204 КБ</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-download"></i>
+                        <span>1337 загрузок</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-star"></i>
+                        <span>4.8</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="plugin-content">
+                <div class="plugin-author">
+                    <img src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y" alt="Аватар автора" class="author-avatar">
+                    <div class="author-info">
+                        <div class="author-name">
+                            sasaaleskevic65
+                            <span class="admin-badge">ADMIN</span>
+                        </div>
+                        <div class="author-role">Администратор</div>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <h2 class="section-title">Описание</h2>
+                    <div class="description">
+                        IQKITS - это мощный плагин для управления китами в игре. Позволяет создавать, редактировать и выдавать наборы предметов игрокам с различными настройками задержки и прав доступа.
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <h2 class="section-title">Команды</h2>
+                    <div class="commands-list">
+                        <div class="command-item">
+                            <div class="command-name">/kit create [название]</div>
+                            <div class="command-description">Создать новый кит из предметов в вашем инвентаре</div>
+                        </div>
+                        <div class="command-item">
+                            <div class="command-name">/kit delete [название]</div>
+                            <div class="command-description">Удалить существующий кит</div>
+                        </div>
+                        <div class="command-item">
+                            <div class="command-name">/kit give [игрок] [название]</div>
+                            <div class="command-description">Выдать кит указанному игроку</div>
+                        </div>
+                        <div class="command-item">
+                            <div class="command-name">/kit list</div>
+                            <div class="command-description">Показать список доступных китов</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="download-section">
+                    <button class="download-btn" onclick="downloadPlugin('IQKITS.zip')">
+                        <i class="fas fa-download"></i>
+                        Скачать
+                    </button>
+                    <button class="delete-btn" onclick="deletePlugin('IQKITS.zip')">
+                        <i class="fas fa-trash"></i>
+                        Удалить
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="copyright">
+                © 2024 ForestDesign. Все права защищены / All rights reserved.
+            </div>
+            <div class="social-links">
+                <a href="https://vk.com/forestdesign" target="_blank" class="social-link vk">
+                    <i class="fab fa-vk"></i>
+                </a>
+                <a href="https://t.me/forestdesign" target="_blank" class="social-link telegram">
+                    <i class="fab fa-telegram"></i>
+                </a>
+                <a href="https://discord.gg/forestdesign" target="_blank" class="social-link discord">
+                    <i class="fab fa-discord"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (user && user.isAdmin) {
+                document.body.setAttribute('data-is-admin', 'true');
+            }
+        });
+
+        function downloadPlugin(filename) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+            alert('Начинается скачивание файла: ' + filename);
+        }
+
+        function deletePlugin(filename) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user || !user.isAdmin) {
+                alert('Только администраторы могут удалять плагины');
+                return;
+            }
+
+            if (confirm('Вы уверены, что хотите удалить плагин "' + filename + '"? Это действие нельзя отменить.')) {
+                // В реальном приложении здесь будет запрос к серверу для удаления файла
+                window.location.href = 'categories.html';
+                alert('Плагин успешно удален');
+            }
+        }
+    </script>
+</body>
+</html> 
