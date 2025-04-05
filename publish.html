@@ -293,25 +293,24 @@
             const fileInput = document.getElementById('fileInput');
             if (fileInput.files[0]) {
                 const file = fileInput.files[0];
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    publication.fileUrl = e.target.result;
-                    publication.fileName = file.name;
-                    publication.fileSize = file.size;
-                    
-                    // Добавляем новую публикацию
-                    publications.push(publication);
-                    
-                    // Сохраняем обновленный список
-                    localStorage.setItem('publications', JSON.stringify(publications));
+                // Создаем объект Blob для файла
+                const blob = new Blob([file], { type: file.type });
+                // Создаем URL для скачивания
+                publication.fileUrl = URL.createObjectURL(blob);
+                publication.fileName = file.name;
+                publication.fileSize = file.size;
+                
+                // Добавляем новую публикацию
+                publications.push(publication);
+                
+                // Сохраняем обновленный список
+                localStorage.setItem('publications', JSON.stringify(publications));
 
-                    // Показываем уведомление
-                    alert('Публикация успешно создана!');
-                    
-                    // Перенаправляем на страницу категории
-                    window.location.href = `category-view.html?category=${publication.category}`;
-                };
-                reader.readAsDataURL(file);
+                // Показываем уведомление
+                alert('Публикация успешно создана!');
+                
+                // Перенаправляем на страницу категории
+                window.location.href = `category-view.html?category=${publication.category}`;
             } else {
                 // Если файла нет, просто сохраняем публикацию
                 publications.push(publication);
