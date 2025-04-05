@@ -4,515 +4,254 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Категории - ForumHub</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            background-color: #f5f5f5;
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Inter', sans-serif;
+            background: #f5f7fa;
+            color: #1a1a1a;
+            line-height: 1.6;
         }
 
-        .categories-container {
+        .container {
             max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
+            margin: 0 auto;
+            padding: 2rem;
         }
 
-        .category-grid {
+        .categories-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
             margin-top: 2rem;
         }
 
         .category-card {
             background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 16px;
             overflow: hidden;
-            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         }
 
         .category-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
         }
 
         .category-header {
-            background: var(--primary-color);
+            background: linear-gradient(135deg, #6c5ce7, #a363d9);
             color: white;
             padding: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .category-header i {
-            font-size: 2rem;
-        }
-
-        .category-header h2 {
-            margin: 0;
             font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .plugins .category-header {
+            background: linear-gradient(135deg, #6c5ce7, #a363d9);
+        }
+
+        .games .category-header {
+            background: linear-gradient(135deg, #00b894, #00cec9);
+        }
+
+        .movies .category-header {
+            background: linear-gradient(135deg, #e17055, #fab1a0);
+        }
+
+        .music .category-header {
+            background: linear-gradient(135deg, #fd79a8, #e84393);
+        }
+
+        .premium .category-header {
+            background: linear-gradient(135deg, #fdcb6e, #ffeaa7);
         }
 
         .category-content {
             padding: 1.5rem;
         }
 
+        .category-description {
+            color: #666;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
         .category-stats {
             display: flex;
-            gap: 2rem;
-            margin-top: 1rem;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
             color: #666;
             font-size: 0.9rem;
         }
 
-        .category-stat {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .category-description {
-            color: #444;
-            margin: 1rem 0;
-            line-height: 1.5;
+        .stat-item i {
+            color: #6c5ce7;
+            font-size: 1.1rem;
         }
 
         .category-link {
-            display: inline-block;
-            color: var(--primary-color);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #6c5ce7;
             text-decoration: none;
-            margin-top: 1rem;
             font-weight: 500;
+            font-size: 0.95rem;
+            transition: gap 0.3s ease;
         }
 
         .category-link:hover {
-            text-decoration: underline;
+            gap: 0.75rem;
         }
 
-        .page-header {
-            background: var(--primary-color);
-            color: white;
-            padding: 2rem 0;
-            margin-bottom: 2rem;
-        }
-
-        .page-header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-
-        .page-header h1 {
-            margin: 0;
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        .page-header p {
-            margin: 0;
-            opacity: 0.9;
-        }
-
-        .breadcrumbs {
-            color: #666;
-            margin-bottom: 2rem;
-        }
-
-        .breadcrumbs a {
-            color: var(--primary-color);
-            text-decoration: none;
-        }
-
-        .breadcrumbs a:hover {
-            text-decoration: underline;
-        }
-
-        /* Стили для тарифов */
-        .pricing-section {
-            margin-top: 4rem;
-            padding-top: 2rem;
-            border-top: 1px solid #eee;
-        }
-
-        .pricing-title {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .pricing-title h2 {
-            font-size: 2rem;
-            color: #333;
-            margin-bottom: 1rem;
-        }
-
-        .pricing-title p {
-            color: #666;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .pricing-card {
-            background: #1a1a1a;
-            border-radius: 8px;
-            padding: 2rem;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .pricing-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .pricing-name {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-        }
-
-        .pricing-price {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
-
-        .pricing-period {
-            color: #999;
-            font-size: 0.9rem;
-        }
-
-        .pricing-features {
-            list-style: none;
-            padding: 0;
-            margin: 0 0 2rem 0;
-        }
-
-        .pricing-features li {
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #ccc;
-        }
-
-        .pricing-features li i {
-            color: #4CAF50;
-        }
-
-        .pricing-button {
-            display: block;
-            width: 100%;
-            padding: 1rem;
-            background: #4CAF50;
-            color: white;
-            text-align: center;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: background-color 0.3s;
-        }
-
-        .pricing-button:hover {
-            background: #45a049;
-        }
-
-        .featured-tag {
-            position: absolute;
-            top: 1rem;
-            right: -2rem;
-            background: #4CAF50;
-            color: white;
-            padding: 0.5rem 3rem;
-            transform: rotate(45deg);
+        .category-link i {
             font-size: 0.8rem;
-            font-weight: bold;
+            transition: transform 0.3s ease;
         }
 
-        .payment-select {
-            width: 100%;
-            padding: 0.75rem;
-            background: #333;
-            border: 1px solid #444;
-            border-radius: 4px;
-            color: white;
-            margin-bottom: 1rem;
-        }
-
-        @media (max-width: 1024px) {
-            .pricing-grid {
-                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            }
-        }
-
-        .publish-btn {
-            background: #4CAF50;
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: background-color 0.3s;
-        }
-
-        .publish-btn:hover {
-            background: #45a049;
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
+        .category-link:hover i {
+            transform: translateX(3px);
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="logo">ForumHub</a>
-            <div class="nav-links">
-                <a href="index.html">Главная</a>
-                <a href="categories.html" class="active">Категории</a>
-                <a href="about.html">О нас</a>
-                <a href="publish.html" class="publish-btn"><i class="fas fa-plus"></i> Опубликовать</a>
-            </div>
-            <div class="auth-buttons">
-                <a href="login.html" class="login-btn">Войти</a>
-                <a href="register.html" class="register-btn">Регистрация</a>
-            </div>
-        </div>
-    </nav>
-
-    <header class="page-header">
-        <div class="page-header-content">
-            <h1>Категории форума</h1>
-            <p>Выберите интересующую вас тему для обсуждения</p>
-        </div>
-    </header>
-
-    <div class="categories-container">
-        <div class="breadcrumbs">
-            <a href="index.html">Главная</a> / Категории
-        </div>
-
-        <div class="category-grid">
-            <!-- Игры -->
-            <div class="category-card">
+    <div class="container">
+        <div class="categories-grid">
+            <div class="category-card games">
                 <div class="category-header">
-                    <i class="fas fa-gamepad"></i>
-                    <h2>Игры</h2>
+                    <i class="fas fa-gamepad"></i> Игры
                 </div>
                 <div class="category-content">
                     <p class="category-description">
                         Обсуждение игр, прохождений, модификаций и всего что связано с игровой индустрией.
                     </p>
                     <div class="category-stats">
-                        <div class="category-stat">
+                        <div class="stat-item">
                             <i class="fas fa-folder"></i>
                             <span>125 тем</span>
                         </div>
-                        <div class="category-stat">
+                        <div class="stat-item">
                             <i class="fas fa-comments"></i>
                             <span>Активные обсуждения</span>
                         </div>
                     </div>
-                    <a href="category-view.html?category=games" class="category-link">Перейти к играм →</a>
+                    <a href="#" class="category-link">
+                        Перейти к играм <i class="fas fa-arrow-right"></i>
+                    </a>
                 </div>
             </div>
 
-            <!-- Плагины -->
-            <div class="category-card">
+            <div class="category-card plugins">
                 <div class="category-header">
-                    <i class="fas fa-code"></i>
-                    <h2>Плагины</h2>
+                    <i class="fas fa-puzzle-piece"></i> Плагины
                 </div>
                 <div class="category-content">
                     <p class="category-description">
                         Различные плагины, скрипты, моды и дополнения для программ и игр.
                     </p>
                     <div class="category-stats">
-                        <div class="category-stat">
+                        <div class="stat-item">
                             <i class="fas fa-folder"></i>
                             <span>89 тем</span>
                         </div>
-                        <div class="category-stat">
+                        <div class="stat-item">
                             <i class="fas fa-download"></i>
                             <span>Популярные загрузки</span>
                         </div>
                     </div>
-                    <a href="category-view.html?category=plugins" class="category-link">Смотреть плагины →</a>
+                    <a href="#" class="category-link">
+                        Смотреть плагины <i class="fas fa-arrow-right"></i>
+                    </a>
                 </div>
             </div>
 
-            <!-- Кино и сериалы -->
-            <div class="category-card">
+            <div class="category-card movies">
                 <div class="category-header">
-                    <i class="fas fa-film"></i>
-                    <h2>Кино и сериалы</h2>
+                    <i class="fas fa-film"></i> Кино и сериалы
                 </div>
                 <div class="category-content">
                     <p class="category-description">
                         Обсуждение фильмов, сериалов, актеров и новинок кинематографа.
                     </p>
                     <div class="category-stats">
-                        <div class="category-stat">
+                        <div class="stat-item">
                             <i class="fas fa-folder"></i>
                             <span>234 темы</span>
                         </div>
-                        <div class="category-stat">
+                        <div class="stat-item">
                             <i class="fas fa-eye"></i>
                             <span>Популярный раздел</span>
                         </div>
                     </div>
-                    <a href="category-view.html?category=movies" class="category-link">Перейти к обсуждению →</a>
+                    <a href="#" class="category-link">
+                        Перейти к обсуждению <i class="fas fa-arrow-right"></i>
+                    </a>
                 </div>
             </div>
 
-            <!-- Музыка -->
-            <div class="category-card">
+            <div class="category-card music">
                 <div class="category-header">
-                    <i class="fas fa-music"></i>
-                    <h2>Музыка</h2>
+                    <i class="fas fa-music"></i> Музыка
                 </div>
                 <div class="category-content">
                     <p class="category-description">
                         Музыкальные новинки, обсуждение исполнителей, альбомов и клипов.
                     </p>
                     <div class="category-stats">
-                        <div class="category-stat">
+                        <div class="stat-item">
                             <i class="fas fa-folder"></i>
                             <span>167 тем</span>
                         </div>
-                        <div class="category-stat">
-                            <i class="fas fa-headphones"></i>
+                        <div class="stat-item">
+                            <i class="fas fa-comments"></i>
                             <span>Активные обсуждения</span>
                         </div>
                     </div>
-                    <a href="category-view.html?category=music" class="category-link">Слушать музыку →</a>
+                    <a href="#" class="category-link">
+                        Слушать музыку <i class="fas fa-arrow-right"></i>
+                    </a>
                 </div>
             </div>
 
-            <!-- Премиум категория -->
-            <div class="category-card">
+            <div class="category-card premium">
                 <div class="category-header">
-                    <i class="fas fa-crown"></i>
-                    <h2>Премиум</h2>
+                    <i class="fas fa-crown"></i> Премиум
                 </div>
                 <div class="category-content">
                     <p class="category-description">
                         Получите доступ к премиум возможностям и эксклюзивному контенту.
                     </p>
                     <div class="category-stats">
-                        <div class="category-stat">
+                        <div class="stat-item">
                             <i class="fas fa-star"></i>
                             <span>Особый статус</span>
                         </div>
-                        <div class="category-stat">
+                        <div class="stat-item">
                             <i class="fas fa-gem"></i>
                             <span>Премиум функции</span>
                         </div>
                     </div>
-                    <a href="#pricing" class="category-link" onclick="showPricingModal()">Выбрать тариф →</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Секция с тарифами -->
-        <div class="pricing-section">
-            <div class="pricing-title">
-                <h2>Выберите тариф, который подходит именно вам.</h2>
-                <p>Получите доступ к премиум возможностям и станьте частью элитного сообщества</p>
-            </div>
-            
-            <div id="pricing" class="pricing-grid">
-                <div class="pricing-card">
-                    <div class="pricing-header">
-                        <div class="pricing-name">Starter</div>
-                        <div class="pricing-price">505,66 ₽</div>
-                        <div class="pricing-period">за 3 дней</div>
-                    </div>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> Доступ к ресурсам с пометкой Премиум</li>
-                        <li><i class="fas fa-check"></i> Безлимитные загрузки ресурсов</li>
-                        <li><i class="fas fa-check"></i> Баннер Starter</li>
-                        <li><i class="fas fa-check"></i> Уникальный цвет никнейма</li>
-                    </ul>
-                    <select class="payment-select">
-                        <option value="">Выберите способ оплаты</option>
-                        <option value="card">Банковская карта</option>
-                        <option value="qiwi">QIWI</option>
-                        <option value="crypto">Криптовалюта</option>
-                    </select>
-                    <button class="pricing-button">Купить</button>
-                </div>
-
-                <div class="pricing-card">
-                    <div class="featured-tag">FEATURED</div>
-                    <div class="pricing-header">
-                        <div class="pricing-name">Basic</div>
-                        <div class="pricing-price">758,50 ₽</div>
-                        <div class="pricing-period">за 14 дней</div>
-                    </div>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> Доступ к ресурсам с пометкой Премиум</li>
-                        <li><i class="fas fa-check"></i> Безлимитные загрузки ресурсов</li>
-                        <li><i class="fas fa-check"></i> Баннер Basic</li>
-                        <li><i class="fas fa-check"></i> Уникальный цвет никнейма</li>
-                    </ul>
-                    <select class="payment-select">
-                        <option value="">Выберите способ оплаты</option>
-                        <option value="card">Банковская карта</option>
-                        <option value="qiwi">QIWI</option>
-                        <option value="crypto">Криптовалюта</option>
-                    </select>
-                    <button class="pricing-button">Купить</button>
-                </div>
-
-                <div class="pricing-card">
-                    <div class="pricing-header">
-                        <div class="pricing-name">Pro</div>
-                        <div class="pricing-price">1 095,61 ₽</div>
-                        <div class="pricing-period">за 1 месяц</div>
-                    </div>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> Доступ к ресурсам с пометкой Премиум</li>
-                        <li><i class="fas fa-check"></i> Безлимитные загрузки ресурсов</li>
-                        <li><i class="fas fa-check"></i> Баннер Pro</li>
-                        <li><i class="fas fa-check"></i> Уникальный цвет никнейма</li>
-                    </ul>
-                    <select class="payment-select">
-                        <option value="">Выберите способ оплаты</option>
-                        <option value="card">Банковская карта</option>
-                        <option value="qiwi">QIWI</option>
-                        <option value="crypto">Криптовалюта</option>
-                    </select>
-                    <button class="pricing-button">Купить</button>
+                    <a href="#" class="category-link">
+                        Выбрать тариф <i class="fas fa-arrow-right"></i>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
-
-    <script src="auth.js"></script>
-    <script>
-        function showPricingModal() {
-            const pricingSection = document.getElementById('pricing');
-            pricingSection.scrollIntoView({ behavior: 'smooth' });
-        }
-    </script>
 </body>
 </html> 
