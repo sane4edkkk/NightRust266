@@ -20,17 +20,12 @@
             line-height: 1.6;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 1rem 2rem;
-            border-bottom: 1px solid #333;
+            background: #242424;
         }
 
         .nav-links {
@@ -43,9 +38,7 @@
             color: #999;
             text-decoration: none;
             transition: color 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            font-size: 1rem;
         }
 
         .nav-link:hover {
@@ -57,43 +50,39 @@
             font-weight: 500;
         }
 
-        .profile-header {
-            position: relative;
-            margin-bottom: 7rem;
-        }
-
         .profile-banner {
             width: 100%;
-            height: 300px;
-            object-fit: cover;
-        }
-
-        .profile-info {
-            position: absolute;
-            bottom: -80px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
+            height: 200px;
+            background: #242424;
+            position: relative;
         }
 
         .profile-avatar {
-            width: 160px;
-            height: 160px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
+            background: #333;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: -60px;
             border: 4px solid #1a1a1a;
-            object-fit: cover;
         }
 
-        .profile-name {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-top: 0.5rem;
+        .profile-info {
+            text-align: center;
+            padding-top: 80px;
+            margin-bottom: 2rem;
         }
 
-        .profile-role {
+        .profile-email {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .admin-badge {
+            display: inline-block;
             background: #ff4757;
             color: white;
             padding: 0.25rem 1rem;
@@ -106,23 +95,22 @@
             display: flex;
             justify-content: center;
             gap: 4rem;
-            margin-top: 2rem;
             padding: 2rem;
             background: #242424;
-            border-radius: 16px;
+            border-radius: 12px;
+            margin: 0 auto;
+            max-width: 600px;
         }
 
         .stat-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
+            text-align: center;
         }
 
         .stat-value {
             font-size: 1.5rem;
-            font-weight: 700;
+            font-weight: 600;
             color: #6c5ce7;
+            margin-bottom: 0.25rem;
         }
 
         .stat-label {
@@ -130,27 +118,32 @@
             font-size: 0.9rem;
         }
 
+        .settings-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .settings-btn:hover {
+            transform: rotate(45deg);
+        }
+
         .footer {
             margin-top: 4rem;
-            padding: 2rem 0;
-            border-top: 1px solid #333;
+            padding: 2rem;
             text-align: center;
-        }
-
-        .footer-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .copyright {
             color: #999;
-            font-size: 0.9rem;
         }
 
         .social-links {
             display: flex;
+            justify-content: center;
             gap: 1.5rem;
             margin-top: 1rem;
         }
@@ -177,78 +170,56 @@
         .social-link.discord:hover {
             color: #7289da;
         }
-
-        .settings-link {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-            padding: 0.5rem;
-            border-radius: 50%;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
-
-        .settings-link:hover {
-            background: rgba(0, 0, 0, 0.7);
-        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <nav class="navbar">
-            <div class="nav-links">
-                <a href="index.html" class="nav-link">Главная</a>
-                <a href="categories.html" class="nav-link">Плагины</a>
-                <a href="#" class="nav-link active">Профиль</a>
-            </div>
-        </nav>
-
-        <div class="profile-header">
-            <img src="https://via.placeholder.com/1200x300/1a1a1a/666666" alt="Баннер профиля" class="profile-banner" id="profileBanner">
-            <a href="settings.html" class="settings-link" title="Настройки профиля">
-                <i class="fas fa-cog"></i>
-            </a>
-            <div class="profile-info">
-                <img src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y" alt="Аватар" class="profile-avatar" id="profileAvatar">
-                <h1 class="profile-name">sasaaleskevic65@gmail.com</h1>
-                <span class="profile-role">ADMIN</span>
-            </div>
+    <nav class="navbar">
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">Главная</a>
+            <a href="categories.html" class="nav-link">Плагины</a>
+            <a href="#" class="nav-link active">Профиль</a>
         </div>
+    </nav>
 
-        <div class="profile-stats">
-            <div class="stat-item">
-                <span class="stat-value">15</span>
-                <span class="stat-label">Публикаций</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-value">2.3K</span>
-                <span class="stat-label">Загрузок</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-value">4.8</span>
-                <span class="stat-label">Рейтинг</span>
-            </div>
+    <div class="profile-banner">
+        <a href="settings.html" class="settings-btn">
+            <i class="fas fa-cog"></i>
+        </a>
+    </div>
+
+    <div class="profile-info">
+        <img src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y" alt="Аватар" class="profile-avatar" id="profileAvatar">
+        <h1 class="profile-email">sasaaleskevic65@gmail.com</h1>
+        <span class="admin-badge">ADMIN</span>
+    </div>
+
+    <div class="profile-stats">
+        <div class="stat-item">
+            <div class="stat-value">15</div>
+            <div class="stat-label">Публикаций</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value">2.3K</div>
+            <div class="stat-label">Загрузок</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value">4.8</div>
+            <div class="stat-label">Рейтинг</div>
         </div>
     </div>
 
     <footer class="footer">
-        <div class="footer-content">
-            <div class="copyright">
-                © 2024 ForestDesign. Все права защищены / All rights reserved.
-            </div>
-            <div class="social-links">
-                <a href="https://vk.com/forestdesign" target="_blank" class="social-link vk">
-                    <i class="fab fa-vk"></i>
-                </a>
-                <a href="https://t.me/forestdesign" target="_blank" class="social-link telegram">
-                    <i class="fab fa-telegram"></i>
-                </a>
-                <a href="https://discord.gg/forestdesign" target="_blank" class="social-link discord">
-                    <i class="fab fa-discord"></i>
-                </a>
-            </div>
+        <div>© 2024 ForestDesign. Все права защищены / All rights reserved.</div>
+        <div class="social-links">
+            <a href="https://vk.com/forestdesign" target="_blank" class="social-link vk">
+                <i class="fab fa-vk"></i>
+            </a>
+            <a href="https://t.me/forestdesign" target="_blank" class="social-link telegram">
+                <i class="fab fa-telegram"></i>
+            </a>
+            <a href="https://discord.gg/forestdesign" target="_blank" class="social-link discord">
+                <i class="fab fa-discord"></i>
+            </a>
         </div>
     </footer>
 
@@ -264,7 +235,9 @@
             
             // Загружаем баннер, если он есть в localStorage
             if (userData.banner) {
-                document.getElementById('profileBanner').src = userData.banner;
+                document.querySelector('.profile-banner').style.backgroundImage = `url(${userData.banner})`;
+                document.querySelector('.profile-banner').style.backgroundSize = 'cover';
+                document.querySelector('.profile-banner').style.backgroundPosition = 'center';
             }
         });
     </script>
