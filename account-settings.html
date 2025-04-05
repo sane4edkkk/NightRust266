@@ -296,5 +296,54 @@
             </form>
         </main>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Проверка авторизации
+            function checkAuth() {
+                const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+                if (!isLoggedIn) {
+                    window.location.href = 'login.html';
+                    return;
+                }
+                return JSON.parse(localStorage.getItem('user'));
+            }
+
+            // Получаем данные пользователя
+            const userData = checkAuth();
+            if (!userData) return;
+
+            // Заполняем данные пользователя
+            document.querySelector('input[type="text"]').value = userData.username;
+            document.querySelector('input[type="email"]').value = userData.email;
+            document.querySelector('.avatar-preview').textContent = userData.avatar;
+
+            // Обработчик выхода
+            document.querySelector('a[href="#"]').addEventListener('click', function(e) {
+                if (e.target.closest('li')?.querySelector('i.fa-sign-out-alt')) {
+                    e.preventDefault();
+                    localStorage.removeItem('isLoggedIn');
+                    localStorage.removeItem('user');
+                    window.location.href = 'login.html';
+                }
+            });
+
+            // Обновляем отображение навигации
+            const authButtons = document.querySelector('.auth-buttons');
+            if (authButtons) {
+                authButtons.innerHTML = `
+                    <span style="color: #fff; margin-right: 10px;">Привет, ${userData.username}</span>
+                    <a href="#" class="login-btn" onclick="logout()">Выйти</a>
+                `;
+            }
+        });
+
+        // Функция выхода
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('user');
+            window.location.href = 'login.html';
+        }
+    </script>
 </body>
 </html> 
