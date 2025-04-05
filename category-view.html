@@ -9,29 +9,100 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body {
-            background-color: #f5f5f5;
+            background-color: #1a1a1a;
             font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
+            color: #fff;
         }
 
-        .category-header {
-            background: #6c5ce7;
-            color: white;
-            padding: 2rem 0;
-            text-align: center;
+        .navbar {
+            background: #242424;
+            padding: 1rem 0;
+            border-bottom: 1px solid #333;
         }
 
-        .category-header h1 {
-            font-size: 2.5rem;
-            margin: 0;
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.5rem;
             font-weight: 500;
         }
 
-        .category-header p {
-            margin: 0.5rem 0 0 0;
-            opacity: 0.9;
-            font-size: 1.1rem;
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            opacity: 0.8;
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+        }
+
+        .nav-links a.active {
+            opacity: 1;
+        }
+
+        .user-panel {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .settings-btn, .logout-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .settings-btn {
+            background: #333;
+        }
+
+        .logout-btn {
+            background: #444;
+        }
+
+        .category-header {
+            background: #242424;
+            color: white;
+            padding: 2rem 0;
+        }
+
+        .category-title {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .category-title i {
+            color: #4CAF50;
+        }
+
+        .category-description {
+            max-width: 1200px;
+            margin: 0.5rem auto 0;
+            padding: 0 1rem;
+            color: #888;
         }
 
         .main-container {
@@ -45,13 +116,17 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 2rem;
+            background: #242424;
+            padding: 1rem;
+            border-radius: 4px;
         }
 
         .sort-select {
             padding: 0.5rem;
-            border: 1px solid #ddd;
+            background: #333;
+            border: none;
+            color: #fff;
             border-radius: 4px;
-            font-size: 0.9rem;
         }
 
         .filter-buttons {
@@ -65,31 +140,60 @@
             border-radius: 4px;
             font-size: 0.9rem;
             cursor: pointer;
-            background: #fff;
-            color: #333;
+            background: #333;
+            color: #fff;
         }
 
         .filter-button.active {
-            background: #6c5ce7;
+            background: #4CAF50;
+        }
+
+        .plugin-card {
+            background: #242424;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            padding: 1rem;
+        }
+
+        .plugin-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .plugin-type {
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .type-free {
+            background: #4CAF50;
             color: white;
         }
 
-        .publication-card {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        .type-plugin {
+            background: #2196F3;
+            color: white;
+        }
+
+        .plugin-title {
+            font-size: 1.25rem;
+            margin: 0;
+            color: #fff;
+        }
+
+        .plugin-description {
+            color: #888;
             margin-bottom: 1rem;
-            padding: 1.5rem;
         }
 
-        .publication-title {
-            font-size: 1.5rem;
-            margin: 0 0 1rem 0;
-            color: #333;
-        }
-
-        .publication-description {
-            color: #666;
+        .plugin-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
             margin-bottom: 1rem;
         }
 
@@ -97,73 +201,111 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            margin-bottom: 1rem;
-            background: #f8f8f8;
-            padding: 1rem;
-            border-radius: 4px;
         }
 
         .author-avatar {
-            width: 48px;
-            height: 48px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
         }
 
-        .author-details {
-            flex-grow: 1;
-        }
-
-        .author-name {
-            font-weight: 500;
-            color: #333;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .admin-badge {
-            background: #ff6b6b;
-            color: white;
-            padding: 0.25rem 0.5rem;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        .author-role {
-            color: #666;
+        .date {
+            color: #888;
             font-size: 0.9rem;
-        }
-
-        .download-button {
-            display: inline-block;
-            background: #4CAF50;
-            color: white;
-            padding: 0.5rem 1.5rem;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: background-color 0.3s;
-        }
-
-        .download-button:hover {
-            background: #45a049;
         }
 
         .file-info {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            color: #666;
-            margin-top: 1rem;
+            color: #888;
             font-size: 0.9rem;
+            padding: 0.5rem;
+            background: #333;
+            border-radius: 4px;
+            margin-right: auto;
+        }
+
+        .download-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #4CAF50;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+        }
+
+        .download-button:hover {
+            background: #45a049;
+        }
+
+        .notification {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: none;
+        }
+
+        .notification.show {
+            display: block;
+        }
+
+        .notification-title {
+            font-size: 1.1rem;
+            margin: 0 0 0.5rem 0;
+            color: #333;
+        }
+
+        .notification-message {
+            color: #666;
+            margin: 0 0 1rem 0;
+        }
+
+        .notification-close {
+            display: block;
+            width: 100%;
+            padding: 0.5rem;
+            background: #eee;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            color: #333;
         }
     </style>
 </head>
 <body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">ForumHub</a>
+            <div class="nav-links">
+                <a href="index.html">Главная</a>
+                <a href="#" class="active">Плагины</a>
+                <a href="#">Панель</a>
+            </div>
+            <div class="user-panel">
+                <a href="#" class="settings-btn"><i class="fas fa-cog"></i> Настройки</a>
+                <a href="#" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Выйти</a>
+            </div>
+        </div>
+    </nav>
+
     <header class="category-header">
-        <h1>Плагины</h1>
-        <p>Различные плагины, скрипты, моды и дополнения для программ и игр.</p>
+        <div class="category-title">
+            <i class="fas fa-code"></i>
+            <h1>Плагины</h1>
+        </div>
+        <p class="category-description">Различные плагины, скрипты, моды и дополнения для программ и игр.</p>
     </header>
 
     <div class="main-container">
@@ -185,6 +327,12 @@
         </div>
     </div>
 
+    <div class="notification" id="notification">
+        <h3 class="notification-title">Уведомление от сайта sane4edkkk.github.io</h3>
+        <p class="notification-message">Файл будет доступен для скачивания в ближайшее время!</p>
+        <button class="notification-close" onclick="closeNotification()">Закрыть</button>
+    </div>
+
     <script>
         // Инициализация администратора
         const adminUser = {
@@ -201,11 +349,8 @@
                     title: 'IQKITS',
                     description: 'ПИДОРСКАЯ ХУЙНЯ',
                     author: 'sasaaleskevic65@gmail.com',
-                    authorRole: 'Администратор',
-                    isAdmin: true,
-                    fileSize: '204 КБ',
-                    downloads: 1337,
-                    rating: 4.8
+                    date: '5 апреля 2025 г.',
+                    fileSize: '204 КБ'
                 }
             ];
             
@@ -213,32 +358,31 @@
             
             publications.forEach(pub => {
                 const card = document.createElement('div');
-                card.className = 'publication-card';
+                card.className = 'plugin-card';
                 card.innerHTML = `
-                    <h2 class="publication-title">${pub.title}</h2>
-                    <p class="publication-description">${pub.description}</p>
-                    <div class="author-info">
-                        <img src="https://www.gravatar.com/avatar/${md5(pub.author)}?d=identicon" class="author-avatar" alt="Author">
-                        <div class="author-details">
-                            <div class="author-name">
-                                ${pub.author}
-                                ${pub.isAdmin ? '<span class="admin-badge">ADMIN</span>' : ''}
-                            </div>
-                            <div class="author-role">${pub.authorRole}</div>
+                    <div class="plugin-header">
+                        <span class="plugin-type type-free">БЕСПЛАТНО</span>
+                        <span class="plugin-type type-plugin">ПЛАГИН</span>
+                        <h2 class="plugin-title">${pub.title}</h2>
+                    </div>
+                    <p class="plugin-description">${pub.description}</p>
+                    <div class="plugin-meta">
+                        <div class="author-info">
+                            <img src="https://www.gravatar.com/avatar/${md5(pub.author)}?d=identicon" class="author-avatar" alt="Author">
+                            <span>${pub.author}</span>
                         </div>
+                        <span class="date">${pub.date}</span>
                     </div>
-                    <div class="file-info">
-                        <i class="fas fa-file-archive"></i>
-                        <span>${pub.fileSize}</span>
-                        <i class="fas fa-download"></i>
-                        <span>${pub.downloads} загрузок</span>
-                        <i class="fas fa-star"></i>
-                        <span>${pub.rating}</span>
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <div class="file-info">
+                            <i class="fas fa-file-archive"></i>
+                            <span>${pub.fileSize}</span>
+                        </div>
+                        <button class="download-button" onclick="handleDownload(event)">
+                            <i class="fas fa-download"></i>
+                            Скачать
+                        </button>
                     </div>
-                    <a href="#" class="download-button" onclick="handleDownload(event)">
-                        <i class="fas fa-download"></i>
-                        Скачать
-                    </a>
                 `;
                 container.appendChild(card);
             });
@@ -251,18 +395,20 @@
                 .join('');
         }
 
+        // Показать уведомление
+        function showNotification() {
+            document.getElementById('notification').classList.add('show');
+        }
+
+        // Закрыть уведомление
+        function closeNotification() {
+            document.getElementById('notification').classList.remove('show');
+        }
+
         // Обработчик скачивания
         function handleDownload(e) {
             e.preventDefault();
-            const file = new Blob(['test content'], { type: 'text/plain' });
-            const url = URL.createObjectURL(file);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'plugin.zip';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+            showNotification();
         }
 
         // Загружаем публикации при загрузке страницы
