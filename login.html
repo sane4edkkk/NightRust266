@@ -229,6 +229,7 @@
             </div>
 
             <form class="auth-form" id="loginForm">
+                <div class="success-message" style="display: none;"></div>
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" id="email" name="email" required>
@@ -272,23 +273,26 @@
 
     <script>
         // Переключение видимости пароля
-        document.querySelector('.password-toggle').addEventListener('click', function() {
-            const input = this.previousElementSibling;
-            if (input.type === 'password') {
-                input.type = 'text';
-                this.classList.remove('fa-eye');
-                this.classList.add('fa-eye-slash');
-            } else {
-                input.type = 'password';
-                this.classList.remove('fa-eye-slash');
-                this.classList.add('fa-eye');
-            }
+        document.querySelectorAll('.password-toggle').forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                const input = this.previousElementSibling;
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    this.classList.remove('fa-eye');
+                    this.classList.add('fa-eye-slash');
+                } else {
+                    input.type = 'password';
+                    this.classList.remove('fa-eye-slash');
+                    this.classList.add('fa-eye');
+                }
+            });
         });
 
         // Валидация формы входа
         const loginForm = document.getElementById('loginForm');
         const email = document.getElementById('email');
         const password = document.getElementById('password');
+        const successMessage = document.querySelector('.success-message');
 
         function showError(input, message) {
             const formGroup = input.closest('.form-group');
@@ -309,12 +313,18 @@
             return re.test(email);
         }
 
+        function showSuccess(message) {
+            successMessage.style.display = 'block';
+            successMessage.textContent = message;
+        }
+
         loginForm.addEventListener('submit', function(e) {
             e.preventDefault();
             let isValid = true;
 
             // Очистка предыдущих ошибок
             [email, password].forEach(input => clearError(input));
+            successMessage.style.display = 'none';
 
             // Проверка email
             if (!validateEmail(email.value)) {
@@ -340,10 +350,12 @@
                 console.log('Отправка данных:', userData);
                 
                 // Показываем сообщение об успехе
-                const successMessage = document.createElement('div');
-                successMessage.className = 'success-message';
-                successMessage.textContent = 'Вход выполнен успешно! Перенаправление...';
-                loginForm.insertBefore(successMessage, loginForm.firstChild);
+                showSuccess('Вход выполнен успешно! Перенаправление...');
+
+                // Отключаем кнопку на время перенаправления
+                const submitBtn = loginForm.querySelector('.submit-btn');
+                submitBtn.disabled = true;
+                submitBtn.style.opacity = '0.7';
 
                 // Перенаправление на главную страницу через 2 секунды
                 setTimeout(() => {
@@ -354,7 +366,10 @@
 
         // Очистка ошибок при вводе
         [email, password].forEach(input => {
-            input.addEventListener('input', () => clearError(input));
+            input.addEventListener('input', () => {
+                clearError(input);
+                successMessage.style.display = 'none';
+            });
         });
 
         // Обработка "Забыли пароль?"
