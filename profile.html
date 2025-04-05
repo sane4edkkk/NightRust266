@@ -202,6 +202,24 @@
         .download-btn:hover {
             background: #45a049;
         }
+
+        .message-badge {
+            background: #ff4757;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+        }
+
+        #adminMessages {
+            position: relative;
+            color: #6c5ce7;
+        }
+
+        #adminMessages:hover {
+            color: #5f50e1;
+        }
     </style>
 </head>
 <body>
@@ -211,6 +229,10 @@
                 <a href="index.html" class="nav-link">Главная</a>
                 <a href="categories.html" class="nav-link">Плагины</a>
                 <a href="#" class="nav-link active">Профиль</a>
+                <a href="support-messages.html" class="nav-link" id="adminMessages" style="display: none;">
+                    <i class="fas fa-envelope"></i> Сообщения
+                    <span class="message-badge" style="display: none;">0</span>
+                </a>
             </div>
         </nav>
 
@@ -282,6 +304,59 @@
     </div>
 
     <script>
+        // Проверяем, является ли пользователь администратором
+        const isAdmin = true; // В реальном приложении здесь будет проверка роли
+        const adminEmail = 'sasaaleskevic65@gmail.com';
+
+        // Показываем ссылку на сообщения только администратору
+        if (isAdmin) {
+            document.getElementById('adminMessages').style.display = 'flex';
+            updateMessageBadge();
+        }
+
+        function handleSupportSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            const subject = form.querySelector('input').value;
+            const message = form.querySelector('textarea').value;
+            
+            // Создаем объект сообщения
+            const supportMessage = {
+                id: Date.now(),
+                subject,
+                message,
+                date: new Date().toISOString(),
+                status: 'new',
+                email: 'user@example.com' // В реальном приложении здесь будет email отправителя
+            };
+
+            // Получаем существующие сообщения из localStorage
+            const messages = JSON.parse(localStorage.getItem('supportMessages') || '[]');
+            messages.push(supportMessage);
+            
+            // Сохраняем обновленный список сообщений
+            localStorage.setItem('supportMessages', JSON.stringify(messages));
+            
+            // Обновляем счетчик непрочитанных сообщений
+            updateMessageBadge();
+
+            alert('Ваше обращение отправлено! Мы ответим вам в ближайшее время.');
+            form.reset();
+        }
+
+        function updateMessageBadge() {
+            const messages = JSON.parse(localStorage.getItem('supportMessages') || '[]');
+            const unreadCount = messages.filter(msg => msg.status === 'new').length;
+            const badge = document.querySelector('.message-badge');
+            
+            if (unreadCount > 0) {
+                badge.style.display = 'inline';
+                badge.textContent = unreadCount;
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+
         function downloadPlugin(filename) {
             const fileData = {
                 'IQKITS.zip': {
@@ -320,17 +395,6 @@
                     a.click();
                     document.body.removeChild(a);
                 });
-        }
-
-        function handleSupportSubmit(event) {
-            event.preventDefault();
-            const form = event.target;
-            const subject = form.querySelector('input').value;
-            const message = form.querySelector('textarea').value;
-            
-            // Здесь можно добавить отправку данных на сервер
-            alert('Ваше обращение отправлено! Мы ответим вам в ближайшее время.');
-            form.reset();
         }
     </script>
 </body>

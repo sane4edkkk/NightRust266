@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сообщения техподдержки - ForumHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #1a1a1a;
+            color: white;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid #333;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: #999;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: white;
+        }
+
+        .nav-link.active {
+            color: white;
+            font-weight: 500;
+        }
+
+        .messages-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .messages-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .message-card {
+            background: #242424;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .message-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .message-card.new {
+            border-left: 4px solid #6c5ce7;
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .message-subject {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .message-meta {
+            display: flex;
+            gap: 1rem;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .message-content {
+            color: #ccc;
+            margin-bottom: 1rem;
+        }
+
+        .message-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .reply-btn {
+            background: #6c5ce7;
+            color: white;
+        }
+
+        .reply-btn:hover {
+            background: #5f50e1;
+        }
+
+        .mark-btn {
+            background: #2d3436;
+            color: #fff;
+        }
+
+        .mark-btn:hover {
+            background: #222;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #999;
+        }
+
+        .empty-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .reply-form {
+            display: none;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #333;
+        }
+
+        .reply-form.active {
+            display: block;
+        }
+
+        .reply-textarea {
+            width: 100%;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: white;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            margin-bottom: 1rem;
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-new {
+            background: #6c5ce7;
+            color: white;
+        }
+
+        .status-answered {
+            background: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Главная</a>
+                <a href="categories.html" class="nav-link">Плагины</a>
+                <a href="profile.html" class="nav-link">Профиль</a>
+                <a href="#" class="nav-link active">Сообщения</a>
+            </div>
+        </nav>
+
+        <div class="messages-header">
+            <h1 class="messages-title">Сообщения техподдержки</h1>
+        </div>
+
+        <div id="messagesList">
+            <!-- Messages will be loaded here -->
+        </div>
+    </div>
+
+    <script>
+        // Проверяем права администратора
+        const adminEmail = 'sasaaleskevic65@gmail.com';
+        const currentUser = adminEmail; // В реальном приложении здесь будет проверка текущего пользователя
+
+        if (currentUser !== adminEmail) {
+            window.location.href = 'index.html';
+        }
+
+        function loadMessages() {
+            const messages = JSON.parse(localStorage.getItem('supportMessages') || '[]');
+            const messagesList = document.getElementById('messagesList');
+
+            if (messages.length === 0) {
+                messagesList.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">
+                            <i class="fas fa-inbox"></i>
+                        </div>
+                        <h2>Нет новых сообщений</h2>
+                        <p>Когда пользователи отправят сообщения, они появятся здесь</p>
+                    </div>
+                `;
+                return;
+            }
+
+            messagesList.innerHTML = messages.reverse().map(message => `
+                <div class="message-card ${message.status === 'new' ? 'new' : ''}" data-id="${message.id}">
+                    <div class="message-header">
+                        <div class="message-subject">${message.subject}</div>
+                        <div class="message-meta">
+                            <span><i class="fas fa-user"></i> ${message.email}</span>
+                            <span><i class="fas fa-clock"></i> ${new Date(message.date).toLocaleString()}</span>
+                            <span class="status-badge ${message.status === 'new' ? 'status-new' : 'status-answered'}">
+                                ${message.status === 'new' ? 'Новое' : 'Отвечено'}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="message-content">${message.message}</div>
+                    <div class="message-actions">
+                        <button class="action-btn reply-btn" onclick="showReplyForm(${message.id})">
+                            <i class="fas fa-reply"></i> Ответить
+                        </button>
+                        ${message.status === 'new' ? `
+                            <button class="action-btn mark-btn" onclick="markAsAnswered(${message.id})">
+                                <i class="fas fa-check"></i> Отметить как отвеченное
+                            </button>
+                        ` : ''}
+                    </div>
+                    <div class="reply-form" id="replyForm_${message.id}">
+                        <textarea class="reply-textarea" placeholder="Введите ваш ответ..."></textarea>
+                        <button class="action-btn reply-btn" onclick="sendReply(${message.id})">
+                            <i class="fas fa-paper-plane"></i> Отправить ответ
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function showReplyForm(messageId) {
+            const form = document.getElementById(`replyForm_${messageId}`);
+            form.classList.toggle('active');
+        }
+
+        function markAsAnswered(messageId) {
+            const messages = JSON.parse(localStorage.getItem('supportMessages') || '[]');
+            const messageIndex = messages.findIndex(m => m.id === messageId);
+            
+            if (messageIndex !== -1) {
+                messages[messageIndex].status = 'answered';
+                localStorage.setItem('supportMessages', JSON.stringify(messages));
+                loadMessages();
+            }
+        }
+
+        function sendReply(messageId) {
+            const form = document.getElementById(`replyForm_${messageId}`);
+            const replyText = form.querySelector('textarea').value;
+            
+            if (replyText.trim()) {
+                const messages = JSON.parse(localStorage.getItem('supportMessages') || '[]');
+                const messageIndex = messages.findIndex(m => m.id === messageId);
+                
+                if (messageIndex !== -1) {
+                    messages[messageIndex].status = 'answered';
+                    messages[messageIndex].reply = replyText;
+                    messages[messageIndex].replyDate = new Date().toISOString();
+                    
+                    localStorage.setItem('supportMessages', JSON.stringify(messages));
+                    alert('Ответ отправлен!');
+                    loadMessages();
+                }
+            }
+        }
+
+        // Загружаем сообщения при загрузке страницы
+        loadMessages();
+    </script>
+</body>
+</html> 
