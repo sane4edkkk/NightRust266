@@ -233,7 +233,7 @@
             <p class="auth-subtitle">Создайте аккаунт для доступа к форуму</p>
         </div>
 
-        <form id="registerForm" onsubmit="handleRegistration(event)">
+        <form id="registerForm" onsubmit="handleRegister(event)">
             <div class="form-group">
                 <label class="form-label">Никнейм</label>
                 <input type="text" class="form-input" id="nickname" required
@@ -347,67 +347,56 @@
             error.style.display = 'none';
         }
 
-        function handleRegistration(event) {
+        function handleRegister(event) {
             event.preventDefault();
             
             const nickname = document.getElementById('nickname').value;
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
             
-            // Очищаем предыдущие ошибки
-            clearError('nickname');
-            clearError('email');
-            clearError('password');
-            clearError('confirmPassword');
-
-            // Проверяем пароли
-            if (password !== confirmPassword) {
-                showError('confirmPassword', 'Пароли не совпадают');
-                return;
-            }
-
-            // Получаем существующих пользователей
-            const users = JSON.parse(localStorage.getItem('users')) || [];
-            
-            // Проверяем, не занят ли никнейм или email
-            if (users.some(user => user.nickname === nickname)) {
-                showError('nickname', 'Этот никнейм уже занят');
-                return;
+            // Получаем существующих пользователей или создаем пустой массив
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            if (!Array.isArray(users)) {
+                users = [];
             }
             
+            // Проверяем, не существует ли уже пользователь с таким email
             if (users.some(user => user.email === email)) {
-                showError('email', 'Этот email уже зарегистрирован');
+                alert('Пользователь с таким email уже существует');
                 return;
             }
-
+            
             // Создаем нового пользователя
             const newUser = {
-                id: Date.now().toString(),
-                nickname,
-                email,
-                password,
+                id: 'user_' + Date.now(),
+                nickname: nickname,
+                email: email,
+                password: password, // В реальном приложении пароль должен быть захеширован
                 registrationDate: new Date().toISOString(),
                 role: 'user',
-                isAdmin: false,
-                permissions: {
-                    viewPlugins: true,
-                    addPlugins: true,
-                    createTickets: true,
-                    replyToTickets: true
-                }
+                banned: false
             };
-
-            // Добавляем пользователя в список
+            
+            // Добавляем пользователя в массив
             users.push(newUser);
+            
+            // Сохраняем обновленный список пользователей
             localStorage.setItem('users', JSON.stringify(users));
             
-            // Автоматически входим в аккаунт
+            // Также сохраняем текущего пользователя в сессию
             localStorage.setItem('user', JSON.stringify(newUser));
             
             // Перенаправляем на главную страницу
             window.location.href = 'index.html';
         }
+
+        // Добавляем обработчик события при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+            if (form) {
+                form.addEventListener('submit', handleRegister);
+            }
+        });
     </script>
 </body>
 </html> 

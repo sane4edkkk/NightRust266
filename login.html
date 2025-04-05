@@ -293,70 +293,46 @@
             
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            const rememberMe = document.getElementById('rememberMe').checked;
             
-            // Очищаем предыдущие ошибки
-            clearError('email');
-            clearError('password');
-
             // Получаем список пользователей
             const users = JSON.parse(localStorage.getItem('users')) || [];
+            
+            // Ищем пользователя
             const user = users.find(u => u.email === email && u.password === password);
-
+            
             if (!user) {
-                showError('email', 'Неверный email или пароль');
+                alert('Неверный email или пароль');
                 return;
             }
 
-            // Проверяем и устанавливаем права администратора
+            if (user.banned) {
+                alert('Ваш аккаунт заблокирован');
+                return;
+            }
+
+            // Проверяем, является ли пользователь администратором
             if (email === 'sasaaleskevic65@gmail.com') {
                 user.role = 'admin';
-                user.isAdmin = true;
-                user.permissions = {
-                    ...user.permissions,
-                    viewPlugins: true,
-                    addPlugins: true,
-                    createTickets: true,
-                    replyToTickets: true,
-                    manageUsers: true,
-                    managePlugins: true,
-                    manageTickets: true
-                };
-
-                // Обновляем информацию о пользователе в списке пользователей
-                const userIndex = users.findIndex(u => u.email === email);
+                // Обновляем пользователя в списке пользователей
+                const userIndex = users.findIndex(u => u.id === user.id);
                 if (userIndex !== -1) {
-                    users[userIndex] = {
-                        ...users[userIndex],
-                        role: 'admin',
-                        isAdmin: true,
-                        permissions: user.permissions
-                    };
+                    users[userIndex] = user;
                     localStorage.setItem('users', JSON.stringify(users));
                 }
             }
 
-            // Сохраняем данные пользователя
+            // Сохраняем информацию о текущем пользователе
             localStorage.setItem('user', JSON.stringify(user));
             
-            // Если выбрано "Запомнить меня", сохраняем токен
-            if (rememberMe) {
-                localStorage.setItem('rememberToken', btoa(user.email + ':' + Date.now()));
-            }
-
             // Перенаправляем на главную страницу
-            window.location.href = 'index.html';
+            window.location.href = user.role === 'admin' ? 'admin.html' : 'index.html';
         }
 
-        // Проверяем, есть ли сохраненный токен
+        // Добавляем обработчик события при загрузке страницы
         document.addEventListener('DOMContentLoaded', function() {
-            const rememberToken = localStorage.getItem('rememberToken');
-            if (rememberToken) {
-                const user = JSON.parse(localStorage.getItem('user'));
-                if (user) {
-                    document.getElementById('email').value = user.email;
-                    document.getElementById('rememberMe').checked = true;
-                }
+            const form = document.querySelector('form');
+            if (form) {
+                form.addEventListener('submit', handleLogin);
             }
         });
     </script>
