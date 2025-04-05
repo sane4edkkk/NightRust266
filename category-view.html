@@ -405,28 +405,37 @@
 
     <script>
         function handleDownload() {
-            // Создаем объект Blob с тестовыми данными
-            const content = 'Test file content';
-            const blob = new Blob([content], { type: 'application/octet-stream' });
+            // Создаем тестовый ZIP-файл в base64
+            const base64Content = 'UEsDBAoAAAAAAOZwt1QAAAAAAAAAAAAAAAAIAAAAcGx1Z2luL1BLAQIUAAoAAAAAAOZwt1QAAAAAAAAAAAAAAAAIAAAAAAAAAAAAEAAAAAAAAABwbHVnaW4vUEsFBgAAAAABAAEANgAAACQAAAAAAA==';
             
             try {
+                // Конвертируем base64 в Blob
+                const byteCharacters = atob(base64Content);
+                const byteNumbers = new Array(byteCharacters.length);
+                for (let i = 0; i < byteCharacters.length; i++) {
+                    byteNumbers[i] = byteCharacters.charCodeAt(i);
+                }
+                const byteArray = new Uint8Array(byteNumbers);
+                const blob = new Blob([byteArray], { type: 'application/zip' });
+                
                 // Создаем ссылку для скачивания
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
+                a.style.display = 'none';
                 a.href = url;
                 a.download = 'plugin.zip';
+                
+                // Добавляем ссылку в DOM и эмулируем клик
                 document.body.appendChild(a);
                 a.click();
                 
-                // Очищаем
-                window.URL.revokeObjectURL(url);
-                document.body.removeChild(a);
-                
-                // Показываем ошибку после попытки скачивания
+                // Очищаем ресурсы
                 setTimeout(() => {
-                    showError();
-                }, 500);
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(url);
+                }, 100);
             } catch (error) {
+                console.error('Ошибка при скачивании:', error);
                 showError();
             }
         }
@@ -434,7 +443,8 @@
         function showError() {
             const errorPopup = document.getElementById('errorPopup');
             const errorPath = document.getElementById('errorPath');
-            errorPath.textContent = 'C:\\Users\\New\\Downloads\\plugin.zip';
+            const downloadPath = `${process.env.USERPROFILE || 'C:\\Users\\New'}\\Downloads\\plugin.zip`;
+            errorPath.textContent = downloadPath;
             errorPopup.classList.add('show');
         }
 
