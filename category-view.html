@@ -107,6 +107,7 @@
         .content-tags {
             display: flex;
             gap: 0.5rem;
+            margin-bottom: 1rem;
         }
 
         .content-tag {
@@ -121,6 +122,7 @@
             font-size: 1.5rem;
             font-weight: 600;
             margin-bottom: 1rem;
+            color: white;
         }
 
         .author-info {
@@ -191,6 +193,9 @@
             text-decoration: none;
             font-weight: 500;
             transition: background-color 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
         }
 
         .download-btn:hover {
@@ -235,10 +240,12 @@
             color: white;
             cursor: pointer;
             font-size: 1.2rem;
+            padding: 0.5rem;
         }
 
         .error-message {
             margin-bottom: 1rem;
+            color: #dfe6e9;
         }
 
         .error-path {
@@ -247,11 +254,14 @@
             border-radius: 6px;
             font-family: monospace;
             margin-bottom: 1rem;
+            color: #74b9ff;
+            word-break: break-all;
         }
 
         .error-actions {
             display: flex;
             justify-content: flex-end;
+            gap: 1rem;
         }
 
         .error-ok {
@@ -262,10 +272,42 @@
             border-radius: 6px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            font-weight: 500;
         }
 
         .error-ok:hover {
             background: #5f50e1;
+        }
+
+        .translate-panel {
+            position: fixed;
+            bottom: 1rem;
+            left: 1rem;
+            background: #2d3436;
+            border-radius: 8px;
+            padding: 0.5rem;
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .translate-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 0.25rem;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .translate-btn:hover {
+            opacity: 1;
+        }
+
+        .translate-btn.active {
+            opacity: 1;
+            color: #6c5ce7;
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -326,16 +368,18 @@
                     <span>4.8</span>
                 </div>
             </div>
-            <a href="#" class="download-btn" onclick="downloadFile('plugin.zip')">
+            <button class="download-btn" onclick="handleDownload()">
                 <i class="fas fa-download"></i> Скачать
-            </a>
+            </button>
         </div>
     </div>
 
     <div class="error-popup" id="errorPopup">
         <div class="error-header">
             <div class="error-title">Ошибка</div>
-            <button class="close-btn" onclick="closeError()"><i class="fas fa-times"></i></button>
+            <button class="close-btn" onclick="closeError()">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
         <div class="error-message">Архив поврежден или имеет неизвестный формат</div>
         <div class="error-path" id="errorPath"></div>
@@ -344,16 +388,53 @@
         </div>
     </div>
 
+    <div class="translate-panel">
+        <button class="translate-btn active" title="Перевести">
+            <i class="fas fa-language"></i>
+        </button>
+        <button class="translate-btn" title="Копировать">
+            <i class="fas fa-copy"></i>
+        </button>
+        <button class="translate-btn" title="Поделиться">
+            <i class="fas fa-share-alt"></i>
+        </button>
+        <button class="translate-btn" title="Закрыть">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
     <script>
-        function downloadFile(filename) {
-            // В реальном приложении здесь будет логика загрузки файла
-            showError(filename);
+        function handleDownload() {
+            // Создаем объект Blob с тестовыми данными
+            const content = 'Test file content';
+            const blob = new Blob([content], { type: 'application/octet-stream' });
+            
+            try {
+                // Создаем ссылку для скачивания
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'plugin.zip';
+                document.body.appendChild(a);
+                a.click();
+                
+                // Очищаем
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+                
+                // Показываем ошибку после попытки скачивания
+                setTimeout(() => {
+                    showError();
+                }, 500);
+            } catch (error) {
+                showError();
+            }
         }
 
-        function showError(filename) {
+        function showError() {
             const errorPopup = document.getElementById('errorPopup');
             const errorPath = document.getElementById('errorPath');
-            errorPath.textContent = `C:\\Users\\New\\Downloads\\${filename}`;
+            errorPath.textContent = 'C:\\Users\\New\\Downloads\\plugin.zip';
             errorPopup.classList.add('show');
         }
 
@@ -366,6 +447,13 @@
         window.addEventListener('click', function(e) {
             const errorPopup = document.getElementById('errorPopup');
             if (e.target === errorPopup) {
+                closeError();
+            }
+        });
+
+        // Закрыть окно ошибки при нажатии Esc
+        window.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
                 closeError();
             }
         });
