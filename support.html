@@ -496,7 +496,7 @@
                         <i class="fas fa-ticket"></i>
                         Мои тикеты
                     </h2>
-                    <div id="ticketsList">
+                    <div id="ticketsContainer">
                         <!-- Тикеты будут добавлены через JavaScript -->
                     </div>
                 </div>
@@ -563,32 +563,71 @@
         });
 
         function loadTickets() {
-            const tickets = JSON.parse(localStorage.getItem('tickets')) || [];
             const user = JSON.parse(localStorage.getItem('user'));
-            const userTickets = tickets.filter(t => t.userId === user.id);
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
 
-            const ticketsList = document.getElementById('ticketsList');
-            ticketsList.innerHTML = userTickets.map(ticket => `
-                <div class="ticket-item" onclick="selectTicket(${ticket.id})">
-                    <div class="ticket-header">
-                        <div class="ticket-title">${ticket.title}</div>
-                        <span class="ticket-status ${ticket.status}">${ticket.status}</span>
-                    </div>
-                    <div class="ticket-meta">
-                        <span><i class="fas fa-clock"></i> ${ticket.date}</span>
-                        <span><i class="fas fa-message"></i> ${ticket.messages.length} сообщений</span>
-                    </div>
-                </div>
-            `).join('');
-
-            if (userTickets.length === 0) {
-                ticketsList.innerHTML = `
-                    <div style="text-align: center; color: var(--text-secondary);">
-                        <i class="fas fa-ticket" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+            const tickets = JSON.parse(localStorage.getItem('tickets')) || [];
+            const ticketsContainer = document.getElementById('ticketsContainer');
+            
+            // Фильтруем тикеты: для админа показываем все, для обычных пользователей только их тикеты
+            const filteredTickets = user.role === 'admin' ? tickets : tickets.filter(ticket => ticket.userId === user.id);
+            
+            if (filteredTickets.length === 0) {
+                ticketsContainer.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-ticket-alt"></i>
                         <p>У вас пока нет тикетов</p>
+                        <button class="create-ticket-btn" onclick="openCreateTicketModal()">
+                            <i class="fas fa-plus"></i>
+                            Создать тикет
+                        </button>
                     </div>
                 `;
+                return;
             }
+
+            ticketsContainer.innerHTML = '';
+            filteredTickets.forEach(ticket => {
+                const ticketElement = document.createElement('div');
+                ticketElement.className = 'ticket';
+                ticketElement.innerHTML = `
+                    <div class="ticket-header">
+                        <h3>${ticket.title}</h3>
+                        <span class="ticket-status ${ticket.status}">${getStatusText(ticket.status)}</span>
+                    </div>
+                    <p class="ticket-description">${ticket.description}</p>
+                    <div class="ticket-meta">
+                        <span class="ticket-author">
+                            <i class="fas fa-user"></i>
+                            ${ticket.authorName}
+                        </span>
+                        <span class="ticket-date">
+                            <i class="fas fa-calendar"></i>
+                            ${new Date(ticket.dateCreated).toLocaleDateString()}
+                        </span>
+                    </div>
+                    ${user.role === 'admin' ? `
+                        <div class="admin-controls">
+                            <select onchange="updateTicketStatus('${ticket.id}', this.value)" class="status-select">
+                                <option value="open" ${ticket.status === 'open' ? 'selected' : ''}>Открыт</option>
+                                <option value="in-progress" ${ticket.status === 'in-progress' ? 'selected' : ''}>В работе</option>
+                                <option value="closed" ${ticket.status === 'closed' ? 'selected' : ''}>Закрыт</option>
+                            </select>
+                            <button onclick="deleteTicket('${ticket.id}')" class="delete-ticket-btn">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    ` : ''}
+                    <button class="view-ticket-btn" onclick="openTicketChat('${ticket.id}')">
+                        <i class="fas fa-comments"></i>
+                        Просмотреть чат
+                    </button>
+                `;
+                ticketsContainer.appendChild(ticketElement);
+            });
         }
 
         function loadMessages() {
@@ -701,6 +740,26 @@
 
             messageInput.value = '';
             loadMessages();
+        }
+
+        function updateTicketStatus(ticketId, newStatus) {
+            const tickets = JSON.parse(localStorage.getItem('tickets')) || [];
+            const ticketIndex = tickets.findIndex(t => t.id === ticketId);
+            
+            if (ticketIndex !== -1) {
+                tickets[ticketIndex].status = newStatus;
+                localStorage.setItem('tickets', JSON.stringify(tickets));
+                loadTickets(); // Перезагружаем список тикетов
+            }
+        }
+
+        function deleteTicket(ticketId) {
+            if (confirm('Вы уверены, что хотите удалить этот тикет?')) {
+                const tickets = JSON.parse(localStorage.getItem('tickets')) || [];
+                const updatedTickets = tickets.filter(t => t.id !== ticketId);
+                localStorage.setItem('tickets', JSON.stringify(updatedTickets));
+                loadTickets(); // Перезагружаем список тикетов
+            }
         }
     </script>
 </body>
