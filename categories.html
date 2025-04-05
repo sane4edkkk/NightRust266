@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Категории - ForumHub</title>
+    <title>Плагины - ForumHub</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -14,8 +15,8 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: #f5f7fa;
-            color: #1a1a1a;
+            background: #1a1a1a;
+            color: white;
             line-height: 1.6;
         }
 
@@ -25,233 +26,378 @@
             padding: 2rem;
         }
 
-        .categories-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid #333;
+        }
+
+        .nav-links {
+            display: flex;
             gap: 2rem;
+        }
+
+        .nav-link {
+            color: #999;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: white;
+        }
+
+        .nav-link.active {
+            color: white;
+            font-weight: 500;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .auth-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .login-btn {
+            background: transparent;
+            color: white;
+            border: 1px solid #6c5ce7;
+        }
+
+        .login-btn:hover {
+            background: rgba(108, 92, 231, 0.1);
+        }
+
+        .register-btn {
+            background: #6c5ce7;
+            color: white;
+            border: none;
+        }
+
+        .register-btn:hover {
+            background: #5f50e1;
+        }
+
+        .plugins-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
             margin-top: 2rem;
         }
 
-        .category-card {
-            background: white;
-            border-radius: 16px;
+        .plugin-card {
+            background: #242424;
+            border-radius: 12px;
             overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-        }
-
-        .category-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .category-header {
-            background: linear-gradient(135deg, #6c5ce7, #a363d9);
-            color: white;
-            padding: 1.5rem;
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-
-        .plugins .category-header {
-            background: linear-gradient(135deg, #6c5ce7, #a363d9);
-        }
-
-        .games .category-header {
-            background: linear-gradient(135deg, #00b894, #00cec9);
-        }
-
-        .movies .category-header {
-            background: linear-gradient(135deg, #e17055, #fab1a0);
-        }
-
-        .music .category-header {
-            background: linear-gradient(135deg, #fd79a8, #e84393);
-        }
-
-        .premium .category-header {
-            background: linear-gradient(135deg, #fdcb6e, #ffeaa7);
-        }
-
-        .category-content {
-            padding: 1.5rem;
-        }
-
-        .category-description {
-            color: #666;
-            margin-bottom: 1.5rem;
-            font-size: 0.95rem;
-        }
-
-        .category-stats {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .stat-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        .stat-item i {
-            color: #6c5ce7;
-            font-size: 1.1rem;
-        }
-
-        .category-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #6c5ce7;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: gap 0.3s ease;
-        }
-
-        .category-link:hover {
-            gap: 0.75rem;
-        }
-
-        .category-link i {
-            font-size: 0.8rem;
             transition: transform 0.3s ease;
         }
 
-        .category-link:hover i {
-            transform: translateX(3px);
+        .plugin-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .plugin-header {
+            background: linear-gradient(135deg, #6c5ce7, #a363d9);
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .plugin-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .plugin-tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .plugin-tag {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+        }
+
+        .plugin-content {
+            padding: 1.5rem;
+        }
+
+        .plugin-description {
+            color: #ccc;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .plugin-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #333;
+        }
+
+        .author-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .author-info {
+            flex-grow: 1;
+        }
+
+        .author-name {
+            font-weight: 500;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .admin-badge {
+            background: #ff4757;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .author-role {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .plugin-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .meta-item i {
+            color: #6c5ce7;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #4CAF50;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 1rem;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background: #45a049;
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <div class="categories-grid">
-            <div class="category-card games">
-                <div class="category-header">
-                    <i class="fas fa-gamepad"></i> Игры
+        <nav class="navbar">
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Главная</a>
+                <a href="#" class="nav-link active">Плагины</a>
+                <a href="profile.html" class="nav-link">Профиль</a>
+            </div>
+            <div class="auth-buttons">
+                <a href="login.html" class="auth-btn login-btn">Войти</a>
+                <a href="register.html" class="auth-btn register-btn">Регистрация</a>
+            </div>
+        </nav>
+
+        <div class="plugins-grid">
+            <!-- IQKITS Plugin -->
+            <div class="plugin-card">
+                <div class="plugin-header">
+                    <div class="plugin-tags">
+                        <span class="plugin-tag">БЕСПЛАТНО</span>
+                        <span class="plugin-tag">C#</span>
+                    </div>
+                    <h2 class="plugin-title">IQKITS</h2>
                 </div>
-                <div class="category-content">
-                    <p class="category-description">
-                        Обсуждение игр, прохождений, модификаций и всего что связано с игровой индустрией.
-                    </p>
-                    <div class="category-stats">
-                        <div class="stat-item">
-                            <i class="fas fa-folder"></i>
-                            <span>125 тем</span>
-                        </div>
-                        <div class="stat-item">
-                            <i class="fas fa-comments"></i>
-                            <span>Активные обсуждения</span>
+                <div class="plugin-content">
+                    <div class="plugin-author">
+                        <img src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y" alt="Аватар автора" class="author-avatar">
+                        <div class="author-info">
+                            <a href="profile.html" class="author-name">
+                                sasaaleskevic65@gmail.com
+                                <span class="admin-badge">ADMIN</span>
+                            </a>
+                            <div class="author-role">Администратор</div>
                         </div>
                     </div>
-                    <a href="#" class="category-link">
-                        Перейти к играм <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-
-            <div class="category-card plugins">
-                <div class="category-header">
-                    <i class="fas fa-puzzle-piece"></i> Плагины
-                </div>
-                <div class="category-content">
-                    <p class="category-description">
-                        Различные плагины, скрипты, моды и дополнения для программ и игр.
-                    </p>
-                    <div class="category-stats">
-                        <div class="stat-item">
-                            <i class="fas fa-folder"></i>
-                            <span>89 тем</span>
+                    <div class="plugin-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-file"></i>
+                            <span>204 КБ</span>
                         </div>
-                        <div class="stat-item">
+                        <div class="meta-item">
                             <i class="fas fa-download"></i>
-                            <span>Популярные загрузки</span>
+                            <span>1337 загрузок</span>
                         </div>
-                    </div>
-                    <a href="#" class="category-link">
-                        Смотреть плагины <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-
-            <div class="category-card movies">
-                <div class="category-header">
-                    <i class="fas fa-film"></i> Кино и сериалы
-                </div>
-                <div class="category-content">
-                    <p class="category-description">
-                        Обсуждение фильмов, сериалов, актеров и новинок кинематографа.
-                    </p>
-                    <div class="category-stats">
-                        <div class="stat-item">
-                            <i class="fas fa-folder"></i>
-                            <span>234 темы</span>
-                        </div>
-                        <div class="stat-item">
-                            <i class="fas fa-eye"></i>
-                            <span>Популярный раздел</span>
-                        </div>
-                    </div>
-                    <a href="#" class="category-link">
-                        Перейти к обсуждению <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-
-            <div class="category-card music">
-                <div class="category-header">
-                    <i class="fas fa-music"></i> Музыка
-                </div>
-                <div class="category-content">
-                    <p class="category-description">
-                        Музыкальные новинки, обсуждение исполнителей, альбомов и клипов.
-                    </p>
-                    <div class="category-stats">
-                        <div class="stat-item">
-                            <i class="fas fa-folder"></i>
-                            <span>167 тем</span>
-                        </div>
-                        <div class="stat-item">
-                            <i class="fas fa-comments"></i>
-                            <span>Активные обсуждения</span>
-                        </div>
-                    </div>
-                    <a href="#" class="category-link">
-                        Слушать музыку <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-
-            <div class="category-card premium">
-                <div class="category-header">
-                    <i class="fas fa-crown"></i> Премиум
-                </div>
-                <div class="category-content">
-                    <p class="category-description">
-                        Получите доступ к премиум возможностям и эксклюзивному контенту.
-                    </p>
-                    <div class="category-stats">
-                        <div class="stat-item">
+                        <div class="meta-item">
                             <i class="fas fa-star"></i>
-                            <span>Особый статус</span>
-                        </div>
-                        <div class="stat-item">
-                            <i class="fas fa-gem"></i>
-                            <span>Премиум функции</span>
+                            <span>4.8</span>
                         </div>
                     </div>
-                    <a href="#" class="category-link">
-                        Выбрать тариф <i class="fas fa-arrow-right"></i>
-                    </a>
+                    <button class="download-btn" onclick="downloadPlugin('IQKITS.zip')">
+                        <i class="fas fa-download"></i>
+                        Скачать
+                    </button>
+                </div>
+            </div>
+
+            <!-- RustEdit Plugin -->
+            <div class="plugin-card">
+                <div class="plugin-header">
+                    <div class="plugin-tags">
+                        <span class="plugin-tag">БЕСПЛАТНО</span>
+                        <span class="plugin-tag">OXIDE</span>
+                    </div>
+                    <h2 class="plugin-title">RustEdit</h2>
+                </div>
+                <div class="plugin-content">
+                    <div class="plugin-author">
+                        <img src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y" alt="Аватар автора" class="author-avatar">
+                        <div class="author-info">
+                            <a href="profile.html" class="author-name">
+                                sasaaleskevic65@gmail.com
+                                <span class="admin-badge">ADMIN</span>
+                            </a>
+                            <div class="author-role">Администратор</div>
+                        </div>
+                    </div>
+                    <div class="plugin-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-file"></i>
+                            <span>156 КБ</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-download"></i>
+                            <span>892 загрузок</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-star"></i>
+                            <span>4.6</span>
+                        </div>
+                    </div>
+                    <button class="download-btn" onclick="downloadPlugin('RustEdit.zip')">
+                        <i class="fas fa-download"></i>
+                        Скачать
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        function downloadPlugin(filename) {
+            const fileData = {
+                'IQKITS.zip': {
+                    url: '/plugins/IQKITS.zip',
+                    fallbackContent: 'data:application/zip;base64,UEsDBAoAAAAAAOZwt1QAAAAAAAAAAAAAAAAIAAAAcGx1Z2luL1BLAQIUAAoAAAAAAOZwt1QAAAAAAAAAAAAAAAAIAAAAAAAAAAAAEAAAAAAAAABwbHVnaW4vUEsFBgAAAAABAAEANgAAACQAAAAAAA=='
+                },
+                'RustEdit.zip': {
+                    url: '/plugins/RustEdit.zip',
+                    fallbackContent: 'data:application/zip;base64,UEsDBAoAAAAAAOZwt1QAAAAAAAAAAAAAAAAIAAAAcGx1Z2luL1BLAQIUAAoAAAAAAOZwt1QAAAAAAAAAAAAAAAAIAAAAAAAAAAAAEAAAAAAAAABwbHVnaW4vUEsFBgAAAAABAAEANgAAACQAAAAAAA=='
+                }
+            };
+
+            const fileInfo = fileData[filename];
+            if (!fileInfo) {
+                alert('Файл не найден');
+                return;
+            }
+
+            // Проверяем авторизацию
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            if (!isLoggedIn) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Пробуем сначала загрузить файл по URL
+            fetch(fileInfo.url)
+                .then(response => response.blob())
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = url;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                })
+                .catch(() => {
+                    // Если не удалось загрузить по URL, используем fallback content
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = fileInfo.fallbackContent;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                });
+        }
+
+        // Проверяем авторизацию при загрузке страницы
+        document.addEventListener('DOMContentLoaded', () => {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const authButtons = document.querySelector('.auth-buttons');
+            
+            if (isLoggedIn) {
+                authButtons.innerHTML = `
+                    <a href="profile.html" class="auth-btn login-btn">
+                        <i class="fas fa-user"></i> Профиль
+                    </a>
+                    <a href="#" class="auth-btn register-btn" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> Выйти
+                    </a>
+                `;
+            }
+        });
+
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('user');
+            window.location.reload();
+        }
+    </script>
 </body>
 </html> 

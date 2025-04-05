@@ -4,145 +4,291 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Вход - ForumHub</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        .auth-form-container {
-            max-width: 400px;
-            margin: 100px auto;
-            padding: 2rem;
-            background-color: white;
-            border-radius: var(--border-radius);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .auth-form {
-            display: grid;
-            gap: 1.5rem;
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #1a1a1a;
+            color: white;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            padding: 2rem;
+        }
+
+        .auth-card {
+            background: #242424;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .auth-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-subtitle {
+            color: #999;
         }
 
         .form-group {
-            display: grid;
-            gap: 0.5rem;
+            margin-bottom: 1.5rem;
         }
 
-        .form-group label {
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #ccc;
             font-weight: 500;
-            color: var(--text-color);
         }
 
-        .form-control {
+        .form-input {
+            width: 100%;
             padding: 0.75rem;
-            border: 1px solid #e5e7eb;
-            border-radius: var(--border-radius);
-            font-size: 1rem;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #6c5ce7;
+        }
+
+        .password-toggle {
+            position: relative;
+        }
+
+        .password-toggle i {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .password-toggle i:hover {
+            color: white;
+        }
+
+        .form-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #999;
+        }
+
+        .remember-me input[type="checkbox"] {
+            width: 1rem;
+            height: 1rem;
+            accent-color: #6c5ce7;
+        }
+
+        .forgot-password {
+            color: #6c5ce7;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password:hover {
+            color: #5f50e1;
         }
 
         .submit-btn {
-            background-color: var(--primary-color);
-            color: white;
+            width: 100%;
             padding: 0.75rem;
+            background: #6c5ce7;
+            color: white;
             border: none;
-            border-radius: var(--border-radius);
-            font-size: 1rem;
+            border-radius: 8px;
             font-weight: 500;
+            font-size: 1rem;
             cursor: pointer;
-            transition: var(--transition);
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
         }
 
         .submit-btn:hover {
-            background-color: #4338ca;
+            background: #5f50e1;
         }
 
-        .success-message {
-            display: none;
-            background-color: #10b981;
-            color: white;
-            padding: 1rem;
-            border-radius: var(--border-radius);
-            margin-bottom: 1rem;
+        .auth-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #999;
+        }
+
+        .auth-link {
+            color: #6c5ce7;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .auth-link:hover {
+            color: #5f50e1;
         }
 
         .error-message {
+            color: #ff4757;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
             display: none;
-            color: #ef4444;
-            font-size: 0.875rem;
-            margin-top: 0.25rem;
+        }
+
+        .error-message.show {
+            display: block;
         }
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">
-                <i class="fas fa-comments"></i>
-                <span>ForumHub</span>
+    <div class="container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1 class="auth-title">Вход</h1>
+                <p class="auth-subtitle">Войдите в свой аккаунт</p>
             </div>
-            <div class="nav-links">
-                <a href="index.html">Главная</a>
-                <div class="auth-buttons">
-                    <!-- Здесь будет динамически обновляться контент для авторизации -->
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" required placeholder="Введите ваш email">
+                    <div class="error-message" id="emailError"></div>
                 </div>
+
+                <div class="form-group">
+                    <label class="form-label">Пароль</label>
+                    <div class="password-toggle">
+                        <input type="password" class="form-input" required placeholder="Введите пароль" id="password">
+                        <i class="fas fa-eye" id="togglePassword"></i>
+                    </div>
+                    <div class="error-message" id="passwordError"></div>
+                </div>
+
+                <div class="form-footer">
+                    <label class="remember-me">
+                        <input type="checkbox">
+                        Запомнить меня
+                    </label>
+                    <a href="#" class="forgot-password">Забыли пароль?</a>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Войти
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                Нет аккаунта? <a href="register.html" class="auth-link">Зарегистрироваться</a>
             </div>
         </div>
-    </nav>
-
-    <div class="auth-form-container">
-        <div class="success-message"></div>
-        <form id="loginForm" class="auth-form">
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" class="form-control" required>
-                <div class="error-message"></div>
-            </div>
-            <div class="form-group">
-                <label for="password">Пароль</label>
-                <input type="password" id="password" class="form-control" required>
-                <div class="error-message"></div>
-            </div>
-            <button type="submit" class="submit-btn">Войти</button>
-        </form>
     </div>
 
-    <!-- Подключаем общий скрипт авторизации -->
-    <script src="auth.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const loginForm = document.getElementById('loginForm');
-            const emailInput = document.getElementById('email');
-            const passwordInput = document.getElementById('password');
-            const successMessage = document.querySelector('.success-message');
+        const form = document.getElementById('loginForm');
+        const emailError = document.getElementById('emailError');
+        const passwordError = document.getElementById('passwordError');
+        const togglePassword = document.getElementById('togglePassword');
+        const password = document.getElementById('password');
 
-            loginForm.addEventListener('submit', function(event) {
-                event.preventDefault();
+        // Переключение видимости пароля
+        togglePassword.addEventListener('click', function() {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
 
-                const email = emailInput.value;
-                const password = passwordInput.value;
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Сброс ошибок
+            emailError.textContent = '';
+            passwordError.textContent = '';
+            emailError.classList.remove('show');
+            passwordError.classList.remove('show');
 
-                // Создаем данные пользователя
-                const userData = {
-                    username: email.split('@')[0],
-                    email: email,
-                    avatar: 'FR',
-                    avatarImage: null,
-                    banner: null,
-                    birthDate: ''
-                };
+            const email = form.querySelector('input[type="email"]').value;
+            const password = form.querySelector('#password').value;
 
-                // Сохраняем в localStorage
-                localStorage.setItem('user', JSON.stringify(userData));
-                localStorage.setItem('isLoggedIn', 'true');
+            // Валидация
+            let isValid = true;
 
-                // Показываем сообщение об успехе
-                successMessage.textContent = 'Вход выполнен успешно! Перенаправление...';
-                successMessage.style.display = 'block';
+            if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+                emailError.textContent = 'Введите корректный email адрес';
+                emailError.classList.add('show');
+                isValid = false;
+            }
 
-                // Перенаправляем на главную
-                setTimeout(() => {
+            if (password.length < 6) {
+                passwordError.textContent = 'Пароль должен содержать минимум 6 символов';
+                passwordError.classList.add('show');
+                isValid = false;
+            }
+
+            if (isValid) {
+                const submitBtn = form.querySelector('.submit-btn');
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Вход...';
+
+                try {
+                    // В реальном приложении здесь будет запрос к серверу
+                    await new Promise(resolve => setTimeout(resolve, 1500));
+                    
+                    // Сохраняем данные пользователя
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('user', JSON.stringify({
+                        email: email,
+                        isAdmin: email === 'sasaaleskevic65@gmail.com'
+                    }));
+
+                    // Перенаправляем на главную страницу
                     window.location.href = 'index.html';
-                }, 1500);
-            });
+                } catch (error) {
+                    emailError.textContent = 'Неверный email или пароль';
+                    emailError.classList.add('show');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Войти';
+                }
+            }
         });
     </script>
 </body>

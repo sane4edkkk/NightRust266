@@ -3,18 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Регистрация - ForestForum</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <title>Регистрация - ForumHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        .auth-container {
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #1a1a1a;
+            color: white;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
             max-width: 400px;
-            margin: 120px auto 0;
             padding: 2rem;
-            background-color: white;
-            border-radius: var(--border-radius);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .auth-card {
+            background: #242424;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
 
         .auth-header {
@@ -22,330 +42,242 @@
             margin-bottom: 2rem;
         }
 
-        .auth-header h1 {
-            color: var(--primary-color);
+        .auth-title {
+            font-size: 1.8rem;
+            font-weight: 600;
             margin-bottom: 0.5rem;
         }
 
-        .auth-form {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
+        .auth-subtitle {
+            color: #999;
         }
 
         .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
+            margin-bottom: 1.5rem;
         }
 
-        .form-group label {
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #ccc;
             font-weight: 500;
-            color: var(--text-color);
         }
 
-        .form-group input {
+        .form-input {
+            width: 100%;
             padding: 0.75rem;
-            border: 2px solid #e5e7eb;
-            border-radius: var(--border-radius);
-            font-size: 1rem;
-            transition: var(--transition);
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.3s ease;
         }
 
-        .form-group input:focus {
+        .form-input:focus {
             outline: none;
-            border-color: var(--primary-color);
-        }
-
-        .password-input {
-            position: relative;
-        }
-
-        .password-toggle {
-            position: absolute;
-            right: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-            color: #6b7280;
+            border-color: #6c5ce7;
         }
 
         .submit-btn {
-            background-color: var(--primary-color);
+            width: 100%;
+            padding: 0.75rem;
+            background: #6c5ce7;
             color: white;
-            padding: 1rem;
             border: none;
-            border-radius: var(--border-radius);
-            font-size: 1rem;
+            border-radius: 8px;
             font-weight: 500;
+            font-size: 1rem;
             cursor: pointer;
-            transition: var(--transition);
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
         }
 
         .submit-btn:hover {
-            background-color: #4338ca;
+            background: #5f50e1;
         }
 
         .auth-footer {
             text-align: center;
             margin-top: 1.5rem;
-            color: #6b7280;
+            color: #999;
         }
 
-        .auth-footer a {
-            color: var(--primary-color);
+        .auth-link {
+            color: #6c5ce7;
             text-decoration: none;
             font-weight: 500;
+            transition: color 0.3s ease;
         }
 
-        .auth-footer a:hover {
-            text-decoration: underline;
-        }
-
-        .social-auth {
-            margin-top: 2rem;
-            text-align: center;
-        }
-
-        .social-auth-text {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            color: #6b7280;
-        }
-
-        .social-auth-text::before,
-        .social-auth-text::after {
-            content: "";
-            flex: 1;
-            height: 1px;
-            background-color: #e5e7eb;
-        }
-
-        .social-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-        }
-
-        .social-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: #f3f4f6;
-            color: #4b5563;
-            transition: var(--transition);
-        }
-
-        .social-btn:hover {
-            background-color: #e5e7eb;
-            transform: translateY(-2px);
+        .auth-link:hover {
+            color: #5f50e1;
         }
 
         .error-message {
-            color: #dc2626;
-            font-size: 0.875rem;
-            margin-top: 0.25rem;
+            color: #ff4757;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
             display: none;
         }
 
-        .form-group.error input {
-            border-color: #dc2626;
-        }
-
-        .form-group.error .error-message {
+        .error-message.show {
             display: block;
         }
 
-        .success-message {
-            background-color: #10b981;
+        .password-toggle {
+            position: relative;
+        }
+
+        .password-toggle i {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .password-toggle i:hover {
             color: white;
-            padding: 1rem;
-            border-radius: var(--border-radius);
-            text-align: center;
-            margin-bottom: 1rem;
-            display: none;
         }
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">
-                <i class="fas fa-comments"></i>
-                <span>ForumHub</span>
-            </div>
-            <div class="nav-links">
-                <a href="index.html">Главная</a>
-                <div class="auth-buttons">
-                    <a href="login.html" class="login-btn">Войти</a>
-                    <a href="register.html" class="register-btn">Регистрация</a>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <main class="container">
-        <div class="auth-container">
+    <div class="container">
+        <div class="auth-card">
             <div class="auth-header">
-                <h1>Регистрация</h1>
-                <p>Создайте аккаунт для доступа к форуму</p>
+                <h1 class="auth-title">Регистрация</h1>
+                <p class="auth-subtitle">Создайте аккаунт для доступа к плагинам</p>
             </div>
 
-            <form class="auth-form" id="registerForm">
+            <form id="registerForm">
                 <div class="form-group">
-                    <label for="username">Имя пользователя</label>
-                    <input type="text" id="username" name="username" required minlength="3">
-                    <small class="error-message"></small>
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" required placeholder="Введите ваш email">
+                    <div class="error-message" id="emailError"></div>
                 </div>
 
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required>
-                    <small class="error-message"></small>
-                </div>
-
-                <div class="form-group">
-                    <label for="password">Пароль</label>
-                    <div class="password-input">
-                        <input type="password" id="password" name="password" required minlength="6">
-                        <i class="fas fa-eye password-toggle"></i>
+                    <label class="form-label">Пароль</label>
+                    <div class="password-toggle">
+                        <input type="password" class="form-input" required placeholder="Создайте пароль" id="password">
+                        <i class="fas fa-eye" id="togglePassword"></i>
                     </div>
-                    <small class="error-message"></small>
+                    <div class="error-message" id="passwordError"></div>
                 </div>
 
                 <div class="form-group">
-                    <label for="confirm-password">Подтвердите пароль</label>
-                    <div class="password-input">
-                        <input type="password" id="confirm-password" name="confirm-password" required>
-                        <i class="fas fa-eye password-toggle"></i>
+                    <label class="form-label">Подтверждение пароля</label>
+                    <div class="password-toggle">
+                        <input type="password" class="form-input" required placeholder="Повторите пароль" id="confirmPassword">
+                        <i class="fas fa-eye" id="toggleConfirmPassword"></i>
                     </div>
-                    <small class="error-message"></small>
+                    <div class="error-message" id="confirmPasswordError"></div>
                 </div>
 
-                <button type="submit" class="submit-btn">Зарегистрироваться</button>
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-user-plus"></i>
+                    Зарегистрироваться
+                </button>
             </form>
 
-            <div class="social-auth">
-                <div class="social-auth-text">Или войдите через</div>
-                <div class="social-buttons">
-                    <a href="#" class="social-btn"><i class="fab fa-vk"></i></a>
-                    <a href="#" class="social-btn"><i class="fab fa-google"></i></a>
-                    <a href="#" class="social-btn"><i class="fab fa-telegram"></i></a>
-                </div>
-            </div>
-
             <div class="auth-footer">
-                Уже есть аккаунт? <a href="login.html">Войти</a>
+                Уже есть аккаунт? <a href="login.html" class="auth-link">Войти</a>
             </div>
         </div>
-    </main>
+    </div>
 
     <script>
+        const form = document.getElementById('registerForm');
+        const emailError = document.getElementById('emailError');
+        const passwordError = document.getElementById('passwordError');
+        const confirmPasswordError = document.getElementById('confirmPasswordError');
+        const togglePassword = document.getElementById('togglePassword');
+        const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
+        const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirmPassword');
+
         // Переключение видимости пароля
-        document.querySelectorAll('.password-toggle').forEach(toggle => {
-            toggle.addEventListener('click', function() {
-                const input = this.previousElementSibling;
-                if (input.type === 'password') {
-                    input.type = 'text';
-                    this.classList.remove('fa-eye');
-                    this.classList.add('fa-eye-slash');
-                } else {
-                    input.type = 'password';
-                    this.classList.remove('fa-eye-slash');
-                    this.classList.add('fa-eye');
-                }
-            });
+        togglePassword.addEventListener('click', function() {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
         });
 
-        // Валидация формы
-        const registerForm = document.getElementById('registerForm');
-        const username = document.getElementById('username');
-        const email = document.getElementById('email');
-        const password = document.getElementById('password');
-        const confirmPassword = document.getElementById('confirm-password');
+        toggleConfirmPassword.addEventListener('click', function() {
+            const type = confirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+            confirmPassword.setAttribute('type', type);
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
 
-        function showError(input, message) {
-            const formGroup = input.closest('.form-group');
-            formGroup.classList.add('error');
-            const error = formGroup.querySelector('.error-message');
-            error.textContent = message;
-        }
-
-        function clearError(input) {
-            const formGroup = input.closest('.form-group');
-            formGroup.classList.remove('error');
-            const error = formGroup.querySelector('.error-message');
-            error.textContent = '';
-        }
-
-        function validateEmail(email) {
-            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return re.test(email);
-        }
-
-        registerForm.addEventListener('submit', function(e) {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
+            
+            // Сброс ошибок
+            emailError.textContent = '';
+            passwordError.textContent = '';
+            confirmPasswordError.textContent = '';
+            emailError.classList.remove('show');
+            passwordError.classList.remove('show');
+            confirmPasswordError.classList.remove('show');
+
+            const email = form.querySelector('input[type="email"]').value;
+            const password = form.querySelector('#password').value;
+            const confirmPassword = form.querySelector('#confirmPassword').value;
+
+            // Валидация
             let isValid = true;
 
-            // Очистка предыдущих ошибок
-            [username, email, password, confirmPassword].forEach(input => clearError(input));
-
-            // Проверка имени пользователя
-            if (username.value.length < 3) {
-                showError(username, 'Имя пользователя должно содержать минимум 3 символа');
+            if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+                emailError.textContent = 'Введите корректный email адрес';
+                emailError.classList.add('show');
                 isValid = false;
             }
 
-            // Проверка email
-            if (!validateEmail(email.value)) {
-                showError(email, 'Введите корректный email адрес');
+            if (password.length < 6) {
+                passwordError.textContent = 'Пароль должен содержать минимум 6 символов';
+                passwordError.classList.add('show');
                 isValid = false;
             }
 
-            // Проверка пароля
-            if (password.value.length < 6) {
-                showError(password, 'Пароль должен содержать минимум 6 символов');
-                isValid = false;
-            }
-
-            // Проверка подтверждения пароля
-            if (password.value !== confirmPassword.value) {
-                showError(confirmPassword, 'Пароли не совпадают');
+            if (password !== confirmPassword) {
+                confirmPasswordError.textContent = 'Пароли не совпадают';
+                confirmPasswordError.classList.add('show');
                 isValid = false;
             }
 
             if (isValid) {
-                // Здесь будет отправка данных на сервер
-                const userData = {
-                    username: username.value,
-                    email: email.value,
-                    password: password.value
-                };
+                const submitBtn = form.querySelector('.submit-btn');
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Регистрация...';
 
-                // Имитация отправки данных
-                console.log('Отправка данных:', userData);
-                
-                // Показываем сообщение об успехе
-                const successMessage = document.createElement('div');
-                successMessage.className = 'success-message';
-                successMessage.textContent = 'Регистрация успешна! Перенаправление...';
-                registerForm.insertBefore(successMessage, registerForm.firstChild);
+                try {
+                    // В реальном приложении здесь будет запрос к серверу
+                    await new Promise(resolve => setTimeout(resolve, 1500));
+                    
+                    // Сохраняем данные пользователя
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('user', JSON.stringify({
+                        email: email,
+                        isAdmin: false
+                    }));
 
-                // Перенаправление на страницу входа через 2 секунды
-                setTimeout(() => {
-                    window.location.href = 'login.html';
-                }, 2000);
+                    // Перенаправляем на главную страницу
+                    window.location.href = 'index.html';
+                } catch (error) {
+                    emailError.textContent = 'Ошибка при регистрации. Попробуйте позже.';
+                    emailError.classList.add('show');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-user-plus"></i> Зарегистрироваться';
+                }
             }
-        });
-
-        // Очистка ошибок при вводе
-        [username, email, password, confirmPassword].forEach(input => {
-            input.addEventListener('input', () => clearError(input));
         });
     </script>
 </body>
