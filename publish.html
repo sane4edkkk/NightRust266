@@ -374,12 +374,12 @@
                     return;
                 }
 
-                // Читаем содержимое файла
+                // Читаем содержимое файла как base64
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    window.fileContent = e.target.result; // Сохраняем содержимое файла
+                    window.fileContent = e.target.result; // Сохраняем содержимое файла в base64
                 };
-                reader.readAsArrayBuffer(file);
+                reader.readAsDataURL(file);
 
                 fileName.textContent = file.name;
                 fileSize.textContent = formatFileSize(file.size);

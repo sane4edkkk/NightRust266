@@ -710,38 +710,60 @@
 
             document.body.appendChild(notification);
 
-            // Создаем ссылку для скачивания
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(new Blob([plugin.fileContent || ''], { type: 'application/octet-stream' }));
-            link.download = filename;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            try {
+                // Создаем ссылку для скачивания
+                const link = document.createElement('a');
+                link.href = plugin.fileContent; // Используем base64 данные напрямую
+                link.download = filename;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
 
-            // Добавляем информацию о скачивании
-            const downloads = parseInt(plugin.downloads || 0) + 1;
-            plugin.downloads = downloads;
-            
-            // Обновляем информацию о плагине в localStorage
-            const updatedPlugins = plugins.map(p => 
-                p.id === plugin.id ? { ...p, downloads } : p
-            );
-            localStorage.setItem('plugins', JSON.stringify(updatedPlugins));
-
-            // Симулируем задержку для уведомления
-            setTimeout(() => {
-                // Удаляем уведомление
-                notification.style.opacity = '0';
-                notification.style.transform = 'translateX(100%)';
-                notification.style.transition = 'all 0.3s ease';
+                // Добавляем информацию о скачивании
+                const downloads = parseInt(plugin.downloads || 0) + 1;
+                plugin.downloads = downloads;
                 
-                setTimeout(() => {
-                    document.body.removeChild(notification);
-                }, 300);
+                // Обновляем информацию о плагине в localStorage
+                const updatedPlugins = plugins.map(p => 
+                    p.id === plugin.id ? { ...p, downloads } : p
+                );
+                localStorage.setItem('plugins', JSON.stringify(updatedPlugins));
 
-                // Обновляем отображение для показа нового количества скачиваний
+                // Обновляем отображение
                 loadPlugins();
-            }, 2000);
+
+                // Показываем уведомление об успешном скачивании
+                setTimeout(() => {
+                    notification.style.opacity = '0';
+                    notification.style.transform = 'translateX(100%)';
+                    notification.style.transition = 'all 0.3s ease';
+                    
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 300);
+                }, 2000);
+            } catch (error) {
+                console.error('Ошибка при скачивании:', error);
+                notification.innerHTML = `
+                    <i class="fas fa-exclamation-circle" style="color: #ff4757; font-size: 1.5rem;"></i>
+                    <div>
+                        <div style="font-weight: 500; margin-bottom: 0.25rem;">Ошибка скачивания</div>
+                        <div style="font-size: 0.9rem; color: #999;">
+                            Не удалось скачать файл
+                        </div>
+                    </div>
+                `;
+
+                setTimeout(() => {
+                    notification.style.opacity = '0';
+                    notification.style.transform = 'translateX(100%)';
+                    notification.style.transition = 'all 0.3s ease';
+                    
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 300);
+                }, 2000);
+            }
         }
 
         function deletePlugin(pluginId, buttonElement) {
