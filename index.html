@@ -3,125 +3,301 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Современный Форум</title>
+    <title>ForumHub - Главная</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #f5f5f5;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .category-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .category-header i {
+            font-size: 2rem;
+        }
+
+        .category-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .category-content {
+            padding: 1.5rem;
+        }
+
+        .category-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .category-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .category-description {
+            color: #444;
+            margin: 1rem 0;
+            line-height: 1.5;
+        }
+
+        .category-link {
+            display: inline-block;
+            color: var(--primary-color);
+            text-decoration: none;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        .category-link:hover {
+            text-decoration: underline;
+        }
+
+        .welcome-section {
+            background: var(--primary-color);
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .welcome-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .welcome-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .welcome-content p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .publish-btn {
+            background: #4CAF50;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background-color 0.3s;
+        }
+
+        .publish-btn:hover {
+            background: #45a049;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar">
         <div class="nav-container">
-            <div class="logo">
-                <i class="fas fa-comments"></i>
-                <span>ForumHub</span>
-            </div>
+            <a href="index.html" class="logo">ForumHub</a>
             <div class="nav-links">
                 <a href="index.html" class="active">Главная</a>
-                <a href="#categories">Категории</a>
-                <a href="#popular">Популярное</a>
-                <div class="auth-buttons">
-                    <a href="login.html" class="login-btn">Войти</a>
-                    <a href="register.html" class="register-btn">Регистрация</a>
-                </div>
+                <a href="categories.html">Категории</a>
+                <a href="about.html">О нас</a>
+                <a href="publish.html" class="publish-btn"><i class="fas fa-plus"></i> Опубликовать</a>
+            </div>
+            <div class="auth-buttons">
+                <a href="login.html" class="login-btn">Войти</a>
+                <a href="register.html" class="register-btn">Регистрация</a>
             </div>
         </div>
     </nav>
 
-    <div class="hero-section">
-        <h1>Добро пожаловать на ForumHub</h1>
-        <p>Присоединяйтесь к нашему сообществу и участвуйте в обсуждениях</p>
-        <a href="register.html" class="cta-button">Присоединиться сейчас</a>
+    <section class="welcome-section">
+        <div class="welcome-content">
+            <h1>Добро пожаловать на ForumHub</h1>
+            <p>Место, где вы можете делиться контентом, общаться и находить единомышленников</p>
+        </div>
+    </section>
+
+    <div class="main-container">
+        <h2 class="section-title">Популярные категории</h2>
+        <div class="category-grid">
+            <!-- Игры -->
+            <div class="category-card">
+                <div class="category-header">
+                    <i class="fas fa-gamepad"></i>
+                    <h2>Игры</h2>
+                </div>
+                <div class="category-content">
+                    <p class="category-description">
+                        Обсуждение игр, прохождений, модификаций и всего что связано с игровой индустрией.
+                    </p>
+                    <div class="category-stats">
+                        <div class="category-stat">
+                            <i class="fas fa-folder"></i>
+                            <span>125 тем</span>
+                        </div>
+                        <div class="category-stat">
+                            <i class="fas fa-comments"></i>
+                            <span>Активные обсуждения</span>
+                        </div>
+                    </div>
+                    <a href="category-view.html?category=games" class="category-link">Перейти к играм →</a>
+                </div>
+            </div>
+
+            <!-- Плагины -->
+            <div class="category-card">
+                <div class="category-header">
+                    <i class="fas fa-code"></i>
+                    <h2>Плагины</h2>
+                </div>
+                <div class="category-content">
+                    <p class="category-description">
+                        Различные плагины, скрипты, моды и дополнения для программ и игр.
+                    </p>
+                    <div class="category-stats">
+                        <div class="category-stat">
+                            <i class="fas fa-folder"></i>
+                            <span>89 тем</span>
+                        </div>
+                        <div class="category-stat">
+                            <i class="fas fa-download"></i>
+                            <span>Популярные загрузки</span>
+                        </div>
+                    </div>
+                    <a href="category-view.html?category=plugins" class="category-link">Смотреть плагины →</a>
+                </div>
+            </div>
+
+            <!-- Кино и сериалы -->
+            <div class="category-card">
+                <div class="category-header">
+                    <i class="fas fa-film"></i>
+                    <h2>Кино и сериалы</h2>
+                </div>
+                <div class="category-content">
+                    <p class="category-description">
+                        Обсуждение фильмов, сериалов, актеров и новинок кинематографа.
+                    </p>
+                    <div class="category-stats">
+                        <div class="category-stat">
+                            <i class="fas fa-folder"></i>
+                            <span>234 темы</span>
+                        </div>
+                        <div class="category-stat">
+                            <i class="fas fa-eye"></i>
+                            <span>Популярный раздел</span>
+                        </div>
+                    </div>
+                    <a href="category-view.html?category=movies" class="category-link">Перейти к обсуждению →</a>
+                </div>
+            </div>
+
+            <!-- Музыка -->
+            <div class="category-card">
+                <div class="category-header">
+                    <i class="fas fa-music"></i>
+                    <h2>Музыка</h2>
+                </div>
+                <div class="category-content">
+                    <p class="category-description">
+                        Музыкальные новинки, обсуждение исполнителей, альбомов и клипов.
+                    </p>
+                    <div class="category-stats">
+                        <div class="category-stat">
+                            <i class="fas fa-folder"></i>
+                            <span>167 тем</span>
+                        </div>
+                        <div class="category-stat">
+                            <i class="fas fa-headphones"></i>
+                            <span>Активные обсуждения</span>
+                        </div>
+                    </div>
+                    <a href="category-view.html?category=music" class="category-link">Слушать музыку →</a>
+                </div>
+            </div>
+
+            <!-- Премиум категория -->
+            <div class="category-card">
+                <div class="category-header">
+                    <i class="fas fa-crown"></i>
+                    <h2>Премиум</h2>
+                </div>
+                <div class="category-content">
+                    <p class="category-description">
+                        Получите доступ к премиум возможностям и эксклюзивному контенту.
+                    </p>
+                    <div class="category-stats">
+                        <div class="category-stat">
+                            <i class="fas fa-star"></i>
+                            <span>Особый статус</span>
+                        </div>
+                        <div class="category-stat">
+                            <i class="fas fa-gem"></i>
+                            <span>Премиум функции</span>
+                        </div>
+                    </div>
+                    <a href="categories.html#pricing" class="category-link">Выбрать тариф →</a>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <main class="container">
-        <section class="categories" id="categories">
-            <h2>Популярные категории</h2>
-            <div class="category-grid">
-                <div class="category-card">
-                    <i class="fas fa-gamepad"></i>
-                    <h3>Игры</h3>
-                    <p>125 тем</p>
-                </div>
-                <div class="category-card">
-                    <i class="fas fa-laptop-code"></i>
-                    <h3>Программирование</h3>
-                    <p>89 тем</p>
-                </div>
-                <div class="category-card">
-                    <i class="fas fa-film"></i>
-                    <h3>Кино и сериалы</h3>
-                    <p>234 темы</p>
-                </div>
-                <div class="category-card">
-                    <i class="fas fa-music"></i>
-                    <h3>Музыка</h3>
-                    <p>167 тем</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="recent-topics">
-            <h2>Последние обсуждения</h2>
-            <div class="topics-list">
-                <div class="topic-card">
-                    <div class="topic-header">
-                        <img src="https://via.placeholder.com/40" alt="User Avatar" class="user-avatar">
-                        <div class="topic-info">
-                            <h3>Лучшие игры 2024 года</h3>
-                            <span class="author">Автор: JohnDoe</span>
-                        </div>
-                    </div>
-                    <div class="topic-stats">
-                        <span><i class="fas fa-comments"></i> 45</span>
-                        <span><i class="fas fa-eye"></i> 1.2k</span>
-                    </div>
-                </div>
-
-                <div class="topic-card">
-                    <div class="topic-header">
-                        <img src="https://via.placeholder.com/40" alt="User Avatar" class="user-avatar">
-                        <div class="topic-info">
-                            <h3>Изучаем JavaScript в 2024</h3>
-                            <span class="author">Автор: WebDev</span>
-                        </div>
-                    </div>
-                    <div class="topic-stats">
-                        <span><i class="fas fa-comments"></i> 32</span>
-                        <span><i class="fas fa-eye"></i> 856</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>О форуме</h3>
-                <p>ForumHub - место для общения и обмена знаниями</p>
-            </div>
-            <div class="footer-section">
-                <h3>Ссылки</h3>
-                <ul>
-                    <li><a href="#">Правила</a></li>
-                    <li><a href="#">Политика конфиденциальности</a></li>
-                    <li><a href="#">Контакты</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Социальные сети</h3>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-telegram"></i></a>
-                    <a href="#"><i class="fab fa-vk"></i></a>
-                    <a href="#"><i class="fab fa-discord"></i></a>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 ForumHub. Все права защищены.</p>
-        </div>
-    </footer>
-    <!-- Подключаем скрипт авторизации -->
     <script src="auth.js"></script>
 </body>
 </html> 
