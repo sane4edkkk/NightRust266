@@ -19,8 +19,6 @@
             --text-secondary: #94a3b8;
             --success: #22c55e;
             --error: #ef4444;
-            --warning: #f59e0b;
-            --info: #3b82f6;
         }
 
         * {
@@ -181,7 +179,11 @@
             font-size: 0.9rem;
             margin-top: 0.5rem;
             display: none;
-            animation: shake 0.5s ease-in-out;
+        }
+
+        .error-message.show {
+            display: block;
+            animation: shake 0.5s ease;
         }
 
         @keyframes shake {
@@ -196,6 +198,31 @@
 
         .form-input.error + .error-message {
             display: block;
+        }
+
+        .password-requirements {
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .requirement {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.25rem;
+        }
+
+        .requirement i {
+            font-size: 0.75rem;
+        }
+
+        .requirement.valid {
+            color: var(--success);
+        }
+
+        .requirement.invalid {
+            color: var(--error);
         }
     </style>
 </head>
@@ -225,14 +252,28 @@
                 <label class="form-label">Пароль</label>
                 <div class="password-group">
                     <input type="password" class="form-input" id="password" required
-                        placeholder="Минимум 8 символов">
+                        placeholder="Придумайте пароль">
                     <i class="fas fa-eye password-toggle" onclick="togglePassword('password')"></i>
                 </div>
                 <div class="error-message" id="passwordError"></div>
+                <div class="password-requirements">
+                    <div class="requirement" id="lengthReq">
+                        <i class="fas fa-circle"></i>
+                        Минимум 8 символов
+                    </div>
+                    <div class="requirement" id="upperReq">
+                        <i class="fas fa-circle"></i>
+                        Заглавная буква
+                    </div>
+                    <div class="requirement" id="numberReq">
+                        <i class="fas fa-circle"></i>
+                        Цифра
+                    </div>
+                </div>
             </div>
 
             <div class="form-group">
-                <label class="form-label">Подтвердите пароль</label>
+                <label class="form-label">Подтверждение пароля</label>
                 <div class="password-group">
                     <input type="password" class="form-input" id="confirmPassword" required
                         placeholder="Повторите пароль">
@@ -268,12 +309,28 @@
         }
 
         function validatePassword(password) {
-            return password.length >= 8;
+            const lengthReq = document.getElementById('lengthReq');
+            const upperReq = document.getElementById('upperReq');
+            const numberReq = document.getElementById('numberReq');
+
+            const hasLength = password.length >= 8;
+            const hasUpper = /[A-Z]/.test(password);
+            const hasNumber = /[0-9]/.test(password);
+
+            lengthReq.className = `requirement ${hasLength ? 'valid' : 'invalid'}`;
+            upperReq.className = `requirement ${hasUpper ? 'valid' : 'invalid'}`;
+            numberReq.className = `requirement ${hasNumber ? 'valid' : 'invalid'}`;
+
+            lengthReq.firstElementChild.className = `fas ${hasLength ? 'fa-check-circle' : 'fa-circle'}`;
+            upperReq.firstElementChild.className = `fas ${hasUpper ? 'fa-check-circle' : 'fa-circle'}`;
+            numberReq.firstElementChild.className = `fas ${hasNumber ? 'fa-check-circle' : 'fa-circle'}`;
+
+            return hasLength && hasUpper && hasNumber;
         }
 
-        function validateEmail(email) {
-            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-        }
+        document.getElementById('password').addEventListener('input', function(e) {
+            validatePassword(e.target.value);
+        });
 
         function showError(inputId, message) {
             const input = document.getElementById(inputId);
@@ -303,56 +360,57 @@
             clearError('email');
             clearError('password');
             clearError('confirmPassword');
-            
-            let hasError = false;
 
+            // Проверяем никнейм
             if (nickname.length < 3) {
                 showError('nickname', 'Никнейм должен содержать минимум 3 символа');
-                hasError = true;
-            }
-
-            if (!validateEmail(email)) {
-                showError('email', 'Введите корректный email адрес');
-                hasError = true;
-            }
-
-            if (!validatePassword(password)) {
-                showError('password', 'Пароль должен содержать минимум 8 символов');
-                hasError = true;
-            }
-
-            if (password !== confirmPassword) {
-                showError('confirmPassword', 'Пароли не совпадают');
-                hasError = true;
-            }
-
-            if (hasError) return;
-
-            // Проверяем, существует ли пользователь
-            const users = JSON.parse(localStorage.getItem('users')) || [];
-            if (users.some(user => user.email === email)) {
-                showError('email', 'Пользователь с таким email уже существует');
                 return;
             }
-            if (users.some(user => user.nickname === nickname)) {
-                showError('nickname', 'Пользователь с таким никнеймом уже существует');
+
+            // Проверяем email
+            if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+                showError('email', 'Введите корректный email адрес');
+                return;
+            }
+
+            // Проверяем пароль
+            if (!validatePassword(password)) {
+                showError('password', 'Пароль не соответствует требованиям');
+                return;
+            }
+
+            // Проверяем совпадение паролей
+            if (password !== confirmPassword) {
+                showError('confirmPassword', 'Пароли не совпадают');
+                return;
+            }
+
+            // Проверяем, не занят ли никнейм или email
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            if (users.some(u => u.nickname === nickname)) {
+                showError('nickname', 'Этот никнейм уже занят');
+                return;
+            }
+            if (users.some(u => u.email === email)) {
+                showError('email', 'Этот email уже зарегистрирован');
                 return;
             }
 
             // Создаем нового пользователя
             const newUser = {
-                id: Date.now(),
+                id: Date.now().toString(),
                 nickname,
                 email,
-                password, // В реальном приложении пароль должен быть захеширован
-                isAdmin: false,
-                registrationDate: new Date().toISOString()
+                password,
+                registrationDate: new Date().toISOString(),
+                isAdmin: false
             };
 
+            // Добавляем пользователя в хранилище
             users.push(newUser);
             localStorage.setItem('users', JSON.stringify(users));
 
-            // Автоматически логиним пользователя
+            // Автоматически входим в аккаунт
             localStorage.setItem('user', JSON.stringify(newUser));
 
             // Перенаправляем на главную страницу
