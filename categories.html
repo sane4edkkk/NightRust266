@@ -223,6 +223,120 @@
         .download-btn:hover {
             background: #45a049;
         }
+
+        .premium-card {
+            background: linear-gradient(135deg, #242424, #2a2a2a);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid #333;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .premium-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ffd700, #ffa500);
+        }
+
+        .premium-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .premium-icon {
+            font-size: 2rem;
+            color: #ffd700;
+        }
+
+        .premium-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            background: linear-gradient(90deg, #ffd700, #ffa500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .premium-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .premium-feature {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 8px;
+            color: #ffd700;
+        }
+
+        .feature-text {
+            flex-grow: 1;
+        }
+
+        .feature-title {
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .feature-description {
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        .premium-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: linear-gradient(90deg, #ffd700, #ffa500);
+            color: #1a1a1a;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+        }
+
+        .premium-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .premium-price {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .price-amount {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ffd700;
+        }
+
+        .price-period {
+            color: #999;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
@@ -238,6 +352,67 @@
                 <a href="register.html" class="auth-btn register-btn">Регистрация</a>
             </div>
         </nav>
+
+        <div class="premium-card">
+            <div class="premium-header">
+                <i class="fas fa-crown premium-icon"></i>
+                <h2 class="premium-title">Премиум доступ</h2>
+            </div>
+            
+            <div class="premium-features">
+                <div class="premium-feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-download"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h3 class="feature-title">Безлимитные загрузки</h3>
+                        <p class="feature-description">Скачивайте плагины без ограничений</p>
+                    </div>
+                </div>
+                
+                <div class="premium-feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h3 class="feature-title">Ранний доступ</h3>
+                        <p class="feature-description">Получайте новые плагины первыми</p>
+                    </div>
+                </div>
+                
+                <div class="premium-feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h3 class="feature-title">Премиум статус</h3>
+                        <p class="feature-description">Особый значок рядом с именем</p>
+                    </div>
+                </div>
+                
+                <div class="premium-feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h3 class="feature-title">Приоритетная поддержка</h3>
+                        <p class="feature-description">Быстрые ответы на ваши вопросы</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="premium-price">
+                <div class="price-amount">$9.99</div>
+                <div class="price-period">в месяц</div>
+            </div>
+
+            <div style="text-align: center;">
+                <a href="#" class="premium-button" onclick="upgradeToPremium()">
+                    <i class="fas fa-crown"></i>
+                    Получить премиум
+                </a>
+            </div>
+        </div>
 
         <div class="plugins-grid">
             <!-- IQKITS Plugin -->
@@ -397,6 +572,17 @@
             localStorage.removeItem('isLoggedIn');
             localStorage.removeItem('user');
             window.location.reload();
+        }
+
+        function upgradeToPremium() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            if (!isLoggedIn) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Here you would typically redirect to a payment gateway
+            alert('Функция оплаты находится в разработке. Скоро будет доступна!');
         }
     </script>
 </body>
