@@ -254,17 +254,52 @@
         document.getElementById('publishForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Здесь будет логика отправки формы
+            // Собираем данные формы
             const formData = new FormData(this);
             const fileInput = document.getElementById('fileInput');
-            if (fileInput.files[0]) {
-                formData.append('file', fileInput.files[0]);
-            }
+            const file = fileInput.files[0];
+            
+            // Создаем объект публикации
+            const publication = {
+                id: Date.now(),
+                title: formData.get('title'),
+                category: formData.get('category'),
+                description: formData.get('description'),
+                allowComments: formData.get('allowComments') === 'on',
+                allowMessages: formData.get('allowMessages') === 'on',
+                author: JSON.parse(localStorage.getItem('user'))?.email || 'Анонимный пользователь',
+                date: new Date().toISOString()
+            };
 
-            // Временно показываем уведомление об успешной публикации
-            alert('Контент успешно опубликован!');
-            // В реальном приложении здесь будет отправка данных на сервер
+            // Если есть файл и это изображение, добавляем URL
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    publication.imageUrl = e.target.result;
+                    savePublicationAndRedirect(publication);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                savePublicationAndRedirect(publication);
+            }
         });
+
+        function savePublicationAndRedirect(publication) {
+            // Получаем существующие публикации
+            const publications = JSON.parse(localStorage.getItem('publications')) || [];
+            
+            // Добавляем новую публикацию
+            publications.push(publication);
+            
+            // Сохраняем обновленный список
+            localStorage.setItem('publications', JSON.stringify(publications));
+
+            // Показываем уведомление
+            alert('Публикация успешно создана!');
+            
+            // Перенаправляем на страницу категории
+            window.location.href = `category-view.html?category=${publication.category}`;
+        }
 
         // Drag and drop функционал
         const dropZone = document.querySelector('.file-upload');

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Просмотр категории - ForumHub</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .category-view-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .publications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .publication-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .publication-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .publication-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .publication-content {
+            padding: 1.5rem;
+        }
+
+        .publication-title {
+            font-size: 1.25rem;
+            font-weight: 500;
+            margin: 0 0 1rem 0;
+            color: #333;
+        }
+
+        .publication-description {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .publication-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .publication-author {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .author-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+        }
+
+        .download-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #4CAF50;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+        }
+
+        .download-button:hover {
+            background: #45a049;
+        }
+
+        .category-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .category-header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .category-header h1 {
+            margin: 0;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .category-header p {
+            margin: 0;
+            opacity: 0.9;
+        }
+
+        .sort-filter {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .sort-select {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .filter-button {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-button.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">ForumHub</a>
+            <div class="nav-links">
+                <a href="index.html">Главная</a>
+                <a href="categories.html" class="active">Категории</a>
+                <a href="about.html">О нас</a>
+                <a href="publish.html" class="publish-btn"><i class="fas fa-plus"></i> Опубликовать</a>
+            </div>
+            <div class="auth-buttons">
+                <a href="login.html" class="login-btn">Войти</a>
+                <a href="register.html" class="register-btn">Регистрация</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="category-header">
+        <div class="category-header-content">
+            <h1 id="categoryTitle">Загрузка категории...</h1>
+            <p id="categoryDescription">Загрузка описания...</p>
+        </div>
+    </header>
+
+    <div class="category-view-container">
+        <div class="sort-filter">
+            <select class="sort-select">
+                <option value="newest">Сначала новые</option>
+                <option value="popular">По популярности</option>
+                <option value="downloaded">По загрузкам</option>
+            </select>
+            <div class="filter-buttons">
+                <button class="filter-button active">Все</button>
+                <button class="filter-button">Бесплатные</button>
+                <button class="filter-button">Премиум</button>
+            </div>
+        </div>
+
+        <div class="publications-grid" id="publicationsContainer">
+            <!-- Публикации будут добавляться динамически -->
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+    <script>
+        // Получаем категорию из URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const category = urlParams.get('category');
+
+        // Настройки категорий
+        const categorySettings = {
+            games: {
+                title: 'Игры',
+                description: 'Обсуждение игр, прохождений, модификаций и всего что связано с игровой индустрией.',
+                icon: 'gamepad'
+            },
+            plugins: {
+                title: 'Плагины',
+                description: 'Различные плагины, скрипты, моды и дополнения для программ и игр.',
+                icon: 'code'
+            },
+            movies: {
+                title: 'Кино и сериалы',
+                description: 'Обсуждение фильмов, сериалов, актеров и новинок кинематографа.',
+                icon: 'film'
+            },
+            music: {
+                title: 'Музыка',
+                description: 'Музыкальные новинки, обсуждение исполнителей, альбомов и клипов.',
+                icon: 'music'
+            }
+        };
+
+        // Обновляем заголовок и описание категории
+        if (category && categorySettings[category]) {
+            document.getElementById('categoryTitle').textContent = categorySettings[category].title;
+            document.getElementById('categoryDescription').textContent = categorySettings[category].description;
+            document.title = `${categorySettings[category].title} - ForumHub`;
+        }
+
+        // Загружаем публикации из localStorage
+        function loadPublications() {
+            const publications = JSON.parse(localStorage.getItem('publications')) || [];
+            const categoryPublications = publications.filter(pub => pub.category === category);
+            const container = document.getElementById('publicationsContainer');
+            
+            container.innerHTML = '';
+            
+            if (categoryPublications.length === 0) {
+                container.innerHTML = '<p>В этой категории пока нет публикаций.</p>';
+                return;
+            }
+
+            categoryPublications.forEach(pub => {
+                const card = document.createElement('div');
+                card.className = 'publication-card';
+                card.innerHTML = `
+                    ${pub.imageUrl ? `<img src="${pub.imageUrl}" class="publication-image" alt="${pub.title}">` : ''}
+                    <div class="publication-content">
+                        <h3 class="publication-title">${pub.title}</h3>
+                        <p class="publication-description">${pub.description}</p>
+                        <div class="publication-meta">
+                            <div class="publication-author">
+                                <img src="https://via.placeholder.com/24" class="author-avatar" alt="Author">
+                                <span>${pub.author || 'Анонимный пользователь'}</span>
+                            </div>
+                            <a href="#" class="download-button">
+                                <i class="fas fa-download"></i>
+                                Скачать
+                            </a>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Загружаем публикации при загрузке страницы
+        loadPublications();
+
+        // Обработчики для кнопок фильтрации
+        document.querySelectorAll('.filter-button').forEach(button => {
+            button.addEventListener('click', function() {
+                document.querySelector('.filter-button.active').classList.remove('active');
+                this.classList.add('active');
+                // Здесь будет логика фильтрации
+            });
+        });
+
+        // Обработчик для сортировки
+        document.querySelector('.sort-select').addEventListener('change', function() {
+            // Здесь будет логика сортировки
+        });
+    </script>
+</body>
+</html> 
