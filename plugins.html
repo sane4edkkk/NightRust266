@@ -229,9 +229,12 @@
         .plugin-author {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
+        }
+
+        .plugin-author i {
+            font-size: 1.25rem;
             color: var(--text-secondary);
-            font-size: 0.9rem;
         }
 
         .plugin-actions {
@@ -403,6 +406,28 @@
             width: 100%;
             height: 100%;
         }
+
+        .plugin-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .author-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .author-name {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .author-date {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
     </style>
 </head>
 <body>
@@ -549,27 +574,33 @@
                 return;
             }
 
-            const plugin = {
-                id: Date.now().toString(),
-                title,
-                category,
-                type,
-                price: parseInt(price),
-                description,
-                author: user.nickname,
-                authorId: user.id,
-                fileName: file.name,
-                dateAdded: new Date().toISOString()
+            // Конвертируем файл в base64
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const plugin = {
+                    id: Date.now().toString(),
+                    title,
+                    category,
+                    type,
+                    price: parseInt(price),
+                    description,
+                    author: user.nickname,
+                    authorId: user.id,
+                    fileName: file.name,
+                    fileData: e.target.result,
+                    dateAdded: new Date().toISOString()
+                };
+
+                // Сохраняем плагин
+                const plugins = JSON.parse(localStorage.getItem('plugins')) || [];
+                plugins.push(plugin);
+                localStorage.setItem('plugins', JSON.stringify(plugins));
+
+                // Обновляем отображение
+                loadPlugins();
+                closeAddPluginModal();
             };
-
-            // Сохраняем плагин
-            const plugins = JSON.parse(localStorage.getItem('plugins')) || [];
-            plugins.push(plugin);
-            localStorage.setItem('plugins', JSON.stringify(plugins));
-
-            // Обновляем отображение
-            loadPlugins();
-            closeAddPluginModal();
+            reader.readAsDataURL(file);
         }
 
         function loadPlugins() {
@@ -595,15 +626,20 @@
                 <div class="plugin-header">
                     <div>
                         <h3 class="plugin-title">${plugin.title}</h3>
-                        <span class="plugin-category">${getCategoryName(plugin.category)}</span>
-                        ${priceDisplay}
+                        <div class="plugin-meta">
+                            <span class="plugin-category">${getCategoryName(plugin.category)}</span>
+                            ${priceDisplay}
+                        </div>
                     </div>
                 </div>
                 <p class="plugin-description">${plugin.description}</p>
                 <div class="plugin-footer">
                     <div class="plugin-author">
                         <i class="fas fa-user"></i>
-                        ${plugin.author}
+                        <div class="author-info">
+                            <span class="author-name">${plugin.author}</span>
+                            <span class="author-date">Добавлено: ${new Date(plugin.dateAdded).toLocaleDateString()}</span>
+                        </div>
                     </div>
                     <div class="plugin-actions">
                         <button class="plugin-btn download-btn" onclick="downloadPlugin('${plugin.id}')">
@@ -665,8 +701,13 @@
                 return;
             }
 
-            // Имитация скачивания
-            alert('Начинается скачивание плагина: ' + plugin.title);
+            // Создаем ссылку для скачивания
+            const link = document.createElement('a');
+            link.href = plugin.fileData;
+            link.download = plugin.fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
 
         function showPluginInfo(pluginId) {
