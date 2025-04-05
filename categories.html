@@ -710,6 +710,14 @@
 
             document.body.appendChild(notification);
 
+            // Создаем ссылку для скачивания
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(new Blob([plugin.fileContent || ''], { type: 'application/octet-stream' }));
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
             // Добавляем информацию о скачивании
             const downloads = parseInt(plugin.downloads || 0) + 1;
             plugin.downloads = downloads;
@@ -720,7 +728,7 @@
             );
             localStorage.setItem('plugins', JSON.stringify(updatedPlugins));
 
-            // Симулируем скачивание
+            // Симулируем задержку для уведомления
             setTimeout(() => {
                 // Удаляем уведомление
                 notification.style.opacity = '0';

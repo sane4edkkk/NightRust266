@@ -374,6 +374,13 @@
                     return;
                 }
 
+                // Читаем содержимое файла
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    window.fileContent = e.target.result; // Сохраняем содержимое файла
+                };
+                reader.readAsArrayBuffer(file);
+
                 fileName.textContent = file.name;
                 fileSize.textContent = formatFileSize(file.size);
                 filePreview.classList.add('show');
@@ -471,6 +478,7 @@
                         commands: commandsInput.value.split('\n').filter(cmd => cmd.trim()),
                         fileName: file.name,
                         fileSize: formatFileSize(file.size),
+                        fileContent: window.fileContent, // Добавляем содержимое файла
                         downloads: 0,
                         rating: 0,
                         author: {
