@@ -530,101 +530,7 @@
         </div>
 
         <div class="plugins-grid">
-            <!-- IQKITS Plugin -->
-            <div class="plugin-card">
-                <div class="plugin-header">
-                    <div class="plugin-tags">
-                        <span class="plugin-tag">БЕСПЛАТНО</span>
-                        <span class="plugin-tag">C#</span>
-                    </div>
-                    <h2 class="plugin-title">
-                        <a href="plugin-details.html" style="color: white; text-decoration: none;">IQKITS</a>
-                    </h2>
-                </div>
-                <div class="plugin-content">
-                    <div class="plugin-author">
-                        <img src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y" alt="Аватар автора" class="author-avatar">
-                        <div class="author-info">
-                            <a href="profile.html" class="author-name">
-                                sasaaleskevic65@gmail.com
-                                <span class="admin-badge">ADMIN</span>
-                            </a>
-                            <div class="author-role">Администратор</div>
-                        </div>
-                    </div>
-                    <div class="plugin-meta">
-                        <div class="meta-item">
-                            <i class="fas fa-file"></i>
-                            <span>204 КБ</span>
-                        </div>
-                        <div class="meta-item">
-                            <i class="fas fa-download"></i>
-                            <span>1337 загрузок</span>
-                        </div>
-                        <div class="meta-item">
-                            <i class="fas fa-star"></i>
-                            <span>4.8</span>
-                        </div>
-                    </div>
-                    <div class="plugin-actions">
-                        <button class="download-btn" onclick="downloadPlugin('IQKITS.zip')">
-                            <i class="fas fa-download"></i>
-                            Скачать
-                        </button>
-                        <button class="delete-btn" onclick="deletePlugin('IQKITS.zip', this)">
-                            <i class="fas fa-trash"></i> Удалить
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- RustEdit Plugin -->
-            <div class="plugin-card">
-                <div class="plugin-header">
-                    <div class="plugin-tags">
-                        <span class="plugin-tag">БЕСПЛАТНО</span>
-                        <span class="plugin-tag">OXIDE</span>
-                    </div>
-                    <h2 class="plugin-title">
-                        <a href="plugin-details.html?plugin=rustedit" style="color: white; text-decoration: none;">RustEdit</a>
-                    </h2>
-                </div>
-                <div class="plugin-content">
-                    <div class="plugin-author">
-                        <img src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y" alt="Аватар автора" class="author-avatar">
-                        <div class="author-info">
-                            <a href="profile.html" class="author-name">
-                                sasaaleskevic65@gmail.com
-                                <span class="admin-badge">ADMIN</span>
-                            </a>
-                            <div class="author-role">Администратор</div>
-                        </div>
-                    </div>
-                    <div class="plugin-meta">
-                        <div class="meta-item">
-                            <i class="fas fa-file"></i>
-                            <span>156 КБ</span>
-                        </div>
-                        <div class="meta-item">
-                            <i class="fas fa-download"></i>
-                            <span>892 загрузок</span>
-                        </div>
-                        <div class="meta-item">
-                            <i class="fas fa-star"></i>
-                            <span>4.6</span>
-                        </div>
-                    </div>
-                    <div class="plugin-actions">
-                        <button class="download-btn" onclick="downloadPlugin('RustEdit.zip')">
-                            <i class="fas fa-download"></i>
-                            Скачать
-                        </button>
-                        <button class="delete-btn" onclick="deletePlugin('RustEdit.zip', this)">
-                            <i class="fas fa-trash"></i> Удалить
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <!-- Плагины будут добавляться динамически через JavaScript -->
         </div>
     </div>
 
@@ -678,7 +584,75 @@
                     <a href="register.html" class="auth-btn register-btn">Регистрация</a>
                 `;
             }
+
+            // Загружаем и отображаем плагины
+            loadPlugins();
         });
+
+        function loadPlugins() {
+            const pluginsGrid = document.querySelector('.plugins-grid');
+            const plugins = JSON.parse(localStorage.getItem('plugins')) || [];
+
+            if (plugins.length === 0) {
+                pluginsGrid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: #999;">
+                        Пока нет опубликованных плагинов
+                    </div>
+                `;
+                return;
+            }
+
+            pluginsGrid.innerHTML = plugins.map(plugin => `
+                <div class="plugin-card">
+                    <div class="plugin-header">
+                        <div class="plugin-tags">
+                            <span class="plugin-tag">БЕСПЛАТНО</span>
+                            <span class="plugin-tag">НОВЫЙ</span>
+                        </div>
+                        <h2 class="plugin-title">
+                            <a href="plugin-details.html?id=${plugin.id}" style="color: white; text-decoration: none;">
+                                ${plugin.name}
+                            </a>
+                        </h2>
+                    </div>
+                    <div class="plugin-content">
+                        <div class="plugin-author">
+                            <img src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y" alt="Аватар автора" class="author-avatar">
+                            <div class="author-info">
+                                <a href="profile.html" class="author-name">
+                                    ${plugin.author.nickname}
+                                    ${plugin.author.isAdmin ? '<span class="admin-badge">ADMIN</span>' : ''}
+                                </a>
+                                <div class="author-role">${plugin.author.isAdmin ? 'Администратор' : 'Пользователь'}</div>
+                            </div>
+                        </div>
+                        <div class="plugin-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-file"></i>
+                                <span>${plugin.fileSize}</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-download"></i>
+                                <span>${plugin.downloads} загрузок</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-star"></i>
+                                <span>${plugin.rating}</span>
+                            </div>
+                        </div>
+                        <div class="plugin-actions">
+                            <button class="download-btn" onclick="downloadPlugin('${plugin.fileName}')">
+                                <i class="fas fa-download"></i>
+                                Скачать
+                            </button>
+                            <button class="delete-btn" onclick="deletePlugin('${plugin.id}', this)">
+                                <i class="fas fa-trash"></i> Удалить
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
 
         function logout() {
             localStorage.removeItem('user');
@@ -691,35 +665,38 @@
                 window.location.href = 'login.html';
                 return;
             }
-            // Здесь будет логика скачивания
             alert('Начинается скачивание файла: ' + filename);
         }
 
-        function deletePlugin(filename, buttonElement) {
+        function deletePlugin(pluginId, buttonElement) {
             const user = JSON.parse(localStorage.getItem('user'));
             if (!user || !user.isAdmin) {
                 alert('Только администраторы могут удалять плагины');
                 return;
             }
 
-            if (confirm('Вы уверены, что хотите удалить плагин "' + filename + '"? Это действие нельзя отменить.')) {
-                // В реальном приложении здесь будет запрос к серверу для удаления файла
-                const pluginCard = buttonElement.closest('.plugin-card');
-                if (pluginCard) {
-                    pluginCard.remove();
-                    alert('Плагин успешно удален');
-                }
+            if (confirm('Вы уверены, что хотите удалить этот плагин? Это действие нельзя отменить.')) {
+                // Получаем текущие плагины
+                let plugins = JSON.parse(localStorage.getItem('plugins')) || [];
+                
+                // Удаляем плагин по ID
+                plugins = plugins.filter(plugin => plugin.id !== parseInt(pluginId));
+                
+                // Сохраняем обновленный список
+                localStorage.setItem('plugins', JSON.stringify(plugins));
+                
+                // Обновляем отображение
+                loadPlugins();
             }
         }
 
         function upgradeToPremium() {
-            const isLoggedIn = localStorage.getItem('isLoggedIn');
-            if (!isLoggedIn) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user) {
                 window.location.href = 'login.html';
                 return;
             }
 
-            // Here you would typically redirect to a payment gateway
             alert('Функция оплаты находится в разработке. Скоро будет доступна!');
         }
     </script>

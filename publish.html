@@ -442,7 +442,37 @@
                 submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Публикация...';
 
                 try {
-                    // В реальном приложении здесь будет загрузка на сервер
+                    // Получаем текущего пользователя
+                    const user = JSON.parse(localStorage.getItem('user'));
+                    
+                    // Создаем объект плагина
+                    const plugin = {
+                        id: Date.now(), // Уникальный идентификатор
+                        name: name,
+                        description: description,
+                        commands: commands.split('\n'),
+                        fileName: file.name,
+                        fileSize: formatFileSize(file.size),
+                        downloads: 0,
+                        rating: 0,
+                        author: {
+                            nickname: user.nickname,
+                            email: user.email,
+                            isAdmin: user.isAdmin
+                        },
+                        datePublished: new Date().toISOString()
+                    };
+
+                    // Получаем существующие плагины или создаем пустой массив
+                    let plugins = JSON.parse(localStorage.getItem('plugins')) || [];
+                    
+                    // Добавляем новый плагин
+                    plugins.push(plugin);
+                    
+                    // Сохраняем обновленный список плагинов
+                    localStorage.setItem('plugins', JSON.stringify(plugins));
+
+                    // Имитируем задержку загрузки
                     await new Promise(resolve => setTimeout(resolve, 1500));
 
                     // Перенаправляем на страницу плагинов
