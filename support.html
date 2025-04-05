@@ -573,7 +573,7 @@
             const ticketsContainer = document.getElementById('ticketsContainer');
             
             // Фильтруем тикеты: для админа показываем все, для обычных пользователей только их тикеты
-            const filteredTickets = user.isAdmin ? tickets : tickets.filter(ticket => ticket.userId === user.id);
+            const filteredTickets = user.role === 'admin' ? tickets : tickets.filter(ticket => ticket.userId === user.id);
             
             if (filteredTickets.length === 0) {
                 ticketsContainer.innerHTML = `
@@ -609,7 +609,7 @@
                             ${new Date(ticket.dateCreated).toLocaleDateString()}
                         </span>
                     </div>
-                    ${user.isAdmin ? `
+                    ${user.role === 'admin' ? `
                         <div class="admin-controls">
                             <select onchange="updateTicketStatus('${ticket.id}', this.value)" class="status-select">
                                 <option value="open" ${ticket.status === 'open' ? 'selected' : ''}>Открыт</option>
@@ -729,13 +729,19 @@
                     content: description,
                     authorId: user.id,
                     authorName: user.nickname,
-                    isAdmin: user.isAdmin,
+                    isAdmin: user.role === 'admin',
                     time: new Date().toISOString()
                 }]
             };
 
             // Получаем существующие тикеты или создаем новый массив
-            const tickets = JSON.parse(localStorage.getItem('tickets')) || [];
+            let tickets = JSON.parse(localStorage.getItem('tickets')) || [];
+            
+            // Проверяем, является ли tickets массивом
+            if (!Array.isArray(tickets)) {
+                tickets = [];
+            }
+            
             tickets.push(newTicket);
             localStorage.setItem('tickets', JSON.stringify(tickets));
 
@@ -777,7 +783,7 @@
                 author: user.nickname,
                 text: message,
                 time: new Date().toLocaleTimeString(),
-                isAdmin: user.isAdmin
+                isAdmin: user.role === 'admin'
             };
 
             tickets[ticketIndex].messages.push(newMessage);
@@ -875,7 +881,7 @@
                 content: content,
                 authorId: user.id,
                 authorName: user.nickname,
-                isAdmin: user.isAdmin,
+                isAdmin: user.role === 'admin',
                 time: new Date().toISOString()
             };
 
