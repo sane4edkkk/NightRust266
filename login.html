@@ -272,113 +272,108 @@
     </main>
 
     <script>
-        // Переключение видимости пароля
-        document.querySelectorAll('.password-toggle').forEach(toggle => {
-            toggle.addEventListener('click', function() {
-                const input = this.previousElementSibling;
-                if (input.type === 'password') {
-                    input.type = 'text';
-                    this.classList.remove('fa-eye');
-                    this.classList.add('fa-eye-slash');
-                } else {
-                    input.type = 'password';
-                    this.classList.remove('fa-eye-slash');
-                    this.classList.add('fa-eye');
+        // Ждем полной загрузки DOM
+        document.addEventListener('DOMContentLoaded', function() {
+            // Получаем элементы формы
+            const loginForm = document.getElementById('loginForm');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const submitButton = document.querySelector('.submit-btn');
+            const successMessage = document.querySelector('.success-message');
+
+            // Функция показа ошибки
+            function showError(input, message) {
+                const formGroup = input.closest('.form-group');
+                formGroup.classList.add('error');
+                const error = formGroup.querySelector('.error-message');
+                error.textContent = message;
+                error.style.display = 'block';
+            }
+
+            // Функция очистки ошибки
+            function clearError(input) {
+                const formGroup = input.closest('.form-group');
+                formGroup.classList.remove('error');
+                const error = formGroup.querySelector('.error-message');
+                error.textContent = '';
+                error.style.display = 'none';
+            }
+
+            // Функция валидации email
+            function validateEmail(email) {
+                return email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+            }
+
+            // Обработчик отправки формы
+            loginForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                console.log('Form submitted'); // Отладочный вывод
+
+                // Очищаем предыдущие ошибки
+                clearError(emailInput);
+                clearError(passwordInput);
+                successMessage.style.display = 'none';
+
+                let isValid = true;
+
+                // Проверяем email
+                if (!emailInput.value) {
+                    showError(emailInput, 'Email обязателен');
+                    isValid = false;
+                } else if (!validateEmail(emailInput.value)) {
+                    showError(emailInput, 'Введите корректный email');
+                    isValid = false;
+                }
+
+                // Проверяем пароль
+                if (!passwordInput.value) {
+                    showError(passwordInput, 'Пароль обязателен');
+                    isValid = false;
+                }
+
+                if (isValid) {
+                    console.log('Validation passed'); // Отладочный вывод
+                    
+                    // Отключаем кнопку
+                    submitButton.disabled = true;
+                    submitButton.style.opacity = '0.7';
+
+                    // Показываем сообщение об успехе
+                    successMessage.textContent = 'Вход выполнен успешно! Перенаправление...';
+                    successMessage.style.display = 'block';
+
+                    // Перенаправляем на главную
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 2000);
                 }
             });
-        });
 
-        // Валидация формы входа
-        const loginForm = document.getElementById('loginForm');
-        const email = document.getElementById('email');
-        const password = document.getElementById('password');
-        const successMessage = document.querySelector('.success-message');
-
-        function showError(input, message) {
-            const formGroup = input.closest('.form-group');
-            formGroup.classList.add('error');
-            const error = formGroup.querySelector('.error-message');
-            error.textContent = message;
-        }
-
-        function clearError(input) {
-            const formGroup = input.closest('.form-group');
-            formGroup.classList.remove('error');
-            const error = formGroup.querySelector('.error-message');
-            error.textContent = '';
-        }
-
-        function validateEmail(email) {
-            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return re.test(email);
-        }
-
-        function showSuccess(message) {
-            successMessage.style.display = 'block';
-            successMessage.textContent = message;
-        }
-
-        loginForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            let isValid = true;
-
-            // Очистка предыдущих ошибок
-            [email, password].forEach(input => clearError(input));
-            successMessage.style.display = 'none';
-
-            // Проверка email
-            if (!validateEmail(email.value)) {
-                showError(email, 'Введите корректный email адрес');
-                isValid = false;
-            }
-
-            // Проверка пароля
-            if (password.value.length < 1) {
-                showError(password, 'Введите пароль');
-                isValid = false;
-            }
-
-            if (isValid) {
-                // Здесь будет отправка данных на сервер
-                const userData = {
-                    email: email.value,
-                    password: password.value,
-                    remember: document.querySelector('input[name="remember"]').checked
-                };
-
-                // Имитация отправки данных
-                console.log('Отправка данных:', userData);
-                
-                // Показываем сообщение об успехе
-                showSuccess('Вход выполнен успешно! Перенаправление...');
-
-                // Отключаем кнопку на время перенаправления
-                const submitBtn = loginForm.querySelector('.submit-btn');
-                submitBtn.disabled = true;
-                submitBtn.style.opacity = '0.7';
-
-                // Перенаправление на главную страницу через 2 секунды
-                setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 2000);
-            }
-        });
-
-        // Очистка ошибок при вводе
-        [email, password].forEach(input => {
-            input.addEventListener('input', () => {
-                clearError(input);
-                successMessage.style.display = 'none';
+            // Переключение видимости пароля
+            const togglePassword = document.querySelector('.password-toggle');
+            togglePassword.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.classList.toggle('fa-eye');
+                this.classList.toggle('fa-eye-slash');
             });
-        });
 
-        // Обработка "Забыли пароль?"
-        document.querySelector('.forgot-password').addEventListener('click', function(e) {
-            e.preventDefault();
-            const email = prompt('Введите ваш email для восстановления пароля:');
-            if (email) {
-                alert('Инструкции по восстановлению пароля отправлены на ваш email');
-            }
+            // Очистка ошибок при вводе
+            [emailInput, passwordInput].forEach(input => {
+                input.addEventListener('input', () => {
+                    clearError(input);
+                    successMessage.style.display = 'none';
+                });
+            });
+
+            // Обработка "Забыли пароль?"
+            document.querySelector('.forgot-password').addEventListener('click', function(e) {
+                e.preventDefault();
+                const email = prompt('Введите ваш email для восстановления пароля:');
+                if (email) {
+                    alert('Инструкции по восстановлению пароля отправлены на ваш email');
+                }
+            });
         });
     </script>
 </body>
