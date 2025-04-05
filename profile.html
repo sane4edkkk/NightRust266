@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Профиль пользователя - ForumHub</title>
+    <title>Профиль - ForumHub</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -14,8 +15,8 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: #f5f7fa;
-            color: #1a1a1a;
+            background: #1a1a1a;
+            color: white;
             line-height: 1.6;
         }
 
@@ -25,11 +26,39 @@
             padding: 2rem;
         }
 
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid #333;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: #999;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: white;
+        }
+
+        .nav-link.active {
+            color: white;
+            font-weight: 500;
+        }
+
         .profile-header {
             background: linear-gradient(135deg, #6c5ce7, #a363d9);
             border-radius: 16px;
             padding: 2rem;
-            color: white;
             margin-bottom: 2rem;
             display: flex;
             align-items: center;
@@ -40,265 +69,269 @@
             width: 120px;
             height: 120px;
             border-radius: 50%;
-            border: 4px solid white;
-            object-fit: cover;
+            border: 4px solid rgba(255, 255, 255, 0.2);
         }
 
-        .profile-info h1 {
-            font-size: 2rem;
+        .profile-info {
+            flex-grow: 1;
+        }
+
+        .profile-name {
+            font-size: 1.8rem;
+            font-weight: 600;
             margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
 
-        .profile-badge {
-            display: inline-block;
+        .admin-badge {
             background: #ff4757;
             color: white;
             padding: 0.25rem 0.75rem;
             border-radius: 50px;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             font-weight: 600;
-            margin-left: 1rem;
         }
 
         .profile-role {
+            color: rgba(255, 255, 255, 0.8);
             font-size: 1.1rem;
-            opacity: 0.9;
+            margin-bottom: 1rem;
         }
 
         .profile-stats {
             display: flex;
             gap: 2rem;
-            margin-top: 1rem;
         }
 
         .stat-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: white;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
         }
 
         .content-section {
-            background: white;
-            border-radius: 16px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            background: #242424;
+            border-radius: 12px;
+            padding: 1.5rem;
             margin-bottom: 1.5rem;
         }
 
         .section-title {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: 600;
-            color: #2d3436;
-        }
-
-        .content-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .content-card {
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 1rem;
-            transition: transform 0.3s ease;
-        }
-
-        .content-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .content-title {
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .content-meta {
-            font-size: 0.9rem;
-            color: #666;
+            margin-bottom: 1rem;
             display: flex;
             align-items: center;
+            gap: 0.5rem;
+        }
+
+        .support-form {
+            display: flex;
+            flex-direction: column;
             gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-label {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .form-input, .form-textarea {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: white;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: #6c5ce7;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            align-self: flex-start;
+        }
+
+        .submit-btn:hover {
+            background: #5f50e1;
         }
 
         .download-btn {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: #6c5ce7;
+            background: #4CAF50;
             color: white;
-            padding: 0.5rem 1rem;
+            padding: 0.75rem 1.5rem;
             border-radius: 8px;
             text-decoration: none;
             font-weight: 500;
-            margin-top: 1rem;
             transition: background-color 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
         }
 
         .download-btn:hover {
-            background: #5f50e1;
-        }
-
-        .error-popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #2d3436;
-            color: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            max-width: 400px;
-            width: 90%;
-        }
-
-        .error-popup.show {
-            display: block;
-        }
-
-        .error-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .error-title {
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        .close-btn {
-            background: none;
-            border: none;
-            color: white;
-            cursor: pointer;
-            font-size: 1.2rem;
-        }
-
-        .error-message {
-            margin-bottom: 1rem;
-        }
-
-        .error-path {
-            background: #1a1a1a;
-            padding: 0.75rem;
-            border-radius: 6px;
-            font-family: monospace;
-            margin-bottom: 1rem;
-        }
-
-        .error-actions {
-            display: flex;
-            justify-content: flex-end;
-        }
-
-        .error-ok {
-            background: #6c5ce7;
-            color: white;
-            border: none;
-            padding: 0.5rem 1.5rem;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .error-ok:hover {
-            background: #5f50e1;
+            background: #45a049;
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
+        <nav class="navbar">
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Главная</a>
+                <a href="categories.html" class="nav-link">Плагины</a>
+                <a href="#" class="nav-link active">Профиль</a>
+            </div>
+        </nav>
+
         <div class="profile-header">
-            <img src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y" alt="Аватар пользователя" class="profile-avatar">
+            <img src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y" alt="Аватар" class="profile-avatar">
             <div class="profile-info">
-                <h1>sasaaleskevic65@gmail.com <span class="profile-badge">ADMIN</span></h1>
+                <div class="profile-name">
+                    sasaaleskevic65@gmail.com
+                    <span class="admin-badge">ADMIN</span>
+                </div>
                 <div class="profile-role">Администратор</div>
                 <div class="profile-stats">
                     <div class="stat-item">
-                        <i class="fas fa-upload"></i>
-                        <span>15 публикаций</span>
+                        <div class="stat-value">15</div>
+                        <div class="stat-label">Публикаций</div>
                     </div>
                     <div class="stat-item">
-                        <i class="fas fa-download"></i>
-                        <span>1337 загрузок</span>
+                        <div class="stat-value">2.3K</div>
+                        <div class="stat-label">Загрузок</div>
                     </div>
                     <div class="stat-item">
-                        <i class="fas fa-star"></i>
-                        <span>4.8 рейтинг</span>
+                        <div class="stat-value">4.8</div>
+                        <div class="stat-label">Рейтинг</div>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="content-section">
-            <div class="section-header">
-                <h2 class="section-title">Публикации</h2>
-            </div>
-            <div class="content-grid">
+            <h2 class="section-title">
+                <i class="fas fa-headset"></i>
+                Техническая поддержка
+            </h2>
+            <form class="support-form" onsubmit="handleSupportSubmit(event)">
+                <div class="form-group">
+                    <label class="form-label">Тема обращения</label>
+                    <input type="text" class="form-input" required placeholder="Например: Проблема со скачиванием">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Описание проблемы</label>
+                    <textarea class="form-textarea" required placeholder="Подробно опишите вашу проблему..."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-paper-plane"></i>
+                    Отправить
+                </button>
+            </form>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">
+                <i class="fas fa-download"></i>
+                Мои плагины
+            </h2>
+            <div class="plugins-list">
+                <!-- IQKITS Plugin -->
                 <div class="content-card">
-                    <div class="content-title">IQKITS</div>
-                    <div class="content-meta">
-                        <span><i class="fas fa-file"></i> 204 КБ</span>
-                        <span><i class="fas fa-download"></i> 1337</span>
+                    <h3>IQKITS</h3>
+                    <div class="meta-item">
+                        <i class="fas fa-file"></i>
+                        <span>204 КБ</span>
                     </div>
-                    <a href="#" class="download-btn" onclick="downloadFile('plugin.zip')">
+                    <button class="download-btn" onclick="downloadPlugin('IQKITS.zip')">
                         <i class="fas fa-download"></i> Скачать
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="error-popup" id="errorPopup">
-        <div class="error-header">
-            <div class="error-title">Ошибка</div>
-            <button class="close-btn" onclick="closeError()"><i class="fas fa-times"></i></button>
-        </div>
-        <div class="error-message">Архив поврежден или имеет неизвестный формат</div>
-        <div class="error-path" id="errorPath"></div>
-        <div class="error-actions">
-            <button class="error-ok" onclick="closeError()">OK</button>
-        </div>
-    </div>
-
     <script>
-        function downloadFile(filename) {
-            // В реальном приложении здесь будет логика загрузки файла
-            showError(filename);
-        }
+        function downloadPlugin(filename) {
+            const fileData = {
+                'IQKITS.zip': {
+                    url: '/plugins/IQKITS.zip',
+                    fallbackContent: 'data:application/zip;base64,UEsDBAoAAAAAAOZwt1QAAAAAAAAAAAAAAAAIAAAAcGx1Z2luL1BLAQIUAAoAAAAAAOZwt1QAAAAAAAAAAAAAAAAIAAAAAAAAAAAAEAAAAAAAAABwbHVnaW4vUEsFBgAAAAABAAEANgAAACQAAAAAAA=='
+                }
+            };
 
-        function showError(filename) {
-            const errorPopup = document.getElementById('errorPopup');
-            const errorPath = document.getElementById('errorPath');
-            errorPath.textContent = `C:\\Users\\New\\Downloads\\${filename}`;
-            errorPopup.classList.add('show');
-        }
-
-        function closeError() {
-            const errorPopup = document.getElementById('errorPopup');
-            errorPopup.classList.remove('show');
-        }
-
-        // Закрыть окно ошибки при клике вне его
-        window.addEventListener('click', function(e) {
-            const errorPopup = document.getElementById('errorPopup');
-            if (e.target === errorPopup) {
-                closeError();
+            const fileInfo = fileData[filename];
+            if (!fileInfo) {
+                alert('Файл не найден');
+                return;
             }
-        });
+
+            // Пробуем сначала загрузить файл по URL
+            fetch(fileInfo.url)
+                .then(response => response.blob())
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = url;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                })
+                .catch(() => {
+                    // Если не удалось загрузить по URL, используем fallback content
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = fileInfo.fallbackContent;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                });
+        }
+
+        function handleSupportSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            const subject = form.querySelector('input').value;
+            const message = form.querySelector('textarea').value;
+            
+            // Здесь можно добавить отправку данных на сервер
+            alert('Ваше обращение отправлено! Мы ответим вам в ближайшее время.');
+            form.reset();
+        }
     </script>
 </body>
 </html> 
