@@ -466,7 +466,7 @@
         <div class="header">
             <h1>Плагины</h1>
             ${JSON.parse(localStorage.getItem('user')) ? `
-                <button class="add-plugin-btn" onclick="openAddPluginModal()">
+                <button class="add-plugin-btn" onclick="showCreatePluginModal()">
                     <i class="fas fa-plus"></i>
                     Добавить плагин
                 </button>
@@ -489,54 +489,35 @@
     </div>
 
     <!-- Модальное окно добавления плагина -->
-    <div class="modal" id="addPluginModal">
+    <div class="modal" id="createPluginModal">
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title">Добавить плагин</h2>
-                <button class="close-modal" onclick="closeAddPluginModal()">
+                <button class="close-modal" onclick="hideCreatePluginModal()">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <form id="addPluginForm" onsubmit="handleAddPlugin(event)">
+            <form id="createPluginForm" onsubmit="handleCreatePlugin(event)">
                 <div class="form-group">
                     <label class="form-label">Название плагина</label>
                     <input type="text" class="form-input" id="pluginTitle" required>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Категория</label>
-                    <select class="form-select" id="pluginCategory" required>
-                        <option value="admin">Админ плагины</option>
-                        <option value="economy">Экономика</option>
-                        <option value="protection">Защита</option>
-                        <option value="other">Другое</option>
-                    </select>
+                    <label class="form-label">Описание</label>
+                    <textarea class="form-input" id="pluginDescription" required></textarea>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Тип</label>
-                    <select class="form-select" id="pluginType" required>
+                    <select class="form-input" id="pluginType" required>
                         <option value="free">Бесплатный</option>
                         <option value="paid">Платный</option>
                     </select>
                 </div>
-                <div class="form-group" id="priceGroup" style="display: none;">
-                    <label class="form-label">Цена (₽)</label>
-                    <input type="number" class="form-input" id="pluginPrice" min="1">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Описание</label>
-                    <textarea class="form-textarea" id="pluginDescription" required></textarea>
-                </div>
                 <div class="form-group">
                     <label class="form-label">Файл плагина</label>
-                    <div class="file-input-wrapper">
-                        <label class="file-input-label">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <span>Перетащите файл сюда или нажмите для выбора</span>
-                            <input type="file" class="file-input" id="pluginFile" accept=".jar,.zip,.cs,.dll" required>
-                        </label>
-                    </div>
+                    <input type="file" class="form-input" id="pluginFile" required>
                 </div>
-                <button type="submit" class="add-plugin-btn" style="width: 100%;">
+                <button type="submit" class="submit-btn">
                     <i class="fas fa-plus"></i>
                     Добавить плагин
                 </button>
@@ -548,127 +529,32 @@
         // Загрузка плагинов при загрузке страницы
         document.addEventListener('DOMContentLoaded', function() {
             loadPlugins();
-            setupPriceVisibility();
             
-            // Добавляем кнопку создания плагина только для авторизованных пользователей
+            // Добавляем кнопку создания плагина для авторизованных пользователей
             const user = JSON.parse(localStorage.getItem('user'));
-            const addPluginButton = document.querySelector('.add-plugin-btn');
-            if (addPluginButton) {
-                addPluginButton.style.display = user ? 'flex' : 'none';
+            const addPluginButton = document.createElement('button');
+            addPluginButton.className = 'add-plugin-btn';
+            addPluginButton.innerHTML = '<i class="fas fa-plus"></i> Добавить плагин';
+            addPluginButton.onclick = showCreatePluginModal;
+            
+            const headerActions = document.querySelector('.header-actions');
+            if (headerActions && user && user.permissions?.addPlugins) {
+                headerActions.appendChild(addPluginButton);
             }
         });
-
-        // Показ/скрытие поля цены в зависимости от типа плагина
-        document.getElementById('pluginType').addEventListener('change', setupPriceVisibility);
-
-        function setupPriceVisibility() {
-            const typeSelect = document.getElementById('pluginType');
-            const priceGroup = document.getElementById('priceGroup');
-            const priceInput = document.getElementById('pluginPrice');
-
-            if (typeSelect.value === 'paid') {
-                priceGroup.style.display = 'block';
-                priceInput.required = true;
-            } else {
-                priceGroup.style.display = 'none';
-                priceInput.required = false;
-            }
-        }
-
-        function openAddPluginModal() {
-            document.getElementById('addPluginModal').classList.add('active');
-        }
-
-        function closeAddPluginModal() {
-            document.getElementById('addPluginModal').classList.remove('active');
-            document.getElementById('addPluginForm').reset();
-        }
-
-        function handleAddPlugin(event) {
-            event.preventDefault();
-
-            const title = document.getElementById('pluginTitle').value;
-            const category = document.getElementById('pluginCategory').value;
-            const type = document.getElementById('pluginType').value;
-            const price = type === 'paid' ? document.getElementById('pluginPrice').value : 0;
-            const description = document.getElementById('pluginDescription').value;
-            const file = document.getElementById('pluginFile').files[0];
-
-            // Проверка размера файла (максимум 50MB)
-            if (file.size > 50 * 1024 * 1024) {
-                alert('Файл слишком большой. Максимальный размер: 50MB');
-                return;
-            }
-
-            // Проверка типа файла
-            const allowedTypes = ['.jar', '.zip', '.cs', '.dll'];
-            const fileExtension = '.' + file.name.split('.').pop().toLowerCase();
-            if (!allowedTypes.includes(fileExtension)) {
-                alert('Неподдерживаемый тип файла. Разрешены только .jar, .zip, .cs и .dll');
-                return;
-            }
-
-            // Получаем текущего пользователя
-            const user = JSON.parse(localStorage.getItem('user'));
-            if (!user) {
-                alert('Необходимо войти в аккаунт');
-                return;
-            }
-
-            try {
-                // Читаем файл как ArrayBuffer
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    // Создаем объект плагина
-                    const plugin = {
-                        id: Date.now().toString(),
-                        title,
-                        category,
-                        type,
-                        price: parseInt(price),
-                        description,
-                        author: user.nickname,
-                        authorId: user.id,
-                        fileName: file.name,
-                        fileSize: file.size,
-                        fileData: e.target.result, // Сохраняем содержимое файла
-                        dateAdded: new Date().toISOString(),
-                        downloads: 0
-                    };
-
-                    // Получаем существующие плагины из localStorage
-                    let plugins = JSON.parse(localStorage.getItem('plugins')) || [];
-                    
-                    // Добавляем новый плагин
-                    plugins.push(plugin);
-                    
-                    // Сохраняем обновленный список плагинов
-                    localStorage.setItem('plugins', JSON.stringify(plugins));
-
-                    // Обновляем отображение
-                    loadPlugins();
-                    closeAddPluginModal();
-                };
-
-                reader.readAsDataURL(file); // Читаем файл как Data URL
-            } catch (error) {
-                console.error('Ошибка при добавлении плагина:', error);
-                alert('Произошла ошибка при добавлении плагина. Попробуйте еще раз.');
-            }
-        }
 
         function loadPlugins() {
             const plugins = JSON.parse(localStorage.getItem('plugins')) || [];
             const pluginsContainer = document.getElementById('pluginsGrid');
-            const user = JSON.parse(localStorage.getItem('user')); // Может быть null для неавторизованных пользователей
+            const user = JSON.parse(localStorage.getItem('user'));
             
             if (plugins.length === 0) {
                 pluginsContainer.innerHTML = `
                     <div class="empty-state">
                         <i class="fas fa-puzzle-piece"></i>
                         <p>Пока нет доступных плагинов</p>
-                        ${user ? `
-                            <button class="create-plugin-btn" onclick="showCreatePluginModal()">
+                        ${user && user.permissions?.addPlugins ? `
+                            <button class="add-plugin-btn" onclick="showCreatePluginModal()">
                                 <i class="fas fa-plus"></i>
                                 Добавить плагин
                             </button>
@@ -724,6 +610,101 @@
                 `;
                 pluginsContainer.appendChild(pluginCard);
             });
+        }
+
+        function showCreatePluginModal() {
+            const modal = document.getElementById('createPluginModal');
+            if (!modal) {
+                // Создаем модальное окно, если его нет
+                const modalHTML = `
+                    <div class="modal" id="createPluginModal">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2 class="modal-title">Добавить плагин</h2>
+                                <button class="close-modal" onclick="hideCreatePluginModal()">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <form id="createPluginForm" onsubmit="handleCreatePlugin(event)">
+                                <div class="form-group">
+                                    <label class="form-label">Название плагина</label>
+                                    <input type="text" class="form-input" id="pluginTitle" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Описание</label>
+                                    <textarea class="form-input" id="pluginDescription" required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Тип</label>
+                                    <select class="form-input" id="pluginType" required>
+                                        <option value="free">Бесплатный</option>
+                                        <option value="paid">Платный</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Файл плагина</label>
+                                    <input type="file" class="form-input" id="pluginFile" required>
+                                </div>
+                                <button type="submit" class="submit-btn">
+                                    <i class="fas fa-plus"></i>
+                                    Добавить плагин
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                `;
+                document.body.insertAdjacentHTML('beforeend', modalHTML);
+            }
+            document.getElementById('createPluginModal').classList.add('active');
+        }
+
+        function hideCreatePluginModal() {
+            const modal = document.getElementById('createPluginModal');
+            if (modal) {
+                modal.classList.remove('active');
+            }
+        }
+
+        function handleCreatePlugin(event) {
+            event.preventDefault();
+            
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user || !user.permissions?.addPlugins) {
+                alert('У вас нет прав для добавления плагинов');
+                return;
+            }
+
+            const title = document.getElementById('pluginTitle').value;
+            const description = document.getElementById('pluginDescription').value;
+            const type = document.getElementById('pluginType').value;
+            const file = document.getElementById('pluginFile').files[0];
+
+            if (!file) {
+                alert('Пожалуйста, выберите файл плагина');
+                return;
+            }
+
+            // Создаем новый плагин
+            const newPlugin = {
+                id: Date.now().toString(),
+                title,
+                description,
+                type,
+                author: user.nickname,
+                authorId: user.id,
+                dateAdded: new Date().toISOString(),
+                downloads: 0,
+                fileName: file.name
+            };
+
+            // Сохраняем плагин
+            const plugins = JSON.parse(localStorage.getItem('plugins')) || [];
+            plugins.push(newPlugin);
+            localStorage.setItem('plugins', JSON.stringify(plugins));
+
+            // Перезагружаем список плагинов
+            loadPlugins();
+            hideCreatePluginModal();
         }
 
         function formatFileSize(bytes) {
