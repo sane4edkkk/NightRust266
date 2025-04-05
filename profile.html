@@ -3,10 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Профиль - ForumHub</title>
+    <title>Профиль - ForestDesign</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #00a651;
+            --primary-dark: #008c44;
+            --secondary: #2c3e50;
+            --accent: #3498db;
+            --background: #0f172a;
+            --surface: #1e293b;
+            --surface-light: #334155;
+            --text: #f8fafc;
+            --text-secondary: #94a3b8;
+            --success: #22c55e;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -15,61 +31,112 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: #1a1a1a;
-            color: white;
+            background: var(--background);
+            color: var(--text);
             line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
+            min-height: 100vh;
         }
 
         .navbar {
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .navbar-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
-            padding: 1rem 0;
-            border-bottom: 1px solid #333;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .logo-icon {
+            font-size: 1.75rem;
+            color: var(--primary);
+            filter: drop-shadow(0 0 8px rgba(0, 166, 81, 0.3));
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 1.5rem;
+            align-items: center;
         }
 
         .nav-link {
-            color: #999;
+            color: var(--text-secondary);
             text-decoration: none;
-            transition: color 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .nav-link:hover {
-            color: white;
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .nav-link.active {
-            color: white;
-            font-weight: 500;
+            color: var(--text);
+            background: var(--primary);
+        }
+
+        .main-content {
+            margin-top: 6rem;
+            padding: 2rem 0;
         }
 
         .profile-header {
-            background: linear-gradient(135deg, #6c5ce7, #a363d9);
+            background: var(--surface);
             border-radius: 16px;
             padding: 2rem;
             margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
-            align-items: center;
             gap: 2rem;
+            align-items: center;
         }
 
         .profile-avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            border: 4px solid rgba(255, 255, 255, 0.2);
+            width: 128px;
+            height: 128px;
+            border-radius: 16px;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            font-weight: 600;
         }
 
         .profile-info {
@@ -77,391 +144,440 @@
         }
 
         .profile-name {
-            font-size: 1.8rem;
-            font-weight: 600;
+            font-size: 2rem;
+            font-weight: 700;
             margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
             gap: 1rem;
         }
 
-        .admin-badge {
-            background: #ff4757;
-            color: white;
-            padding: 0.25rem 0.75rem;
+        .profile-role {
+            display: inline-block;
+            padding: 0.25rem 1rem;
             border-radius: 50px;
             font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        .profile-role {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
+            font-weight: 500;
+            background: var(--primary);
+            color: white;
         }
 
         .profile-stats {
             display: flex;
             gap: 2rem;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-
-        .stat-label {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 0.9rem;
-        }
-
-        .content-section {
-            background: #242424;
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .section-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .support-form {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .form-label {
-            color: #999;
-            font-size: 0.9rem;
-        }
-
-        .form-input, .form-textarea {
-            background: #1a1a1a;
-            border: 1px solid #333;
-            color: white;
-            padding: 0.75rem;
-            border-radius: 8px;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .form-textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .submit-btn {
-            background: #6c5ce7;
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            align-self: flex-start;
-        }
-
-        .submit-btn:hover {
-            background: #5f50e1;
-        }
-
-        .download-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: #4CAF50;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: background-color 0.3s ease;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-
-        .download-btn:hover {
-            background: #45a049;
-        }
-
-        .message-badge {
-            background: #ff4757;
-            color: white;
-            padding: 0.25rem 0.5rem;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            margin-left: 0.5rem;
-        }
-
-        #adminMessages {
-            position: relative;
-            color: #6c5ce7;
-        }
-
-        #adminMessages:hover {
-            color: #5f50e1;
-        }
-
-        .footer {
-            margin-top: 4rem;
-            padding: 2rem 0;
-            border-top: 1px solid #333;
-            text-align: center;
-        }
-
-        .footer-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .copyright {
-            color: #999;
-            font-size: 0.9rem;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1.5rem;
             margin-top: 1rem;
         }
 
-        .social-link {
-            color: #999;
-            text-decoration: none;
-            font-size: 1.5rem;
-            transition: color 0.3s ease;
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-secondary);
         }
 
-        .social-link:hover {
+        .stat-item i {
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+
+        .stat-value {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .profile-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .tab-button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            background: var(--surface);
+            color: var(--text);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tab-button:hover {
+            background: var(--surface-light);
+        }
+
+        .tab-button.active {
+            background: var(--primary);
+        }
+
+        .tab-button i {
+            font-size: 1.1rem;
+        }
+
+        .profile-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .content-section {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title i {
+            color: var(--primary);
+        }
+
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .activity-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--surface-light);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .activity-item:hover {
+            transform: translateX(5px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: white;
         }
 
-        .social-link.vk:hover {
-            color: #45668e;
+        .activity-content {
+            flex-grow: 1;
         }
 
-        .social-link.telegram:hover {
-            color: #0088cc;
+        .activity-title {
+            font-weight: 500;
+            margin-bottom: 0.25rem;
         }
 
-        .social-link.discord:hover {
-            color: #7289da;
+        .activity-meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .plugin-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .plugin-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--surface-light);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .plugin-item:hover {
+            transform: translateX(5px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .plugin-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .plugin-content {
+            flex-grow: 1;
+        }
+
+        .plugin-title {
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .plugin-meta {
+            display: flex;
+            gap: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .edit-profile-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: 0 4px 12px rgba(0, 166, 81, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .edit-profile-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 166, 81, 0.4);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <nav class="navbar">
-            <div class="nav-links">
-                <a href="index.html" class="nav-link">Главная</a>
-                <a href="categories.html" class="nav-link">Плагины</a>
-                <a href="#" class="nav-link active">Профиль</a>
-                <a href="support-messages.html" class="nav-link" id="adminMessages" style="display: none;">
-                    <i class="fas fa-envelope"></i> Сообщения
-                    <span class="message-badge" style="display: none;">0</span>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-content">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-tree logo-icon"></i>
+                    <span class="logo-text">ForestDesign</span>
                 </a>
-            </div>
-        </nav>
-
-        <div class="profile-header">
-            <img src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y" alt="Аватар" class="profile-avatar" id="profileAvatar">
-            <div class="profile-info">
-                <div class="profile-name">
-                    sasaaleskevic65@gmail.com
-                    <span class="admin-badge">ADMIN</span>
-                </div>
-                <div class="profile-role">Администратор</div>
-                <div class="profile-stats">
-                    <div class="stat-item">
-                        <div class="stat-value">15</div>
-                        <div class="stat-label">Публикаций</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">2.3K</div>
-                        <div class="stat-label">Загрузок</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">4.8</div>
-                        <div class="stat-label">Рейтинг</div>
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">
+                        <i class="fas fa-home"></i>
+                        Форум
+                    </a>
+                    <a href="plugins.html" class="nav-link">
+                        <i class="fas fa-puzzle-piece"></i>
+                        Плагины
+                    </a>
+                    <a href="support.html" class="nav-link">
+                        <i class="fas fa-headset"></i>
+                        Поддержка
+                    </a>
+                    <div class="user-menu" id="userMenu">
+                        <!-- Динамическое добавление меню пользователя -->
                     </div>
                 </div>
             </div>
         </div>
+    </nav>
 
-        <div class="content-section">
-            <h2 class="section-title">
-                <i class="fas fa-headset"></i>
-                Техническая поддержка
-            </h2>
-            <form class="support-form" onsubmit="handleSupportSubmit(event)">
-                <div class="form-group">
-                    <label class="form-label">Тема обращения</label>
-                    <input type="text" class="form-input" required placeholder="Например: Проблема со скачиванием">
+    <main class="main-content">
+        <div class="container">
+            <div class="profile-header">
+                <div class="profile-avatar" id="profileAvatar">
+                    <!-- Инициалы будут добавлены через JavaScript -->
                 </div>
-                <div class="form-group">
-                    <label class="form-label">Описание проблемы</label>
-                    <textarea class="form-textarea" required placeholder="Подробно опишите вашу проблему..."></textarea>
+                <div class="profile-info">
+                    <div class="profile-name">
+                        <span id="profileName"><!-- Имя будет добавлено через JavaScript --></span>
+                        <span class="profile-role" id="profileRole"><!-- Роль будет добавлена через JavaScript --></span>
+                    </div>
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <i class="fas fa-puzzle-piece"></i>
+                            <div>
+                                <span class="stat-value" id="pluginsCount">0</span>
+                                <span>плагинов</span>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-message"></i>
+                            <div>
+                                <span class="stat-value" id="postsCount">0</span>
+                                <span>сообщений</span>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-calendar"></i>
+                            <div>
+                                <span class="stat-value" id="joinDate"><!-- Дата будет добавлена через JavaScript --></span>
+                                <span>дата регистрации</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <button type="submit" class="submit-btn">
-                    <i class="fas fa-paper-plane"></i>
-                    Отправить
+            </div>
+
+            <div class="profile-tabs">
+                <button class="tab-button active">
+                    <i class="fas fa-clock"></i>
+                    Активность
                 </button>
-            </form>
-        </div>
+                <button class="tab-button">
+                    <i class="fas fa-puzzle-piece"></i>
+                    Плагины
+                </button>
+                <button class="tab-button">
+                    <i class="fas fa-message"></i>
+                    Сообщения
+                </button>
+            </div>
 
-        <div class="content-section">
-            <h2 class="section-title">
-                <i class="fas fa-download"></i>
-                Мои плагины
-            </h2>
-            <div class="plugins-list">
-                <!-- IQKITS Plugin -->
-                <div class="content-card">
-                    <h3>IQKITS</h3>
-                    <div class="meta-item">
-                        <i class="fas fa-file"></i>
-                        <span>204 КБ</span>
+            <div class="profile-content">
+                <div class="content-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-clock"></i>
+                        Последняя активность
+                    </h2>
+                    <div class="activity-list" id="activityList">
+                        <!-- Активность будет добавлена через JavaScript -->
                     </div>
-                    <button class="download-btn" onclick="downloadPlugin('IQKITS.zip')">
-                        <i class="fas fa-download"></i> Скачать
-                    </button>
+                </div>
+
+                <div class="content-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-puzzle-piece"></i>
+                        Популярные плагины
+                    </h2>
+                    <div class="plugin-list" id="pluginList">
+                        <!-- Плагины будут добавлены через JavaScript -->
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="copyright">
-                © 2024 ForestDesign. Все права защищены / All rights reserved.
-            </div>
-            <div class="social-links">
-                <a href="https://vk.com/forestdesign" target="_blank" class="social-link vk">
-                    <i class="fab fa-vk"></i>
-                </a>
-                <a href="https://t.me/forestdesign" target="_blank" class="social-link telegram">
-                    <i class="fab fa-telegram"></i>
-                </a>
-                <a href="https://discord.gg/forestdesign" target="_blank" class="social-link discord">
-                    <i class="fab fa-discord"></i>
-                </a>
-            </div>
-        </div>
-    </footer>
+    <a href="edit-profile.html" class="edit-profile-btn">
+        <i class="fas fa-edit"></i>
+        Редактировать профиль
+    </a>
 
     <script>
-        // Проверяем, является ли пользователь администратором
-        const isAdmin = true; // В реальном приложении здесь будет проверка роли
-        const adminEmail = 'sasaaleskevic65@gmail.com';
-
-        // Показываем ссылку на сообщения только администратору
-        if (isAdmin) {
-            document.getElementById('adminMessages').style.display = 'flex';
-            updateMessageBadge();
-        }
-
-        function handleSupportSubmit(event) {
-            event.preventDefault();
-            const form = event.target;
-            const subject = form.querySelector('input').value;
-            const message = form.querySelector('textarea').value;
-            
-            // Создаем объект сообщения
-            const supportMessage = {
-                id: Date.now(),
-                subject,
-                message,
-                date: new Date().toISOString(),
-                status: 'new',
-                email: 'user@example.com' // В реальном приложении здесь будет email отправителя
-            };
-
-            // Получаем существующие сообщения из localStorage
-            const messages = JSON.parse(localStorage.getItem('supportMessages') || '[]');
-            messages.push(supportMessage);
-            
-            // Сохраняем обновленный список сообщений
-            localStorage.setItem('supportMessages', JSON.stringify(messages));
-            
-            // Обновляем счетчик непрочитанных сообщений
-            updateMessageBadge();
-
-            alert('Ваше обращение отправлено! Мы ответим вам в ближайшее время.');
-            form.reset();
-        }
-
-        function updateMessageBadge() {
-            const messages = JSON.parse(localStorage.getItem('supportMessages') || '[]');
-            const unreadCount = messages.filter(msg => msg.status === 'new').length;
-            const badge = document.querySelector('.message-badge');
-            
-            if (unreadCount > 0) {
-                badge.style.display = 'inline';
-                badge.textContent = unreadCount;
-            } else {
-                badge.style.display = 'none';
-            }
-        }
-
-        function downloadPlugin(filename) {
-            const fileData = {
-                'IQKITS.zip': {
-                    url: '/plugins/IQKITS.zip',
-                    fallbackContent: 'data:application/zip;base64,UEsDBAoAAAAAAOZwt1QAAAAAAAAAAAAAAAAIAAAAcGx1Z2luL1BLAQIUAAoAAAAAAOZwt1QAAAAAAAAAAAAAAAAIAAAAAAAAAAAAEAAAAAAAAABwbHVnaW4vUEsFBgAAAAABAAEANgAAACQAAAAAAA=='
-                }
-            };
-
-            const fileInfo = fileData[filename];
-            if (!fileInfo) {
-                alert('Файл не найден');
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user) {
+                window.location.href = 'login.html';
                 return;
             }
+
+            // Загружаем информацию профиля
+            loadProfile(user);
+            // Загружаем активность
+            loadActivity();
+            // Загружаем плагины
+            loadPlugins(user);
+        });
+
+        function loadProfile(user) {
+            // Устанавливаем инициалы в аватар
+            const initials = user.nickname.substring(0, 2).toUpperCase();
+            document.getElementById('profileAvatar').textContent = initials;
+
+            // Устанавливаем имя и роль
+            document.getElementById('profileName').textContent = user.nickname;
+            document.getElementById('profileRole').textContent = user.isAdmin ? 'Администратор' : 'Пользователь';
+
+            // Загружаем статистику
+            const plugins = JSON.parse(localStorage.getItem('plugins')) || [];
+            const userPlugins = plugins.filter(p => p.author.id === user.id);
+            document.getElementById('pluginsCount').textContent = userPlugins.length;
             
-            // Пробуем сначала загрузить файл по URL
-            fetch(fileInfo.url)
-                .then(response => response.blob())
-                .then(blob => {
-                    const url = window.URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.style.display = 'none';
-                    a.href = url;
-                    a.download = filename;
-                    document.body.appendChild(a);
-                    a.click();
-                    window.URL.revokeObjectURL(url);
-                    document.body.removeChild(a);
-                })
-                .catch(() => {
-                    // Если не удалось загрузить по URL, используем fallback content
-                    const a = document.createElement('a');
-                    a.style.display = 'none';
-                    a.href = fileInfo.fallbackContent;
-                    a.download = filename;
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                });
+            // Временные данные для демонстрации
+            document.getElementById('postsCount').textContent = '42';
+            document.getElementById('joinDate').textContent = '01.03.2024';
+        }
+
+        function loadActivity() {
+            const activities = [
+                {
+                    type: 'plugin',
+                    title: 'Опубликовал новый плагин',
+                    description: 'JumpLoot',
+                    date: '2 часа назад',
+                    icon: 'fas fa-puzzle-piece'
+                },
+                {
+                    type: 'post',
+                    title: 'Ответил в теме',
+                    description: 'Как создать свой первый плагин?',
+                    date: '5 часов назад',
+                    icon: 'fas fa-message'
+                },
+                {
+                    type: 'like',
+                    title: 'Оценил плагин',
+                    description: 'AutoLoot',
+                    date: '1 день назад',
+                    icon: 'fas fa-heart'
+                }
+            ];
+
+            const activityList = document.getElementById('activityList');
+            activityList.innerHTML = activities.map(activity => `
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="${activity.icon}"></i>
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-title">${activity.title}</div>
+                        <div class="activity-meta">
+                            <span>${activity.description}</span>
+                            <span>${activity.date}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function loadPlugins(user) {
+            const plugins = JSON.parse(localStorage.getItem('plugins')) || [];
+            const userPlugins = plugins.filter(p => p.author.id === user.id)
+                .sort((a, b) => (b.downloads || 0) - (a.downloads || 0))
+                .slice(0, 3);
+
+            const pluginList = document.getElementById('pluginList');
+            pluginList.innerHTML = userPlugins.map(plugin => `
+                <div class="plugin-item">
+                    <div class="plugin-icon">
+                        <i class="fas fa-puzzle-piece"></i>
+                    </div>
+                    <div class="plugin-content">
+                        <div class="plugin-title">${plugin.name}</div>
+                        <div class="plugin-meta">
+                            <span><i class="fas fa-download"></i> ${plugin.downloads || 0}</span>
+                            <span><i class="fas fa-star"></i> ${plugin.rating || '0.0'}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            if (userPlugins.length === 0) {
+                pluginList.innerHTML = `
+                    <div style="text-align: center; color: var(--text-secondary);">
+                        <i class="fas fa-box-open" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                        <p>Нет опубликованных плагинов</p>
+                    </div>
+                `;
+            }
         }
     </script>
 </body>
