@@ -21,7 +21,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 2rem;
         }
@@ -30,9 +30,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 2rem;
             padding: 1rem 0;
             border-bottom: 1px solid #333;
-            margin-bottom: 2rem;
         }
 
         .nav-links {
@@ -54,65 +54,26 @@
             color: white;
         }
 
-        .nav-link.active {
-            color: white;
-            font-weight: 500;
-        }
-
         .publish-card {
             background: #242424;
-            border-radius: 12px;
+            border-radius: 16px;
             padding: 2rem;
             margin-bottom: 2rem;
         }
 
-        .card-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
+        .publish-header {
             margin-bottom: 2rem;
+            text-align: center;
         }
 
-        .plugin-icon {
-            width: 64px;
-            height: 64px;
-            border-radius: 8px;
-            background: #333;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: #6c5ce7;
-        }
-
-        .plugin-info {
-            flex-grow: 1;
-        }
-
-        .plugin-type {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: #6c5ce7;
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: 500;
+        .publish-title {
+            font-size: 1.8rem;
+            font-weight: 600;
             margin-bottom: 0.5rem;
         }
 
-        .plugin-free {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: #4CAF50;
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            margin-left: 0.5rem;
+        .publish-subtitle {
+            color: #999;
         }
 
         .form-group {
@@ -121,8 +82,8 @@
 
         .form-label {
             display: block;
-            color: #999;
             margin-bottom: 0.5rem;
+            color: #ccc;
             font-weight: 500;
         }
 
@@ -142,208 +103,137 @@
             border-color: #6c5ce7;
         }
 
-        .form-textarea {
+        textarea.form-input {
             min-height: 150px;
             resize: vertical;
         }
 
-        .required-note {
-            color: #ff4757;
-            font-size: 0.9rem;
-            margin-top: 0.25rem;
-        }
-
         .file-upload {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
             border: 2px dashed #333;
             border-radius: 8px;
-            padding: 2rem;
-            text-align: center;
-            cursor: pointer;
-            transition: border-color 0.3s ease;
+            background: #1a1a1a;
+            transition: all 0.3s ease;
         }
 
-        .file-upload:hover {
+        .file-upload.dragover {
             border-color: #6c5ce7;
+            background: rgba(108, 92, 231, 0.1);
         }
 
-        .file-upload i {
+        .file-upload input[type="file"] {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .upload-icon {
             font-size: 2rem;
             color: #6c5ce7;
             margin-bottom: 1rem;
         }
 
-        .file-upload-text {
-            color: #999;
+        .upload-text {
+            text-align: center;
             margin-bottom: 0.5rem;
         }
 
-        .file-types {
-            color: #666;
+        .upload-info {
+            color: #999;
             font-size: 0.9rem;
         }
 
-        .file-info {
+        .submit-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: #6c5ce7;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .submit-btn:hover {
+            background: #5f50e1;
+        }
+
+        .submit-btn:disabled {
+            background: #444;
+            cursor: not-allowed;
+        }
+
+        .error-message {
+            color: #ff4757;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .file-preview {
             display: none;
             margin-top: 1rem;
             padding: 1rem;
             background: rgba(108, 92, 231, 0.1);
             border-radius: 8px;
+            width: 100%;
         }
 
-        .file-info.visible {
+        .file-preview.show {
             display: block;
         }
 
-        .publish-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: #6c5ce7;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .publish-btn:hover {
-            background: #5f50e1;
-        }
-
-        .publish-btn:disabled {
-            background: #333;
-            cursor: not-allowed;
-        }
-
-        .tabs {
+        .file-info {
             display: flex;
+            align-items: center;
             gap: 1rem;
-            margin-bottom: 2rem;
-            border-bottom: 1px solid #333;
-            padding-bottom: 1rem;
         }
 
-        .tab {
-            color: #999;
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-        }
-
-        .tab:hover {
-            color: white;
-            background: rgba(108, 92, 231, 0.1);
-        }
-
-        .tab.active {
-            color: white;
-            background: #6c5ce7;
-        }
-
-        .api-key-section {
-            margin-top: 2rem;
-            padding: 1rem;
-            background: rgba(255, 71, 87, 0.1);
-            border-radius: 8px;
-            border: 1px solid rgba(255, 71, 87, 0.2);
-        }
-
-        .api-key-title {
-            color: #ff4757;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .api-key-text {
-            color: #999;
-            margin-bottom: 1rem;
-        }
-
-        .api-key-link {
+        .file-icon {
+            font-size: 1.5rem;
             color: #6c5ce7;
-            text-decoration: none;
         }
 
-        .api-key-link:hover {
-            text-decoration: underline;
+        .file-details {
+            flex-grow: 1;
         }
 
-        .code-block {
-            background: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 8px;
-            padding: 1rem;
-            font-family: monospace;
-            margin: 1rem 0;
-            position: relative;
+        .file-name {
+            font-weight: 500;
+            margin-bottom: 0.25rem;
         }
 
-        .copy-btn {
-            position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
-            background: none;
-            border: none;
-            color: #999;
-            cursor: pointer;
-            padding: 0.25rem;
-            transition: color 0.3s ease;
-        }
-
-        .copy-btn:hover {
-            color: white;
-        }
-
-        .footer {
-            margin-top: 4rem;
-            padding: 2rem 0;
-            border-top: 1px solid #333;
-            text-align: center;
-        }
-
-        .footer-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .copyright {
+        .file-size {
             color: #999;
             font-size: 0.9rem;
         }
 
-        .social-links {
-            display: flex;
-            gap: 1.5rem;
-            margin-top: 1rem;
-        }
-
-        .social-link {
-            color: #999;
-            text-decoration: none;
-            font-size: 1.5rem;
+        .remove-file {
+            color: #ff4757;
+            cursor: pointer;
             transition: color 0.3s ease;
         }
 
-        .social-link:hover {
-            color: white;
-        }
-
-        .social-link.vk:hover {
-            color: #45668e;
-        }
-
-        .social-link.telegram:hover {
-            color: #0088cc;
-        }
-
-        .social-link.discord:hover {
-            color: #7289da;
+        .remove-file:hover {
+            color: #ff6b81;
         }
     </style>
 </head>
@@ -358,79 +248,52 @@
         </nav>
 
         <div class="publish-card">
-            <div class="card-header">
-                <div class="plugin-icon">
-                    <i class="fas fa-puzzle-piece"></i>
-                </div>
-                <div class="plugin-info">
-                    <div>
-                        <span class="plugin-type">ПЛАГИН</span>
-                        <span class="plugin-free">БЕСПЛАТНО</span>
-                    </div>
-                    <h1>Публикация плагина</h1>
-                </div>
-            </div>
-
-            <div class="tabs">
-                <a href="#overview" class="tab active">Обзор</a>
-                <a href="#config" class="tab">Конфигурация</a>
-                <a href="#commands" class="tab">Команды</a>
-                <a href="#screenshots" class="tab">Скриншоты</a>
-                <a href="#updates" class="tab">Обновления (6)</a>
-                <a href="#discussion" class="tab">Обсуждение</a>
+            <div class="publish-header">
+                <h1 class="publish-title">Публикация плагина</h1>
+                <p class="publish-subtitle">Заполните информацию о вашем плагине</p>
             </div>
 
             <form id="publishForm">
                 <div class="form-group">
                     <label class="form-label">Название плагина</label>
-                    <input type="text" class="form-input" required placeholder="Например: SkinBox">
-                    <div class="required-note">* Обязательное поле</div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Версия</label>
-                    <input type="text" class="form-input" required placeholder="Например: 2.2.21">
-                    <div class="required-note">* Обязательное поле</div>
+                    <input type="text" class="form-input" required placeholder="Введите название плагина">
+                    <div class="error-message" id="nameError"></div>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">Описание</label>
-                    <textarea class="form-input form-textarea" required placeholder="Опишите ваш плагин, его функции и особенности..."></textarea>
-                    <div class="required-note">* Обязательное поле</div>
+                    <textarea class="form-input" required placeholder="Опишите функционал вашего плагина"></textarea>
+                    <div class="error-message" id="descriptionError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Команды</label>
+                    <textarea class="form-input" required placeholder="Укажите команды плагина, по одной на строку"></textarea>
+                    <div class="error-message" id="commandsError"></div>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">Файл плагина</label>
-                    <input type="file" id="pluginFile" accept=".zip,.rar,.7z" style="display: none;">
-                    <div class="file-upload" onclick="document.getElementById('pluginFile').click()">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <div class="file-upload-text">Перетащите файл сюда или нажмите для выбора</div>
-                        <div class="file-types">Поддерживаемые форматы: .zip, .rar, .7z</div>
+                    <div class="file-upload" id="dropZone">
+                        <input type="file" accept=".zip,.rar,.7z" id="fileInput" required>
+                        <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                        <p class="upload-text">Перетащите файл сюда или кликните для выбора</p>
+                        <p class="upload-info">Поддерживаемые форматы: .zip, .rar, .7z</p>
                     </div>
-                    <div id="fileInfo" class="file-info">
-                        <i class="fas fa-file-archive"></i>
-                        <span id="fileName"></span>
-                        (<span id="fileSize"></span>)
+                    <div class="file-preview" id="filePreview">
+                        <div class="file-info">
+                            <i class="fas fa-file-archive file-icon"></i>
+                            <div class="file-details">
+                                <div class="file-name" id="fileName"></div>
+                                <div class="file-size" id="fileSize"></div>
+                            </div>
+                            <i class="fas fa-times remove-file" onclick="removeFile()"></i>
+                        </div>
                     </div>
+                    <div class="error-message" id="fileError"></div>
                 </div>
 
-                <div class="api-key-section">
-                    <h3 class="api-key-title">Требуется ключ Steam API</h3>
-                    <p class="api-key-text">
-                        Вы можете получить свой ключ API Steam, перейдя по этой ссылке →
-                        <a href="https://steamcommunity.com/dev/apikey" target="_blank" class="api-key-link">
-                            https://steamcommunity.com/dev/apikey
-                        </a>
-                    </p>
-                    <div class="code-block">
-                        "Steam API key for workshop skins (https://steamcommunity.com/dev/apikey)": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-                        <button class="copy-btn" onclick="copyToClipboard(this)">
-                            <i class="fas fa-copy"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <button type="submit" class="publish-btn">
+                <button type="submit" class="submit-btn" id="submitBtn">
                     <i class="fas fa-cloud-upload-alt"></i>
                     Опубликовать плагин
                 </button>
@@ -438,41 +301,85 @@
         </div>
     </div>
 
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="copyright">
-                © 2024 ForestDesign. Все права защищены / All rights reserved.
-            </div>
-            <div class="social-links">
-                <a href="https://vk.com/forestdesign" target="_blank" class="social-link vk">
-                    <i class="fab fa-vk"></i>
-                </a>
-                <a href="https://t.me/forestdesign" target="_blank" class="social-link telegram">
-                    <i class="fab fa-telegram"></i>
-                </a>
-                <a href="https://discord.gg/forestdesign" target="_blank" class="social-link discord">
-                    <i class="fab fa-discord"></i>
-                </a>
-            </div>
-        </div>
-    </footer>
-
     <script>
-        // Обработка загрузки файла
-        document.getElementById('pluginFile').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const fileInfo = document.getElementById('fileInfo');
-                const fileName = document.getElementById('fileName');
-                const fileSize = document.getElementById('fileSize');
+        const form = document.getElementById('publishForm');
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const filePreview = document.getElementById('filePreview');
+        const fileName = document.getElementById('fileName');
+        const fileSize = document.getElementById('fileSize');
+        const submitBtn = document.getElementById('submitBtn');
 
-                fileName.textContent = file.name;
-                fileSize.textContent = formatFileSize(file.size);
-                fileInfo.classList.add('visible');
+        // Проверяем авторизацию
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user) {
+                window.location.href = 'login.html';
             }
         });
 
-        // Форматирование размера файла
+        // Drag and drop функционал
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, unhighlight, false);
+        });
+
+        function highlight() {
+            dropZone.classList.add('dragover');
+        }
+
+        function unhighlight() {
+            dropZone.classList.remove('dragover');
+        }
+
+        dropZone.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const file = dt.files[0];
+            handleFile(file);
+        }
+
+        fileInput.addEventListener('change', function() {
+            handleFile(this.files[0]);
+        });
+
+        function handleFile(file) {
+            if (file) {
+                const validTypes = ['.zip', '.rar', '.7z'];
+                const fileExtension = '.' + file.name.split('.').pop().toLowerCase();
+                
+                if (!validTypes.includes(fileExtension)) {
+                    showError('fileError', 'Неподдерживаемый формат файла');
+                    return;
+                }
+
+                fileName.textContent = file.name;
+                fileSize.textContent = formatFileSize(file.size);
+                filePreview.classList.add('show');
+                hideError('fileError');
+            }
+        }
+
+        function removeFile() {
+            fileInput.value = '';
+            filePreview.classList.remove('show');
+            fileName.textContent = '';
+            fileSize.textContent = '';
+        }
+
         function formatFileSize(bytes) {
             if (bytes === 0) return '0 Bytes';
             const k = 1024;
@@ -481,61 +388,70 @@
             return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
         }
 
-        // Копирование в буфер обмена
-        function copyToClipboard(button) {
-            const codeBlock = button.parentElement;
-            const text = codeBlock.textContent.trim();
-            navigator.clipboard.writeText(text).then(() => {
-                const icon = button.querySelector('i');
-                icon.className = 'fas fa-check';
-                setTimeout(() => {
-                    icon.className = 'fas fa-copy';
-                }, 2000);
-            });
+        function showError(id, message) {
+            const error = document.getElementById(id);
+            error.textContent = message;
+            error.classList.add('show');
         }
 
-        // Обработка отправки формы
-        document.getElementById('publishForm').addEventListener('submit', async function(e) {
+        function hideError(id) {
+            const error = document.getElementById(id);
+            error.classList.remove('show');
+        }
+
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const form = e.target;
-            const submitBtn = form.querySelector('.publish-btn');
             
-            // Блокируем кнопку
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Публикация...';
+            const name = form.querySelector('input[type="text"]').value;
+            const description = form.querySelectorAll('textarea')[0].value;
+            const commands = form.querySelectorAll('textarea')[1].value;
+            const file = fileInput.files[0];
 
-            // Имитация загрузки
-            await new Promise(resolve => setTimeout(resolve, 2000));
+            let isValid = true;
 
-            // В реальном приложении здесь был бы запрос к серверу
+            if (name.length < 3) {
+                showError('nameError', 'Название должно содержать минимум 3 символа');
+                isValid = false;
+            } else {
+                hideError('nameError');
+            }
 
-            // Перенаправляем на страницу плагина
-            alert('Плагин успешно опубликован!');
-            window.location.href = 'categories.html';
-        });
+            if (description.length < 10) {
+                showError('descriptionError', 'Описание должно содержать минимум 10 символов');
+                isValid = false;
+            } else {
+                hideError('descriptionError');
+            }
 
-        // Drag and drop для файлов
-        const dropZone = document.querySelector('.file-upload');
+            if (!commands.trim()) {
+                showError('commandsError', 'Укажите хотя бы одну команду');
+                isValid = false;
+            } else {
+                hideError('commandsError');
+            }
 
-        dropZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            dropZone.style.borderColor = '#6c5ce7';
-        });
+            if (!file) {
+                showError('fileError', 'Выберите файл для загрузки');
+                isValid = false;
+            } else {
+                hideError('fileError');
+            }
 
-        dropZone.addEventListener('dragleave', (e) => {
-            e.preventDefault();
-            dropZone.style.borderColor = '#333';
-        });
+            if (isValid) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Публикация...';
 
-        dropZone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            dropZone.style.borderColor = '#333';
-            
-            const file = e.dataTransfer.files[0];
-            if (file) {
-                const input = document.getElementById('pluginFile');
-                input.files = e.dataTransfer.files;
-                input.dispatchEvent(new Event('change'));
+                try {
+                    // В реальном приложении здесь будет загрузка на сервер
+                    await new Promise(resolve => setTimeout(resolve, 1500));
+
+                    // Перенаправляем на страницу плагинов
+                    window.location.href = 'categories.html';
+                } catch (error) {
+                    showError('fileError', 'Ошибка при публикации. Попробуйте позже.');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Опубликовать плагин';
+                }
             }
         });
     </script>
