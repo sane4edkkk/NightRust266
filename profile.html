@@ -20,25 +20,30 @@
             line-height: 1.6;
         }
 
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 2rem;
-            background: #242424;
+            margin-bottom: 2rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid #333;
         }
 
         .nav-links {
             display: flex;
             gap: 2rem;
-            align-items: center;
         }
 
         .nav-link {
             color: #999;
             text-decoration: none;
             transition: color 0.3s ease;
-            font-size: 1rem;
         }
 
         .nav-link:hover {
@@ -50,56 +55,54 @@
             font-weight: 500;
         }
 
-        .profile-banner {
-            width: 100%;
-            height: 200px;
-            background: #242424;
-            position: relative;
+        .profile-header {
+            background: linear-gradient(135deg, #6c5ce7, #a363d9);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
         }
 
         .profile-avatar {
             width: 120px;
             height: 120px;
             border-radius: 50%;
-            background: #333;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            top: -60px;
-            border: 4px solid #1a1a1a;
+            border: 4px solid rgba(255, 255, 255, 0.2);
         }
 
         .profile-info {
-            text-align: center;
-            padding-top: 80px;
-            margin-bottom: 2rem;
+            flex-grow: 1;
         }
 
-        .profile-email {
-            font-size: 1.5rem;
+        .profile-name {
+            font-size: 1.8rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
 
         .admin-badge {
-            display: inline-block;
             background: #ff4757;
             color: white;
-            padding: 0.25rem 1rem;
+            padding: 0.25rem 0.75rem;
             border-radius: 50px;
             font-size: 0.9rem;
-            font-weight: 500;
+            font-weight: 600;
+        }
+
+        .profile-role {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
         }
 
         .profile-stats {
             display: flex;
-            justify-content: center;
-            gap: 4rem;
-            padding: 2rem;
-            background: #242424;
-            border-radius: 12px;
-            margin: 0 auto;
-            max-width: 600px;
+            gap: 2rem;
         }
 
         .stat-item {
@@ -109,41 +112,136 @@
         .stat-value {
             font-size: 1.5rem;
             font-weight: 600;
-            color: #6c5ce7;
             margin-bottom: 0.25rem;
         }
 
         .stat-label {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        .content-section {
+            background: #242424;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .support-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-label {
             color: #999;
             font-size: 0.9rem;
         }
 
-        .settings-btn {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: none;
-            border: none;
+        .form-input, .form-textarea {
+            background: #1a1a1a;
+            border: 1px solid #333;
             color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: transform 0.3s ease;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
         }
 
-        .settings-btn:hover {
-            transform: rotate(45deg);
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: #6c5ce7;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            align-self: flex-start;
+        }
+
+        .submit-btn:hover {
+            background: #5f50e1;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #4CAF50;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .download-btn:hover {
+            background: #45a049;
+        }
+
+        .message-badge {
+            background: #ff4757;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+        }
+
+        #adminMessages {
+            position: relative;
+            color: #6c5ce7;
+        }
+
+        #adminMessages:hover {
+            color: #5f50e1;
         }
 
         .footer {
             margin-top: 4rem;
-            padding: 2rem;
+            padding: 2rem 0;
+            border-top: 1px solid #333;
             text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .copyright {
             color: #999;
+            font-size: 0.9rem;
         }
 
         .social-links {
             display: flex;
-            justify-content: center;
             gap: 1.5rem;
             margin-top: 1rem;
         }
@@ -173,73 +271,198 @@
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-links">
-            <a href="index.html" class="nav-link">Главная</a>
-            <a href="categories.html" class="nav-link">Плагины</a>
-            <a href="#" class="nav-link active">Профиль</a>
-        </div>
-    </nav>
+    <div class="container">
+        <nav class="navbar">
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Главная</a>
+                <a href="categories.html" class="nav-link">Плагины</a>
+                <a href="#" class="nav-link active">Профиль</a>
+                <a href="support-messages.html" class="nav-link" id="adminMessages" style="display: none;">
+                    <i class="fas fa-envelope"></i> Сообщения
+                    <span class="message-badge" style="display: none;">0</span>
+                </a>
+            </div>
+        </nav>
 
-    <div class="profile-banner">
-        <a href="settings.html" class="settings-btn">
-            <i class="fas fa-cog"></i>
-        </a>
-    </div>
-
-    <div class="profile-info">
-        <img src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y" alt="Аватар" class="profile-avatar" id="profileAvatar">
-        <h1 class="profile-email">sasaaleskevic65@gmail.com</h1>
-        <span class="admin-badge">ADMIN</span>
-    </div>
-
-    <div class="profile-stats">
-        <div class="stat-item">
-            <div class="stat-value">15</div>
-            <div class="stat-label">Публикаций</div>
+        <div class="profile-header">
+            <img src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y" alt="Аватар" class="profile-avatar" id="profileAvatar">
+            <div class="profile-info">
+                <div class="profile-name">
+                    sasaaleskevic65@gmail.com
+                    <span class="admin-badge">ADMIN</span>
+                </div>
+                <div class="profile-role">Администратор</div>
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">15</div>
+                        <div class="stat-label">Публикаций</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">2.3K</div>
+                        <div class="stat-label">Загрузок</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">4.8</div>
+                        <div class="stat-label">Рейтинг</div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="stat-item">
-            <div class="stat-value">2.3K</div>
-            <div class="stat-label">Загрузок</div>
+
+        <div class="content-section">
+            <h2 class="section-title">
+                <i class="fas fa-headset"></i>
+                Техническая поддержка
+            </h2>
+            <form class="support-form" onsubmit="handleSupportSubmit(event)">
+                <div class="form-group">
+                    <label class="form-label">Тема обращения</label>
+                    <input type="text" class="form-input" required placeholder="Например: Проблема со скачиванием">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Описание проблемы</label>
+                    <textarea class="form-textarea" required placeholder="Подробно опишите вашу проблему..."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-paper-plane"></i>
+                    Отправить
+                </button>
+            </form>
         </div>
-        <div class="stat-item">
-            <div class="stat-value">4.8</div>
-            <div class="stat-label">Рейтинг</div>
+
+        <div class="content-section">
+            <h2 class="section-title">
+                <i class="fas fa-download"></i>
+                Мои плагины
+            </h2>
+            <div class="plugins-list">
+                <!-- IQKITS Plugin -->
+                <div class="content-card">
+                    <h3>IQKITS</h3>
+                    <div class="meta-item">
+                        <i class="fas fa-file"></i>
+                        <span>204 КБ</span>
+                    </div>
+                    <button class="download-btn" onclick="downloadPlugin('IQKITS.zip')">
+                        <i class="fas fa-download"></i> Скачать
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
     <footer class="footer">
-        <div>© 2024 ForestDesign. Все права защищены / All rights reserved.</div>
-        <div class="social-links">
-            <a href="https://vk.com/forestdesign" target="_blank" class="social-link vk">
-                <i class="fab fa-vk"></i>
-            </a>
-            <a href="https://t.me/forestdesign" target="_blank" class="social-link telegram">
-                <i class="fab fa-telegram"></i>
-            </a>
-            <a href="https://discord.gg/forestdesign" target="_blank" class="social-link discord">
-                <i class="fab fa-discord"></i>
-            </a>
+        <div class="footer-content">
+            <div class="copyright">
+                © 2024 ForestDesign. Все права защищены / All rights reserved.
+            </div>
+            <div class="social-links">
+                <a href="https://vk.com/forestdesign" target="_blank" class="social-link vk">
+                    <i class="fab fa-vk"></i>
+                </a>
+                <a href="https://t.me/forestdesign" target="_blank" class="social-link telegram">
+                    <i class="fab fa-telegram"></i>
+                </a>
+                <a href="https://discord.gg/forestdesign" target="_blank" class="social-link discord">
+                    <i class="fab fa-discord"></i>
+                </a>
+            </div>
         </div>
     </footer>
 
     <script>
-        // Загружаем сохраненные данные при загрузке страницы
-        document.addEventListener('DOMContentLoaded', () => {
-            const userData = JSON.parse(localStorage.getItem('user') || '{}');
+        // Проверяем, является ли пользователь администратором
+        const isAdmin = true; // В реальном приложении здесь будет проверка роли
+        const adminEmail = 'sasaaleskevic65@gmail.com';
+
+        // Показываем ссылку на сообщения только администратору
+        if (isAdmin) {
+            document.getElementById('adminMessages').style.display = 'flex';
+            updateMessageBadge();
+        }
+
+        function handleSupportSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            const subject = form.querySelector('input').value;
+            const message = form.querySelector('textarea').value;
             
-            // Загружаем аватар, если он есть в localStorage
-            if (userData.avatar) {
-                document.getElementById('profileAvatar').src = userData.avatar;
+            // Создаем объект сообщения
+            const supportMessage = {
+                id: Date.now(),
+                subject,
+                message,
+                date: new Date().toISOString(),
+                status: 'new',
+                email: 'user@example.com' // В реальном приложении здесь будет email отправителя
+            };
+
+            // Получаем существующие сообщения из localStorage
+            const messages = JSON.parse(localStorage.getItem('supportMessages') || '[]');
+            messages.push(supportMessage);
+            
+            // Сохраняем обновленный список сообщений
+            localStorage.setItem('supportMessages', JSON.stringify(messages));
+            
+            // Обновляем счетчик непрочитанных сообщений
+            updateMessageBadge();
+
+            alert('Ваше обращение отправлено! Мы ответим вам в ближайшее время.');
+            form.reset();
+        }
+
+        function updateMessageBadge() {
+            const messages = JSON.parse(localStorage.getItem('supportMessages') || '[]');
+            const unreadCount = messages.filter(msg => msg.status === 'new').length;
+            const badge = document.querySelector('.message-badge');
+            
+            if (unreadCount > 0) {
+                badge.style.display = 'inline';
+                badge.textContent = unreadCount;
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+
+        function downloadPlugin(filename) {
+            const fileData = {
+                'IQKITS.zip': {
+                    url: '/plugins/IQKITS.zip',
+                    fallbackContent: 'data:application/zip;base64,UEsDBAoAAAAAAOZwt1QAAAAAAAAAAAAAAAAIAAAAcGx1Z2luL1BLAQIUAAoAAAAAAOZwt1QAAAAAAAAAAAAAAAAIAAAAAAAAAAAAEAAAAAAAAABwbHVnaW4vUEsFBgAAAAABAAEANgAAACQAAAAAAA=='
+                }
+            };
+
+            const fileInfo = fileData[filename];
+            if (!fileInfo) {
+                alert('Файл не найден');
+                return;
             }
             
-            // Загружаем баннер, если он есть в localStorage
-            if (userData.banner) {
-                document.querySelector('.profile-banner').style.backgroundImage = `url(${userData.banner})`;
-                document.querySelector('.profile-banner').style.backgroundSize = 'cover';
-                document.querySelector('.profile-banner').style.backgroundPosition = 'center';
-            }
-        });
+            // Пробуем сначала загрузить файл по URL
+            fetch(fileInfo.url)
+                .then(response => response.blob())
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = url;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                })
+                .catch(() => {
+                    // Если не удалось загрузить по URL, используем fallback content
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = fileInfo.fallbackContent;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                });
+        }
     </script>
 </body>
 </html> 
