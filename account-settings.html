@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Настройки аккаунта - ForumHub</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #ffffff;
+        }
+
+        .settings-container {
+            display: flex;
+            max-width: 1200px;
+            margin: 40px auto;
+            gap: 2rem;
+            padding: 0 1rem;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #242424;
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .sidebar-section {
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-title {
+            color: #ffffff;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #333;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #999;
+            text-decoration: none;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .sidebar-menu a:hover {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .sidebar-menu a.active {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .main-content {
+            flex: 1;
+            background-color: #242424;
+            border-radius: 8px;
+            padding: 2rem;
+        }
+
+        .settings-header {
+            margin-bottom: 2rem;
+        }
+
+        .settings-header h1 {
+            font-size: 1.5rem;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        .settings-form {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .form-control {
+            background-color: #333;
+            border: 1px solid #444;
+            color: #fff;
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .btn-edit {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+        }
+
+        .btn-edit:hover {
+            background-color: #444;
+        }
+
+        .avatar-section {
+            margin: 2rem 0;
+        }
+
+        .avatar-preview {
+            width: 100px;
+            height: 100px;
+            background-color: #333;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        .banner-preview {
+            width: 100%;
+            height: 200px;
+            background-color: #333;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .banner-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .email-options {
+            margin-top: 1rem;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .settings-link {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .settings-link:hover {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-comments"></i>
+                <span>ForumHub</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Главная</a>
+                <div class="auth-buttons">
+                    <a href="login.html" class="login-btn">Войти</a>
+                    <a href="register.html" class="register-btn">Регистрация</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="settings-container">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h2 class="sidebar-title">Ваш аккаунт</h2>
+                <ul class="sidebar-menu">
+                    <li><a href="#" class="active"><i class="fas fa-user"></i> Ваш профиль</a></li>
+                    <li><a href="#"><i class="fas fa-bell"></i> Оповещения</a></li>
+                    <li><a href="#"><i class="fas fa-heart"></i> Полученные реакции</a></li>
+                    <li><a href="#"><i class="fas fa-bookmark"></i> Закладки</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <h2 class="sidebar-title">Настройки</h2>
+                <ul class="sidebar-menu">
+                    <li><a href="#" class="active"><i class="fas fa-info-circle"></i> Информация</a></li>
+                    <li><a href="#"><i class="fas fa-shield-alt"></i> Безопасность</a></li>
+                    <li><a href="#"><i class="fas fa-lock"></i> Конфиденциальность</a></li>
+                    <li><a href="#"><i class="fas fa-cog"></i> Настройки</a></li>
+                    <li><a href="#"><i class="fas fa-credit-card"></i> Подписка</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <ul class="sidebar-menu">
+                    <li><a href="#"><i class="fas fa-link"></i> Связанные аккаунты</a></li>
+                    <li><a href="#"><i class="fas fa-users"></i> Подписки</a></li>
+                    <li><a href="#"><i class="fas fa-ban"></i> Игнорирование</a></li>
+                    <li><a href="#"><i class="fas fa-sign-out-alt"></i> Выход</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="settings-header">
+                <h1>Информация</h1>
+            </div>
+
+            <form class="settings-form">
+                <div class="form-group">
+                    <label>Имя пользователя:</label>
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <input type="text" class="form-control" value="alekssanek1020" readonly>
+                        <button type="button" class="btn-edit">Изменить</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Электронная почта:</label>
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <input type="email" class="form-control" value="alekssanek@gmail.com" readonly>
+                        <button type="button" class="btn-edit">Изменить</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Опции электронной почты:</label>
+                    <div class="email-options">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="newsletter">
+                            <label for="newsletter">Получать электронные письма о новостях и обновлениях</label>
+                        </div>
+                        <div style="margin-top: 0.5rem;">
+                            <small>Дополнительные опции для электронной почты Вы можете найти в <a href="#" class="settings-link">настройках</a></small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="avatar-section">
+                    <label>Аватар:</label>
+                    <div class="avatar-preview">
+                        FR
+                    </div>
+                    <small>Нажмите на изображение для изменения своего аватара.</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Баннер профиля:</label>
+                    <div class="banner-preview">
+                        <img src="forest-banner.jpg" alt="Баннер профиля">
+                    </div>
+                    <button type="button" class="btn-edit">Редактировать баннер профиля</button>
+                </div>
+
+                <div class="form-group">
+                    <label>Дата рождения:</label>
+                    <div style="display: flex; gap: 1rem;">
+                        <select class="form-control" style="width: 100px;">
+                            <option>День</option>
+                        </select>
+                        <select class="form-control" style="width: 150px;">
+                            <option>Месяц</option>
+                        </select>
+                        <select class="form-control" style="width: 100px;">
+                            <option>Год</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </main>
+    </div>
+</body>
+</html> 
