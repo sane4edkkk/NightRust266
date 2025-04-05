@@ -665,7 +665,39 @@
                 window.location.href = 'login.html';
                 return;
             }
-            alert('Начинается скачивание файла: ' + filename);
+
+            // Получаем информацию о плагине
+            const plugins = JSON.parse(localStorage.getItem('plugins')) || [];
+            const plugin = plugins.find(p => p.fileName === filename);
+            
+            if (!plugin) {
+                alert('Ошибка: плагин не найден');
+                return;
+            }
+
+            // Создаем ссылку для скачивания
+            const link = document.createElement('a');
+            link.href = `plugins/${filename}`; // Предполагаемый путь к файлам плагинов
+            link.download = filename;
+
+            // Добавляем информацию о скачивании
+            const downloads = parseInt(plugin.downloads || 0) + 1;
+            plugin.downloads = downloads;
+            
+            // Обновляем информацию о плагине в localStorage
+            const updatedPlugins = plugins.map(p => 
+                p.id === plugin.id ? { ...p, downloads } : p
+            );
+            localStorage.setItem('plugins', JSON.stringify(updatedPlugins));
+
+            // Показываем информацию о начале скачивания
+            alert(`Начинается скачивание файла: ${filename}\nРазмер: ${plugin.fileSize}`);
+
+            // Симулируем скачивание
+            setTimeout(() => {
+                // В реальном приложении здесь будет настоящее скачивание файла
+                loadPlugins(); // Обновляем отображение для показа нового количества скачиваний
+            }, 1000);
         }
 
         function deletePlugin(pluginId, buttonElement) {

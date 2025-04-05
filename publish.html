@@ -367,6 +367,13 @@
                     return;
                 }
 
+                // Проверяем размер файла (максимум 100 МБ)
+                const maxSize = 100 * 1024 * 1024; // 100 МБ в байтах
+                if (file.size > maxSize) {
+                    showError('fileError', 'Размер файла не должен превышать 100 МБ');
+                    return;
+                }
+
                 fileName.textContent = file.name;
                 fileSize.textContent = formatFileSize(file.size);
                 filePreview.classList.add('show');
