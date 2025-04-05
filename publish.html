@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Опубликовать - ForumHub</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #f5f5f5;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .publish-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .publish-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .publish-header h1 {
+            font-size: 1.5rem;
+            color: #333;
+            margin: 0;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .form-group input[type="text"],
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .file-upload {
+            border: 2px dashed #ddd;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+
+        .file-upload:hover {
+            border-color: #4CAF50;
+        }
+
+        .file-upload i {
+            font-size: 2rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .file-upload p {
+            margin: 0;
+            color: #666;
+        }
+
+        .file-info {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #f8f8f8;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .file-info.active {
+            display: block;
+        }
+
+        .publish-button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .publish-button:hover {
+            background: #45a049;
+        }
+
+        .preview-image {
+            max-width: 100%;
+            max-height: 300px;
+            margin-top: 1rem;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .preview-image.active {
+            display: block;
+        }
+
+        .contact-options {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .contact-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .contact-option input[type="checkbox"] {
+            width: 1.2rem;
+            height: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигационная панель -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">ForumHub</a>
+            <div class="nav-links">
+                <a href="index.html">Главная</a>
+                <a href="categories.html">Категории</a>
+                <a href="about.html">О нас</a>
+                <a href="publish.html" class="publish-btn active"><i class="fas fa-plus"></i> Опубликовать</a>
+            </div>
+            <div class="auth-buttons">
+                <!-- Здесь будут кнопки авторизации -->
+            </div>
+        </div>
+    </nav>
+
+    <!-- Основной контент -->
+    <div class="publish-container">
+        <div class="publish-header">
+            <h1>Опубликовать контент</h1>
+        </div>
+
+        <form id="publishForm">
+            <div class="form-group">
+                <label for="title">Название</label>
+                <input type="text" id="title" name="title" required placeholder="Введите название публикации">
+            </div>
+
+            <div class="form-group">
+                <label for="category">Категория</label>
+                <select id="category" name="category" required>
+                    <option value="">Выберите категорию</option>
+                    <option value="games">Игры</option>
+                    <option value="plugins">Плагины</option>
+                    <option value="movies">Кино и сериалы</option>
+                    <option value="music">Музыка</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Описание</label>
+                <textarea id="description" name="description" required placeholder="Опишите ваш контент"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Файл</label>
+                <div class="file-upload" onclick="document.getElementById('fileInput').click()">
+                    <input type="file" id="fileInput" style="display: none;" onchange="handleFileSelect(event)">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Нажмите или перетащите файл сюда</p>
+                </div>
+                <div class="file-info" id="fileInfo">
+                    <p><i class="fas fa-file"></i> <span id="fileName">file.zip</span> (<span id="fileSize">2.5 MB</span>)</p>
+                </div>
+                <img id="previewImage" class="preview-image">
+            </div>
+
+            <div class="form-group">
+                <label>Способы связи</label>
+                <div class="contact-options">
+                    <div class="contact-option">
+                        <input type="checkbox" id="allowComments" name="allowComments" checked>
+                        <label for="allowComments">Разрешить комментарии</label>
+                    </div>
+                    <div class="contact-option">
+                        <input type="checkbox" id="allowMessages" name="allowMessages" checked>
+                        <label for="allowMessages">Разрешить личные сообщения</label>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="publish-button">Опубликовать</button>
+        </form>
+    </div>
+
+    <script src="auth.js"></script>
+    <script>
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                // Показываем информацию о файле
+                document.getElementById('fileInfo').classList.add('active');
+                document.getElementById('fileName').textContent = file.name;
+                document.getElementById('fileSize').textContent = formatFileSize(file.size);
+
+                // Если это изображение, показываем превью
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const preview = document.getElementById('previewImage');
+                        preview.src = e.target.result;
+                        preview.classList.add('active');
+                    }
+                    reader.readAsDataURL(file);
+                } else {
+                    document.getElementById('previewImage').classList.remove('active');
+                }
+            }
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        document.getElementById('publishForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Здесь будет логика отправки формы
+            const formData = new FormData(this);
+            const fileInput = document.getElementById('fileInput');
+            if (fileInput.files[0]) {
+                formData.append('file', fileInput.files[0]);
+            }
+
+            // Временно показываем уведомление об успешной публикации
+            alert('Контент успешно опубликован!');
+            // В реальном приложении здесь будет отправка данных на сервер
+        });
+
+        // Drag and drop функционал
+        const dropZone = document.querySelector('.file-upload');
+
+        dropZone.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.style.borderColor = '#4CAF50';
+        });
+
+        dropZone.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            this.style.borderColor = '#ddd';
+        });
+
+        dropZone.addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.style.borderColor = '#ddd';
+            
+            const file = e.dataTransfer.files[0];
+            const fileInput = document.getElementById('fileInput');
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(file);
+            fileInput.files = dataTransfer.files;
+            
+            handleFileSelect({ target: { files: [file] } });
+        });
+    </script>
+</body>
+</html> 

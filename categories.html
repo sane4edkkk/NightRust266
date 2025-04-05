@@ -257,21 +257,43 @@
                 grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             }
         }
+
+        .publish-btn {
+            background: #4CAF50;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background-color 0.3s;
+        }
+
+        .publish-btn:hover {
+            background: #45a049;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
     </style>
 </head>
 <body>
     <nav class="navbar">
         <div class="nav-container">
-            <div class="logo">
-                <i class="fas fa-comments"></i>
-                <span>ForumHub</span>
-            </div>
+            <a href="index.html" class="logo">ForumHub</a>
             <div class="nav-links">
                 <a href="index.html">Главная</a>
-                <div class="auth-buttons">
-                    <a href="login.html" class="login-btn">Войти</a>
-                    <a href="register.html" class="register-btn">Регистрация</a>
-                </div>
+                <a href="categories.html" class="active">Категории</a>
+                <a href="about.html">О нас</a>
+                <a href="publish.html" class="publish-btn"><i class="fas fa-plus"></i> Опубликовать</a>
+            </div>
+            <div class="auth-buttons">
+                <a href="login.html" class="login-btn">Войти</a>
+                <a href="register.html" class="register-btn">Регистрация</a>
             </div>
         </div>
     </nav>
