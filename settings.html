@@ -209,6 +209,54 @@
             margin-bottom: 1rem;
             text-align: center;
         }
+
+        .footer {
+            margin-top: 4rem;
+            padding: 2rem 0;
+            border-top: 1px solid #333;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .copyright {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            color: #999;
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-link:hover {
+            color: white;
+        }
+
+        .social-link.vk:hover {
+            color: #45668e;
+        }
+
+        .social-link.telegram:hover {
+            color: #0088cc;
+        }
+
+        .social-link.discord:hover {
+            color: #7289da;
+        }
     </style>
 </head>
 <body>
@@ -363,14 +411,35 @@
             // В реальном приложении здесь был бы запрос к серверу
             await new Promise(resolve => setTimeout(resolve, 1000));
 
+            // Сохраняем данные в localStorage
+            const userData = JSON.parse(localStorage.getItem('user') || '{}');
+            
+            // Сохраняем дату рождения
+            userData.birthDate = `${formData.birthYear}-${formData.birthMonth}-${formData.birthDay}`;
+            
+            // Сохраняем аватар
+            if (formData.avatar) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    userData.avatar = e.target.result;
+                    localStorage.setItem('user', JSON.stringify(userData));
+                }
+                reader.readAsDataURL(formData.avatar);
+            }
+            
+            // Сохраняем баннер
+            if (formData.banner) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    userData.banner = e.target.result;
+                    localStorage.setItem('user', JSON.stringify(userData));
+                }
+                reader.readAsDataURL(formData.banner);
+            }
+
             // Показываем сообщение об успехе
             const successMessage = document.getElementById('successMessage');
             successMessage.style.display = 'block';
-            
-            // Сохраняем данные в localStorage
-            const userData = JSON.parse(localStorage.getItem('user') || '{}');
-            userData.birthDate = `${formData.birthYear}-${formData.birthMonth}-${formData.birthDay}`;
-            localStorage.setItem('user', JSON.stringify(userData));
 
             // Скрываем сообщение через 3 секунды
             setTimeout(() => {
@@ -381,13 +450,44 @@
         // Загружаем сохраненные данные при загрузке страницы
         document.addEventListener('DOMContentLoaded', () => {
             const userData = JSON.parse(localStorage.getItem('user') || '{}');
+            
+            // Загружаем дату рождения
             if (userData.birthDate) {
                 const [year, month, day] = userData.birthDate.split('-');
                 document.getElementById('birthDay').value = day;
                 document.getElementById('birthMonth').value = month;
                 document.getElementById('birthYear').value = year;
             }
+            
+            // Загружаем аватар
+            if (userData.avatar) {
+                document.getElementById('avatarPreview').src = userData.avatar;
+            }
+            
+            // Загружаем баннер
+            if (userData.banner) {
+                document.getElementById('bannerPreview').src = userData.banner;
+            }
         });
     </script>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="copyright">
+                © 2024 ForestDesign. Все права защищены / All rights reserved.
+            </div>
+            <div class="social-links">
+                <a href="https://vk.com/forestdesign" target="_blank" class="social-link vk">
+                    <i class="fab fa-vk"></i>
+                </a>
+                <a href="https://t.me/forestdesign" target="_blank" class="social-link telegram">
+                    <i class="fab fa-telegram"></i>
+                </a>
+                <a href="https://discord.gg/forestdesign" target="_blank" class="social-link discord">
+                    <i class="fab fa-discord"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
 </body>
 </html> 
