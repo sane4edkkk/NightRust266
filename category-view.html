@@ -340,6 +340,7 @@
                 <div class="content-tags">
                     <span class="content-tag">БЕСПЛАТНО</span>
                     <span class="content-tag">ПЛАГИН</span>
+                    <span class="content-tag" style="background: #178600; color: white;">C#</span>
                 </div>
             </div>
             <h2 class="content-title">IQKITS</h2>
@@ -405,39 +406,39 @@
 
     <script>
         function handleDownload() {
-            // Создаем тестовый ZIP-файл в base64
-            const base64Content = 'UEsDBAoAAAAAAOZwt1QAAAAAAAAAAAAAAAAIAAAAcGx1Z2luL1BLAQIUAAoAAAAAAOZwt1QAAAAAAAAAAAAAAAAIAAAAAAAAAAAAEAAAAAAAAABwbHVnaW4vUEsFBgAAAAABAAEANgAAACQAAAAAAA==';
+            // Путь к реальному файлу плагина
+            const pluginPath = 'plugins/IQKITS.zip';
             
-            try {
-                // Конвертируем base64 в Blob
-                const byteCharacters = atob(base64Content);
-                const byteNumbers = new Array(byteCharacters.length);
-                for (let i = 0; i < byteCharacters.length; i++) {
-                    byteNumbers[i] = byteCharacters.charCodeAt(i);
-                }
-                const byteArray = new Uint8Array(byteNumbers);
-                const blob = new Blob([byteArray], { type: 'application/zip' });
-                
-                // Создаем ссылку для скачивания
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.style.display = 'none';
-                a.href = url;
-                a.download = 'plugin.zip';
-                
-                // Добавляем ссылку в DOM и эмулируем клик
-                document.body.appendChild(a);
-                a.click();
-                
-                // Очищаем ресурсы
-                setTimeout(() => {
-                    document.body.removeChild(a);
-                    window.URL.revokeObjectURL(url);
-                }, 100);
-            } catch (error) {
-                console.error('Ошибка при скачивании:', error);
-                showError();
-            }
+            // Создаем запрос на скачивание
+            fetch(pluginPath)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.blob();
+                })
+                .then(blob => {
+                    // Создаем ссылку для скачивания
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = url;
+                    a.download = 'IQKITS.zip';
+                    
+                    // Добавляем ссылку в DOM и эмулируем клик
+                    document.body.appendChild(a);
+                    a.click();
+                    
+                    // Очищаем ресурсы
+                    setTimeout(() => {
+                        document.body.removeChild(a);
+                        window.URL.revokeObjectURL(url);
+                    }, 100);
+                })
+                .catch(error => {
+                    console.error('Ошибка при скачивании:', error);
+                    showError();
+                });
         }
 
         function showError() {
