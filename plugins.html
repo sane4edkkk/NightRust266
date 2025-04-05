@@ -549,6 +549,13 @@
         document.addEventListener('DOMContentLoaded', function() {
             loadPlugins();
             setupPriceVisibility();
+            
+            // Добавляем кнопку создания плагина только для авторизованных пользователей
+            const user = JSON.parse(localStorage.getItem('user'));
+            const addPluginButton = document.querySelector('.add-plugin-btn');
+            if (addPluginButton) {
+                addPluginButton.style.display = user ? 'flex' : 'none';
+            }
         });
 
         // Показ/скрытие поля цены в зависимости от типа плагина
@@ -652,96 +659,71 @@
 
         function loadPlugins() {
             const plugins = JSON.parse(localStorage.getItem('plugins')) || [];
-            const grid = document.getElementById('pluginsGrid');
+            const pluginsContainer = document.getElementById('pluginsGrid');
             const user = JSON.parse(localStorage.getItem('user')); // Может быть null для неавторизованных пользователей
             
             if (plugins.length === 0) {
-                grid.innerHTML = `
-                    <div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--text-secondary);">
-                        <i class="fas fa-puzzle-piece" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
-                        <p>Пока нет добавленных плагинов</p>
+                pluginsContainer.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-puzzle-piece"></i>
+                        <p>Пока нет доступных плагинов</p>
                         ${user ? `
-                            <button class="add-plugin-btn" style="margin-top: 1rem;" onclick="openAddPluginModal()">
+                            <button class="create-plugin-btn" onclick="showCreatePluginModal()">
                                 <i class="fas fa-plus"></i>
-                                Добавить первый плагин
+                                Добавить плагин
                             </button>
-                        ` : `
-                            <p style="margin-top: 1rem;">
-                                <a href="login.html" style="color: var(--primary); text-decoration: none;">Войдите</a>
-                                чтобы добавить плагин
-                            </p>
-                        `}
+                        ` : ''}
                     </div>
                 `;
                 return;
             }
 
-            grid.innerHTML = '';
+            pluginsContainer.innerHTML = '';
             plugins.forEach(plugin => {
-                const card = createPluginCard(plugin);
-                grid.appendChild(card);
-            });
-        }
-
-        function createPluginCard(plugin) {
-            const card = document.createElement('div');
-            card.className = 'plugin-card';
-            
-            const priceDisplay = plugin.type === 'free' 
-                ? '<span class="plugin-price price-free">Бесплатно</span>'
-                : `<span class="plugin-price price-paid">${plugin.price} ₽</span>`;
-
-            const fileSize = formatFileSize(plugin.fileSize);
-            const downloads = plugin.downloads || 0;
-            const user = JSON.parse(localStorage.getItem('user'));
-
-            card.innerHTML = `
-                <div class="plugin-header">
-                    <div>
+                const pluginCard = document.createElement('div');
+                pluginCard.className = 'plugin-card';
+                pluginCard.innerHTML = `
+                    <div class="plugin-header">
                         <h3 class="plugin-title">${plugin.title}</h3>
-                        <div class="plugin-meta">
-                            <span class="plugin-category">${getCategoryName(plugin.category)}</span>
-                            ${priceDisplay}
-                        </div>
+                        <span class="plugin-type ${plugin.type.toLowerCase()}">${plugin.type}</span>
                     </div>
-                </div>
-                <p class="plugin-description">${plugin.description}</p>
-                <div class="plugin-info">
-                    <span class="plugin-stat">
-                        <i class="fas fa-file"></i> ${fileSize}
-                    </span>
-                    <span class="plugin-stat">
-                        <i class="fas fa-download"></i> ${downloads} скачиваний
-                    </span>
-                </div>
-                <div class="plugin-footer">
-                    <div class="plugin-author">
-                        <i class="fas fa-user"></i>
-                        <div class="author-info">
-                            <span class="author-name">${plugin.author}</span>
-                            <span class="author-date">Добавлено: ${new Date(plugin.dateAdded).toLocaleDateString()}</span>
-                        </div>
+                    <p class="plugin-description">${plugin.description}</p>
+                    <div class="plugin-meta">
+                        <span class="plugin-author">
+                            <i class="fas fa-user"></i>
+                            Автор: ${plugin.author}
+                        </span>
+                        <span class="plugin-date">
+                            <i class="fas fa-calendar"></i>
+                            Добавлен: ${new Date(plugin.dateAdded).toLocaleDateString()}
+                        </span>
+                        ${plugin.downloads ? `
+                            <span class="plugin-downloads">
+                                <i class="fas fa-download"></i>
+                                Скачиваний: ${plugin.downloads}
+                            </span>
+                        ` : ''}
                     </div>
                     <div class="plugin-actions">
                         ${user ? `
-                            <button class="plugin-btn download-btn" onclick="downloadPlugin('${plugin.id}')">
+                            <button class="download-btn" onclick="downloadPlugin('${plugin.id}')">
                                 <i class="fas fa-download"></i>
                                 Скачать
                             </button>
-                            <button class="plugin-btn info-btn" onclick="showPluginInfo('${plugin.id}')">
+                            <button class="info-btn" onclick="showPluginInfo('${plugin.id}')">
                                 <i class="fas fa-info-circle"></i>
+                                Подробнее
                             </button>
                         ` : `
-                            <a href="login.html" class="plugin-btn download-btn">
+                            <a href="login.html" class="login-btn">
                                 <i class="fas fa-sign-in-alt"></i>
-                                Войти для скачивания
+                                Войдите для скачивания
                             </a>
                         `}
                     </div>
-                </div>
-            `;
-
-            return card;
+                `;
+                pluginsContainer.appendChild(pluginCard);
+            });
         }
 
         function formatFileSize(bytes) {
