@@ -447,6 +447,16 @@
         .social-link.discord:hover {
             color: #7289da;
         }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
     </style>
 </head>
 <body>
@@ -669,101 +679,78 @@
                 return;
             }
 
-            // Получаем информацию о плагине
+            // Получаем список плагинов
             const plugins = JSON.parse(localStorage.getItem('plugins')) || [];
-            const plugin = plugins.find(p => p.fileName === filename);
+            const plugin = plugins.find(p => p.filename === filename);
             
-            if (!plugin) {
-                alert('Ошибка: плагин не найден');
+            if (!plugin || !plugin.fileContent) {
+                showNotification('Ошибка: файл не найден', 'error');
                 return;
             }
 
-            // Создаем уведомление о скачивании
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: #242424;
-                border: 1px solid #333;
-                border-radius: 8px;
-                padding: 1rem;
-                color: white;
-                z-index: 1000;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                display: flex;
-                align-items: center;
-                gap: 1rem;
-                min-width: 300px;
-            `;
-
-            notification.innerHTML = `
-                <i class="fas fa-download" style="color: #4CAF50; font-size: 1.5rem;"></i>
-                <div>
-                    <div style="font-weight: 500; margin-bottom: 0.25rem;">Скачивание файла</div>
-                    <div style="font-size: 0.9rem; color: #999;">
-                        ${filename}<br>
-                        Размер: ${plugin.fileSize}
-                    </div>
-                </div>
-            `;
-
-            document.body.appendChild(notification);
-
             try {
+                // Создаем Blob из base64 данных
+                const byteCharacters = atob(plugin.fileContent.split(',')[1]);
+                const byteNumbers = new Array(byteCharacters.length);
+                for (let i = 0; i < byteCharacters.length; i++) {
+                    byteNumbers[i] = byteCharacters.charCodeAt(i);
+                }
+                const byteArray = new Uint8Array(byteNumbers);
+                const blob = new Blob([byteArray], { type: 'application/octet-stream' });
+
                 // Создаем ссылку для скачивания
-                const link = document.createElement('a');
-                link.href = plugin.fileContent; // Используем base64 данные напрямую
-                link.download = filename;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
+                const downloadLink = document.createElement('a');
+                downloadLink.href = URL.createObjectURL(blob);
+                downloadLink.download = filename;
 
-                // Добавляем информацию о скачивании
-                const downloads = parseInt(plugin.downloads || 0) + 1;
-                plugin.downloads = downloads;
+                // Добавляем ссылку в документ (невидимую)
+                document.body.appendChild(downloadLink);
                 
-                // Обновляем информацию о плагине в localStorage
-                const updatedPlugins = plugins.map(p => 
-                    p.id === plugin.id ? { ...p, downloads } : p
-                );
-                localStorage.setItem('plugins', JSON.stringify(updatedPlugins));
+                // Симулируем клик
+                downloadLink.click();
 
-                // Обновляем отображение
-                loadPlugins();
+                // Удаляем ссылку и освобождаем URL
+                document.body.removeChild(downloadLink);
+                URL.revokeObjectURL(downloadLink.href);
+
+                // Обновляем счетчик скачиваний
+                plugin.downloads = (plugin.downloads || 0) + 1;
+                localStorage.setItem('plugins', JSON.stringify(plugins));
 
                 // Показываем уведомление об успешном скачивании
-                setTimeout(() => {
-                    notification.style.opacity = '0';
-                    notification.style.transform = 'translateX(100%)';
-                    notification.style.transition = 'all 0.3s ease';
-                    
-                    setTimeout(() => {
-                        document.body.removeChild(notification);
-                    }, 300);
-                }, 2000);
+                showNotification(`Скачивание файла ${filename} началось`, 'success');
             } catch (error) {
                 console.error('Ошибка при скачивании:', error);
-                notification.innerHTML = `
-                    <i class="fas fa-exclamation-circle" style="color: #ff4757; font-size: 1.5rem;"></i>
-                    <div>
-                        <div style="font-weight: 500; margin-bottom: 0.25rem;">Ошибка скачивания</div>
-                        <div style="font-size: 0.9rem; color: #999;">
-                            Не удалось скачать файл
-                        </div>
-                    </div>
-                `;
-
-                setTimeout(() => {
-                    notification.style.opacity = '0';
-                    notification.style.transform = 'translateX(100%)';
-                    notification.style.transition = 'all 0.3s ease';
-                    
-                    setTimeout(() => {
-                        document.body.removeChild(notification);
-                    }, 300);
-                }, 2000);
+                showNotification('Ошибка при скачивании файла', 'error');
             }
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            
+            // Стили для уведомления
+            notification.style.position = 'fixed';
+            notification.style.top = '20px';
+            notification.style.right = '20px';
+            notification.style.padding = '15px 25px';
+            notification.style.borderRadius = '8px';
+            notification.style.backgroundColor = type === 'success' ? '#4CAF50' : '#f44336';
+            notification.style.color = 'white';
+            notification.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
+            notification.style.zIndex = '1000';
+            notification.style.animation = 'slideIn 0.5s ease-out';
+            
+            document.body.appendChild(notification);
+            
+            // Удаляем уведомление через 3 секунды
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.5s ease-out';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 500);
+            }, 3000);
         }
 
         function deletePlugin(pluginId, buttonElement) {
