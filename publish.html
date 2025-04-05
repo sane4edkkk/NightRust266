@@ -3,246 +3,301 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Опубликовать - ForumHub</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <title>Публикация плагина - ForumHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body {
-            background-color: #f5f5f5;
-            font-family: 'Roboto', sans-serif;
-        }
-
-        .publish-container {
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 2rem;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .publish-header {
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid #eee;
-        }
-
-        .publish-header h1 {
-            font-size: 1.5rem;
-            color: #333;
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #1a1a1a;
+            color: white;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid #333;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: #999;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: white;
+        }
+
+        .nav-link.active {
+            color: white;
+            font-weight: 500;
+        }
+
+        .publish-form {
+            background: #242424;
+            border-radius: 16px;
+            padding: 2rem;
+        }
+
+        .form-header {
+            margin-bottom: 2rem;
+        }
+
+        .form-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-subtitle {
+            color: #999;
         }
 
         .form-group {
             margin-bottom: 1.5rem;
         }
 
-        .form-group label {
+        .form-label {
             display: block;
             margin-bottom: 0.5rem;
-            color: #666;
+            color: #ccc;
             font-weight: 500;
         }
 
-        .form-group input[type="text"],
-        .form-group textarea,
-        .form-group select {
+        .form-input {
             width: 100%;
             padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 1rem;
-            color: #333;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.3s ease;
         }
 
-        .form-group textarea {
+        .form-input:focus {
+            outline: none;
+            border-color: #6c5ce7;
+        }
+
+        .form-textarea {
             min-height: 150px;
             resize: vertical;
         }
 
         .file-upload {
-            border: 2px dashed #ddd;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             padding: 2rem;
-            text-align: center;
-            border-radius: 4px;
+            border: 2px dashed #333;
+            border-radius: 8px;
             cursor: pointer;
-            transition: border-color 0.3s;
+            transition: all 0.3s ease;
         }
 
         .file-upload:hover {
-            border-color: #4CAF50;
+            border-color: #6c5ce7;
+            background: rgba(108, 92, 231, 0.1);
         }
 
-        .file-upload i {
+        .file-upload input[type="file"] {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .upload-icon {
             font-size: 2rem;
-            color: #666;
+            color: #6c5ce7;
             margin-bottom: 1rem;
         }
 
-        .file-upload p {
-            margin: 0;
-            color: #666;
+        .upload-text {
+            text-align: center;
+            color: #999;
+        }
+
+        .upload-text strong {
+            color: #6c5ce7;
         }
 
         .file-info {
+            display: none;
             margin-top: 1rem;
             padding: 1rem;
-            background: #f8f8f8;
-            border-radius: 4px;
-            display: none;
+            background: rgba(108, 92, 231, 0.1);
+            border-radius: 8px;
+            width: 100%;
         }
 
         .file-info.active {
             display: block;
         }
 
-        .publish-button {
-            background: #4CAF50;
+        .file-name {
+            color: white;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .file-size {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .submit-btn {
+            background: #6c5ce7;
             color: white;
             border: none;
             padding: 1rem 2rem;
-            border-radius: 4px;
-            font-size: 1rem;
+            border-radius: 8px;
+            font-weight: 500;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            font-size: 1rem;
         }
 
-        .publish-button:hover {
-            background: #45a049;
+        .submit-btn:hover {
+            background: #5f50e1;
         }
 
-        .preview-image {
-            max-width: 100%;
-            max-height: 300px;
-            margin-top: 1rem;
-            border-radius: 4px;
-            display: none;
+        .submit-btn:disabled {
+            background: #333;
+            cursor: not-allowed;
         }
 
-        .preview-image.active {
-            display: block;
-        }
-
-        .contact-options {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .contact-option {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .contact-option input[type="checkbox"] {
-            width: 1.2rem;
-            height: 1.2rem;
+        .error-message {
+            color: #ff4757;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
-    <!-- Навигационная панель -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="logo">ForumHub</a>
+    <div class="container">
+        <nav class="navbar">
             <div class="nav-links">
-                <a href="index.html">Главная</a>
-                <a href="categories.html">Категории</a>
-                <a href="about.html">О нас</a>
-                <a href="publish.html" class="publish-btn active"><i class="fas fa-plus"></i> Опубликовать</a>
+                <a href="index.html" class="nav-link">Главная</a>
+                <a href="categories.html" class="nav-link">Плагины</a>
+                <a href="profile.html" class="nav-link">Профиль</a>
             </div>
-            <div class="auth-buttons">
-                <!-- Здесь будут кнопки авторизации -->
-            </div>
-        </div>
-    </nav>
+        </nav>
 
-    <!-- Основной контент -->
-    <div class="publish-container">
-        <div class="publish-header">
-            <h1>Опубликовать контент</h1>
-        </div>
-
-        <form id="publishForm">
-            <div class="form-group">
-                <label for="title">Название</label>
-                <input type="text" id="title" name="title" required placeholder="Введите название публикации">
+        <form class="publish-form" id="publishForm">
+            <div class="form-header">
+                <h1 class="form-title">Публикация плагина</h1>
+                <p class="form-subtitle">Заполните информацию о вашем плагине</p>
             </div>
 
             <div class="form-group">
-                <label for="category">Категория</label>
-                <select id="category" name="category" required>
-                    <option value="">Выберите категорию</option>
-                    <option value="games">Игры</option>
-                    <option value="plugins">Плагины</option>
-                    <option value="movies">Кино и сериалы</option>
-                    <option value="music">Музыка</option>
-                    <option value="premium">Премиум</option>
-                </select>
+                <label class="form-label">Название плагина</label>
+                <input type="text" class="form-input" required placeholder="Введите название плагина">
             </div>
 
             <div class="form-group">
-                <label for="description">Описание</label>
-                <textarea id="description" name="description" required placeholder="Опишите ваш контент"></textarea>
+                <label class="form-label">Описание</label>
+                <textarea class="form-input form-textarea" required placeholder="Опишите ваш плагин..."></textarea>
             </div>
 
             <div class="form-group">
-                <label>Файл</label>
-                <div class="file-upload" onclick="document.getElementById('fileInput').click()">
-                    <input type="file" id="fileInput" style="display: none;" onchange="handleFileSelect(event)">
-                    <i class="fas fa-cloud-upload-alt"></i>
-                    <p>Нажмите или перетащите файл сюда</p>
+                <label class="form-label">Файл плагина</label>
+                <div class="file-upload">
+                    <input type="file" accept=".zip,.rar,.7z" required id="pluginFile">
+                    <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                    <div class="upload-text">
+                        <p>Перетащите файл сюда или <strong>выберите файл</strong></p>
+                        <p>Поддерживаемые форматы: .zip, .rar, .7z</p>
+                    </div>
                 </div>
                 <div class="file-info" id="fileInfo">
-                    <p><i class="fas fa-file"></i> <span id="fileName">file.zip</span> (<span id="fileSize">2.5 MB</span>)</p>
+                    <div class="file-name"></div>
+                    <div class="file-size"></div>
                 </div>
-                <img id="previewImage" class="preview-image">
+                <div class="error-message" id="fileError"></div>
             </div>
 
-            <div class="form-group">
-                <label>Способы связи</label>
-                <div class="contact-options">
-                    <div class="contact-option">
-                        <input type="checkbox" id="allowComments" name="allowComments" checked>
-                        <label for="allowComments">Разрешить комментарии</label>
-                    </div>
-                    <div class="contact-option">
-                        <input type="checkbox" id="allowMessages" name="allowMessages" checked>
-                        <label for="allowMessages">Разрешить личные сообщения</label>
-                    </div>
-                </div>
-            </div>
-
-            <button type="submit" class="publish-button">Опубликовать</button>
+            <button type="submit" class="submit-btn" id="submitBtn">
+                <i class="fas fa-upload"></i> Опубликовать плагин
+            </button>
         </form>
     </div>
 
-    <script src="auth.js"></script>
     <script>
-        function handleFileSelect(event) {
-            const file = event.target.files[0];
-            if (file) {
-                // Показываем информацию о файле
-                document.getElementById('fileInfo').classList.add('active');
-                document.getElementById('fileName').textContent = file.name;
-                document.getElementById('fileSize').textContent = formatFileSize(file.size);
+        const form = document.getElementById('publishForm');
+        const fileInput = document.getElementById('pluginFile');
+        const fileInfo = document.getElementById('fileInfo');
+        const fileError = document.getElementById('fileError');
+        const submitBtn = document.getElementById('submitBtn');
 
-                // Если это изображение, показываем превью
-                if (file.type.startsWith('image/')) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        const preview = document.getElementById('previewImage');
-                        preview.src = e.target.result;
-                        preview.classList.add('active');
-                    }
-                    reader.readAsDataURL(file);
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const allowedTypes = ['.zip', '.rar', '.7z'];
+                const fileExtension = '.' + file.name.split('.').pop().toLowerCase();
+                
+                if (allowedTypes.includes(fileExtension)) {
+                    fileInfo.classList.add('active');
+                    fileInfo.querySelector('.file-name').textContent = file.name;
+                    fileInfo.querySelector('.file-size').textContent = formatFileSize(file.size);
+                    fileError.textContent = '';
+                    submitBtn.disabled = false;
                 } else {
-                    document.getElementById('previewImage').classList.remove('active');
+                    fileError.textContent = 'Неподдерживаемый формат файла';
+                    fileInfo.classList.remove('active');
+                    submitBtn.disabled = true;
                 }
             }
-        }
+        });
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            
+            try {
+                // В реальном приложении здесь будет отправка на сервер
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Публикация...';
+                
+                // Имитация загрузки
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                // Перенаправление на страницу плагинов
+                window.location.href = 'categories.html';
+            } catch (error) {
+                fileError.textContent = 'Ошибка при публикации плагина';
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-upload"></i> Опубликовать плагин';
+            }
+        });
 
         function formatFileSize(bytes) {
             if (bytes === 0) return '0 Bytes';
@@ -251,100 +306,6 @@
             const i = Math.floor(Math.log(bytes) / Math.log(k));
             return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
         }
-
-        document.getElementById('publishForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Собираем данные формы
-            const formData = new FormData(this);
-            const fileInput = document.getElementById('fileInput');
-            const file = fileInput.files[0];
-            
-            // Создаем объект публикации
-            const publication = {
-                id: Date.now(),
-                title: formData.get('title'),
-                category: formData.get('category'),
-                description: formData.get('description'),
-                allowComments: formData.get('allowComments') === 'on',
-                allowMessages: formData.get('allowMessages') === 'on',
-                author: JSON.parse(localStorage.getItem('user'))?.email || 'Анонимный пользователь',
-                date: new Date().toISOString()
-            };
-
-            // Если есть файл и это изображение, добавляем URL
-            if (file && file.type.startsWith('image/')) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    publication.imageUrl = e.target.result;
-                    savePublicationAndRedirect(publication);
-                };
-                reader.readAsDataURL(file);
-            } else {
-                savePublicationAndRedirect(publication);
-            }
-        });
-
-        function savePublicationAndRedirect(publication) {
-            // Получаем существующие публикации
-            const publications = JSON.parse(localStorage.getItem('publications')) || [];
-            
-            // Добавляем файл, если он есть
-            const fileInput = document.getElementById('fileInput');
-            if (fileInput.files[0]) {
-                const file = fileInput.files[0];
-                // Создаем объект Blob для файла
-                const blob = new Blob([file], { type: file.type });
-                // Создаем URL для скачивания
-                publication.fileUrl = URL.createObjectURL(blob);
-                publication.fileName = file.name;
-                publication.fileSize = file.size;
-                
-                // Добавляем новую публикацию
-                publications.push(publication);
-                
-                // Сохраняем обновленный список
-                localStorage.setItem('publications', JSON.stringify(publications));
-
-                // Показываем уведомление
-                alert('Публикация успешно создана!');
-                
-                // Перенаправляем на страницу категории
-                window.location.href = `category-view.html?category=${publication.category}`;
-            } else {
-                // Если файла нет, просто сохраняем публикацию
-                publications.push(publication);
-                localStorage.setItem('publications', JSON.stringify(publications));
-                alert('Публикация успешно создана!');
-                window.location.href = `category-view.html?category=${publication.category}`;
-            }
-        }
-
-        // Drag and drop функционал
-        const dropZone = document.querySelector('.file-upload');
-
-        dropZone.addEventListener('dragover', function(e) {
-            e.preventDefault();
-            this.style.borderColor = '#4CAF50';
-        });
-
-        dropZone.addEventListener('dragleave', function(e) {
-            e.preventDefault();
-            this.style.borderColor = '#ddd';
-        });
-
-        dropZone.addEventListener('drop', function(e) {
-            e.preventDefault();
-            this.style.borderColor = '#ddd';
-            
-            const file = e.dataTransfer.files[0];
-            const fileInput = document.getElementById('fileInput');
-            const dataTransfer = new DataTransfer();
-            dataTransfer.items.add(file);
-            fileInput.files = dataTransfer.files;
-            
-            handleFileSelect({ target: { files: [file] } });
-        });
     </script>
 </body>
 </html> 

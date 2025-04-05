@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ForumHub - Главная</title>
+    <title>ForumHub</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -14,8 +15,8 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: #f8fafc;
-            color: #1a1a1a;
+            background: #1a1a1a;
+            color: white;
             line-height: 1.6;
         }
 
@@ -29,15 +30,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
             padding: 1rem 0;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #1a1a1a;
-            text-decoration: none;
+            border-bottom: 1px solid #333;
         }
 
         .nav-links {
@@ -46,265 +41,154 @@
         }
 
         .nav-link {
-            color: #64748b;
+            color: #999;
             text-decoration: none;
-            font-weight: 500;
             transition: color 0.3s ease;
         }
 
         .nav-link:hover {
-            color: #1a1a1a;
+            color: white;
         }
 
         .nav-link.active {
-            color: #1a1a1a;
-        }
-
-        .categories-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
+            color: white;
+            font-weight: 500;
         }
 
         .category-card {
-            background: white;
-            border-radius: 12px;
+            background: #242424;
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
         }
 
         .category-header {
-            padding: 1.25rem;
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: white;
+            background: linear-gradient(135deg, #6c5ce7, #a363d9);
+            padding: 2rem;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 1rem;
         }
 
-        /* Уникальные цвета для каждой категории */
-        .games .category-header {
-            background: #00b894;
+        .category-icon {
+            font-size: 2rem;
+            color: white;
         }
 
-        .plugins .category-header {
-            background: #6c5ce7;
-        }
-
-        .movies .category-header {
-            background: #ff7675;
-        }
-
-        .music .category-header {
-            background: #fd79a8;
-        }
-
-        .premium .category-header {
-            background: #ffd480;
+        .category-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: white;
         }
 
         .category-content {
-            padding: 1.25rem;
+            padding: 2rem;
         }
 
         .category-description {
-            color: #64748b;
-            margin-bottom: 1.25rem;
-            font-size: 0.95rem;
-            line-height: 1.5;
+            color: #ccc;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
         }
 
         .category-stats {
             display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            margin-bottom: 1.25rem;
-            color: #64748b;
-            font-size: 0.9rem;
+            gap: 2rem;
+            margin-bottom: 2rem;
         }
 
         .stat-item {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            color: #6c5ce7;
+            color: #999;
         }
 
         .stat-item i {
-            font-size: 1rem;
+            color: #6c5ce7;
         }
 
-        .category-link {
-            color: #6c5ce7;
-            text-decoration: none;
-            font-weight: 500;
+        .category-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .action-btn {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            font-size: 0.95rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
         }
 
-        .category-link:hover {
-            text-decoration: underline;
+        .primary-btn {
+            background: #6c5ce7;
+            color: white;
         }
 
-        .category-link i {
-            font-size: 0.8rem;
+        .primary-btn:hover {
+            background: #5f50e1;
+            transform: translateX(5px);
         }
 
-        @media (max-width: 1024px) {
-            .categories-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+        .publish-btn {
+            background: #4CAF50;
+            color: white;
         }
 
-        @media (max-width: 640px) {
-            .categories-grid {
-                grid-template-columns: 1fr;
-            }
+        .publish-btn:hover {
+            background: #45a049;
+            transform: translateX(5px);
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
         <nav class="navbar">
-            <a href="index.html" class="logo">ForumHub</a>
             <div class="nav-links">
-                <a href="index.html" class="nav-link active">Главная</a>
-                <a href="categories.html" class="nav-link">Категории</a>
+                <a href="#" class="nav-link active">Главная</a>
+                <a href="categories.html" class="nav-link">Плагины</a>
                 <a href="profile.html" class="nav-link">Профиль</a>
             </div>
         </nav>
 
-        <div class="categories-grid">
-            <!-- Игры -->
-            <div class="category-card games">
-                <div class="category-header">
-                    <i class="fas fa-gamepad"></i>
-                    Игры
-                </div>
-                <div class="category-content">
-                    <p class="category-description">
-                        Обсуждение игр, прохождений, модификаций и всего что связано с игровой индустрией.
-                    </p>
-                    <div class="category-stats">
-                        <div class="stat-item">
-                            <i class="fas fa-folder"></i>
-                            <span>125 тем</span>
-                        </div>
-                        <div class="stat-item">
-                            <i class="fas fa-comments"></i>
-                            <span>Активные обсуждения</span>
-                        </div>
-                    </div>
-                    <a href="category-view.html?category=games" class="category-link">
-                        Перейти к играм →
-                    </a>
-                </div>
+        <div class="category-card">
+            <div class="category-header">
+                <i class="fas fa-puzzle-piece category-icon"></i>
+                <h2 class="category-title">Плагины</h2>
             </div>
-
-            <!-- Плагины -->
-            <div class="category-card plugins">
-                <div class="category-header">
-                    <i class="fas fa-puzzle-piece"></i>
-                    Плагины
-                </div>
-                <div class="category-content">
-                    <p class="category-description">
-                        Различные плагины, скрипты, моды и дополнения для программ и игр.
-                    </p>
-                    <div class="category-stats">
-                        <div class="stat-item">
-                            <i class="fas fa-folder"></i>
-                            <span>89 тем</span>
-                        </div>
-                        <div class="stat-item">
-                            <i class="fas fa-download"></i>
-                            <span>Популярные загрузки</span>
-                        </div>
+            <div class="category-content">
+                <p class="category-description">
+                    Различные плагины, скрипты, моды и дополнения для программ и игр.
+                </p>
+                <div class="category-stats">
+                    <div class="stat-item">
+                        <i class="fas fa-folder"></i>
+                        <span>89 тем</span>
                     </div>
-                    <a href="category-view.html?category=plugins" class="category-link">
-                        Смотреть плагины →
+                    <div class="stat-item">
+                        <i class="fas fa-download"></i>
+                        <span>Популярные загрузки</span>
+                    </div>
+                </div>
+                <div class="category-actions">
+                    <a href="categories.html" class="action-btn primary-btn">
+                        <i class="fas fa-eye"></i>
+                        Смотреть плагины
+                        <i class="fas fa-arrow-right"></i>
                     </a>
-                </div>
-            </div>
-
-            <!-- Кино и сериалы -->
-            <div class="category-card movies">
-                <div class="category-header">
-                    <i class="fas fa-film"></i>
-                    Кино и сериалы
-                </div>
-                <div class="category-content">
-                    <p class="category-description">
-                        Обсуждение фильмов, сериалов, актеров и новинок кинематографа.
-                    </p>
-                    <div class="category-stats">
-                        <div class="stat-item">
-                            <i class="fas fa-folder"></i>
-                            <span>234 темы</span>
-                        </div>
-                        <div class="stat-item">
-                            <i class="fas fa-eye"></i>
-                            <span>Популярный раздел</span>
-                        </div>
-                    </div>
-                    <a href="category-view.html?category=movies" class="category-link">
-                        Перейти к обсуждению →
-                    </a>
-                </div>
-            </div>
-
-            <!-- Музыка -->
-            <div class="category-card music">
-                <div class="category-header">
-                    <i class="fas fa-music"></i>
-                    Музыка
-                </div>
-                <div class="category-content">
-                    <p class="category-description">
-                        Музыкальные новинки, обсуждение исполнителей, альбомов и клипов.
-                    </p>
-                    <div class="category-stats">
-                        <div class="stat-item">
-                            <i class="fas fa-folder"></i>
-                            <span>167 тем</span>
-                        </div>
-                        <div class="stat-item">
-                            <i class="fas fa-comments"></i>
-                            <span>Активные обсуждения</span>
-                        </div>
-                    </div>
-                    <a href="category-view.html?category=music" class="category-link">
-                        Слушать музыку →
-                    </a>
-                </div>
-            </div>
-
-            <!-- Премиум -->
-            <div class="category-card premium">
-                <div class="category-header">
-                    <i class="fas fa-crown"></i>
-                    Премиум
-                </div>
-                <div class="category-content">
-                    <p class="category-description">
-                        Получите доступ к премиум возможностям и эксклюзивному контенту.
-                    </p>
-                    <div class="category-stats">
-                        <div class="stat-item">
-                            <i class="fas fa-star"></i>
-                            <span>Особый статус</span>
-                        </div>
-                        <div class="stat-item">
-                            <i class="fas fa-gem"></i>
-                            <span>Премиум функции</span>
-                        </div>
-                    </div>
-                    <a href="category-view.html?category=premium" class="category-link">
-                        Выбрать тариф →
+                    <a href="publish.html" class="action-btn publish-btn">
+                        <i class="fas fa-plus"></i>
+                        Опубликовать
                     </a>
                 </div>
             </div>
