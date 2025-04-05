@@ -406,6 +406,30 @@
                 return;
             }
 
+            // Добавляем отладочную информацию
+            console.log('Current user:', user);
+            console.log('All users:', JSON.parse(localStorage.getItem('users')));
+
+            // Проверяем наличие пользователей в localStorage
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            if (!Array.isArray(users)) {
+                users = [];
+            }
+
+            // Если нет пользователей, добавляем тестового
+            if (users.length === 0) {
+                const testUser = {
+                    id: 'test123',
+                    nickname: 'sanek.aleshhh',
+                    email: 'sasaaleskevic65@gmail.com',
+                    registrationDate: new Date().toISOString(),
+                    role: 'admin',
+                    banned: false
+                };
+                users.push(testUser);
+                localStorage.setItem('users', JSON.stringify(users));
+            }
+
             loadStatistics();
             loadUsers();
             loadTickets();
@@ -425,31 +449,52 @@
             const users = JSON.parse(localStorage.getItem('users')) || [];
             const tableBody = document.getElementById('usersTableBody');
             
-            tableBody.innerHTML = users.map(user => `
-                <tr>
-                    <td>${user.nickname}</td>
-                    <td>${user.email}</td>
-                    <td>${new Date(user.registrationDate).toLocaleDateString()}</td>
-                    <td>${user.role === 'admin' ? 'Администратор' : 'Пользователь'}</td>
-                    <td>
-                        <span class="status-badge ${user.banned ? 'status-banned' : 'status-active'}">
-                            ${user.banned ? 'Заблокирован' : 'Активен'}
-                        </span>
-                    </td>
-                    <td>
-                        <button class="action-btn" onclick="toggleUserRole('${user.id}')">
-                            <i class="fas fa-user-shield" title="Изменить роль"></i>
-                        </button>
-                        <button class="action-btn" onclick="toggleUserBan('${user.id}')">
-                            <i class="fas ${user.banned ? 'fa-user-check' : 'fa-user-slash'}" 
-                               title="${user.banned ? 'Разблокировать' : 'Заблокировать'}"></i>
-                        </button>
-                        <button class="action-btn" onclick="deleteUser('${user.id}')">
-                            <i class="fas fa-trash" title="Удалить"></i>
-                        </button>
-                    </td>
-                </tr>
-            `).join('');
+            if (users.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align: center;">Пользователи не найдены</td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tableBody.innerHTML = users.map(user => {
+                const registrationDate = user.registrationDate ? new Date(user.registrationDate).toLocaleDateString() : 'Не указана';
+                const role = user.role || 'user';
+                const banned = user.banned || false;
+                const nickname = user.nickname || 'Без имени';
+                const email = user.email || 'Не указан';
+                const userId = user.id || '';
+
+                return `
+                    <tr>
+                        <td>${nickname}</td>
+                        <td>${email}</td>
+                        <td>${registrationDate}</td>
+                        <td>${role === 'admin' ? 'Администратор' : 'Пользователь'}</td>
+                        <td>
+                            <span class="status-badge ${banned ? 'status-banned' : 'status-active'}">
+                                ${banned ? 'Заблокирован' : 'Активен'}
+                            </span>
+                        </td>
+                        <td>
+                            <button class="action-btn" onclick="toggleUserRole('${userId}')">
+                                <i class="fas fa-user-shield" title="Изменить роль"></i>
+                            </button>
+                            <button class="action-btn" onclick="toggleUserBan('${userId}')">
+                                <i class="fas ${banned ? 'fa-user-check' : 'fa-user-slash'}" 
+                                   title="${banned ? 'Разблокировать' : 'Заблокировать'}"></i>
+                            </button>
+                            <button class="action-btn" onclick="deleteUser('${userId}')">
+                                <i class="fas fa-trash" title="Удалить"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+
+            // Обновляем статистику после загрузки пользователей
+            document.getElementById('usersCount').textContent = users.length;
         }
 
         function loadTickets() {
