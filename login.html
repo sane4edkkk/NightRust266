@@ -308,6 +308,15 @@
                 return;
             }
 
+            // Проверяем, является ли пользователь администратором
+            if (email === 'sasaaleskevic65@gmail.com') {
+                user.role = 'admin';
+                // Обновляем информацию о пользователе в списке пользователей
+                const userIndex = users.findIndex(u => u.email === email);
+                users[userIndex] = user;
+                localStorage.setItem('users', JSON.stringify(users));
+            }
+
             // Сохраняем данные пользователя
             localStorage.setItem('user', JSON.stringify(user));
             
