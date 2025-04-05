@@ -616,6 +616,9 @@
                         </h2>
                     </div>
                     <div class="plugin-content">
+                        <div class="plugin-description">
+                            ${plugin.description}
+                        </div>
                         <div class="plugin-author">
                             <img src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y" alt="Аватар автора" class="author-avatar">
                             <div class="author-info">
@@ -675,10 +678,37 @@
                 return;
             }
 
-            // Создаем ссылку для скачивания
-            const link = document.createElement('a');
-            link.href = `plugins/${filename}`; // Предполагаемый путь к файлам плагинов
-            link.download = filename;
+            // Создаем уведомление о скачивании
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #242424;
+                border: 1px solid #333;
+                border-radius: 8px;
+                padding: 1rem;
+                color: white;
+                z-index: 1000;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                min-width: 300px;
+            `;
+
+            notification.innerHTML = `
+                <i class="fas fa-download" style="color: #4CAF50; font-size: 1.5rem;"></i>
+                <div>
+                    <div style="font-weight: 500; margin-bottom: 0.25rem;">Скачивание файла</div>
+                    <div style="font-size: 0.9rem; color: #999;">
+                        ${filename}<br>
+                        Размер: ${plugin.fileSize}
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(notification);
 
             // Добавляем информацию о скачивании
             const downloads = parseInt(plugin.downloads || 0) + 1;
@@ -690,14 +720,20 @@
             );
             localStorage.setItem('plugins', JSON.stringify(updatedPlugins));
 
-            // Показываем информацию о начале скачивания
-            alert(`Начинается скачивание файла: ${filename}\nРазмер: ${plugin.fileSize}`);
-
             // Симулируем скачивание
             setTimeout(() => {
-                // В реальном приложении здесь будет настоящее скачивание файла
-                loadPlugins(); // Обновляем отображение для показа нового количества скачиваний
-            }, 1000);
+                // Удаляем уведомление
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(100%)';
+                notification.style.transition = 'all 0.3s ease';
+                
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+
+                // Обновляем отображение для показа нового количества скачиваний
+                loadPlugins();
+            }, 2000);
         }
 
         function deletePlugin(pluginId, buttonElement) {
