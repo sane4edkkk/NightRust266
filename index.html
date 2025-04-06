@@ -32,64 +32,68 @@
     </nav>
 
     <div class="container">
-        <!-- Login Form -->
-        <div id="login-form" class="form-container" style="display: none;">
-            <h2><i class="fas fa-sign-in-alt"></i> Вход в систему</h2>
-            <form id="loginForm">
-                <input type="email" placeholder="Email" required>
-                <input type="password" placeholder="Пароль" required>
-                <button type="submit">Войти</button>
-            </form>
-        </div>
+        <div class="main-content">
+            <!-- Login Form -->
+            <div id="login-form" class="form-container" style="display: none;">
+                <h2><i class="fas fa-sign-in-alt"></i> Вход в систему</h2>
+                <form id="loginForm">
+                    <input type="email" placeholder="Email" required>
+                    <input type="password" placeholder="Пароль" required>
+                    <button type="submit">Войти</button>
+                </form>
+            </div>
 
-        <!-- Registration Form -->
-        <div id="register-form" class="form-container" style="display: none;">
-            <h2><i class="fas fa-user-plus"></i> Регистрация</h2>
-            <form id="registerForm">
-                <input type="text" placeholder="Имя пользователя" required>
-                <input type="email" placeholder="Email" required>
-                <input type="password" placeholder="Пароль" required>
-                <input type="password" placeholder="Подтвердите пароль" required>
-                <button type="submit">Зарегистрироваться</button>
-            </form>
-        </div>
+            <!-- Registration Form -->
+            <div id="register-form" class="form-container" style="display: none;">
+                <h2><i class="fas fa-user-plus"></i> Регистрация</h2>
+                <form id="registerForm">
+                    <input type="text" placeholder="Имя пользователя" required>
+                    <input type="email" placeholder="Email" required>
+                    <input type="password" placeholder="Пароль" required>
+                    <input type="password" placeholder="Подтвердите пароль" required>
+                    <button type="submit">Зарегистрироваться</button>
+                </form>
+            </div>
 
-        <!-- Profile Settings -->
-        <div id="profile-settings" class="form-container" style="display: none;">
-            <h2><i class="fas fa-user-cog"></i> Настройки профиля</h2>
-            <form id="profileForm">
-                <input type="text" placeholder="Имя пользователя" required>
-                <input type="email" placeholder="Email" required>
-                <input type="password" placeholder="Новый пароль (необязательно)">
-                <input type="file" id="profile-picture" accept="image/*">
-                <button type="submit">Сохранить изменения</button>
-            </form>
-        </div>
+            <!-- Profile Settings -->
+            <div id="profile-settings" class="form-container" style="display: none;">
+                <h2><i class="fas fa-user-cog"></i> Настройки профиля</h2>
+                <form id="profileForm">
+                    <input type="text" placeholder="Имя пользователя" required>
+                    <input type="email" placeholder="Email" required>
+                    <input type="password" placeholder="Новый пароль (необязательно)">
+                    <input type="file" id="profile-picture" accept="image/*">
+                    <button type="submit">Сохранить изменения</button>
+                </form>
+            </div>
 
-        <!-- File Upload Section -->
-        <div id="file-upload" class="form-container">
-            <h2><i class="fas fa-file-upload"></i> Загрузка файлов</h2>
-            <form id="uploadForm">
-                <input type="file" id="file-input" multiple>
-                <button type="submit"><i class="fas fa-upload"></i> Загрузить</button>
-            </form>
-        </div>
+            <!-- File Upload Section -->
+            <div id="file-upload" class="form-container">
+                <h2><i class="fas fa-file-upload"></i> Загрузка файлов</h2>
+                <form id="uploadForm">
+                    <input type="file" id="file-input" multiple>
+                    <button type="submit"><i class="fas fa-upload"></i> Загрузить</button>
+                </form>
+            </div>
 
-        <!-- Online Users Section -->
-        <div id="online-users" class="users-container">
-            <h2><i class="fas fa-users"></i> Пользователи онлайн</h2>
-            <div id="users-list">
-                <!-- Users will be dynamically added here -->
+            <!-- Support Section -->
+            <div id="support-section" class="form-container" style="display: none;">
+                <h2><i class="fas fa-headset"></i> Техническая поддержка</h2>
+                <form id="supportForm">
+                    <textarea placeholder="Опишите вашу проблему..." required></textarea>
+                    <button type="submit"><i class="fas fa-paper-plane"></i> Отправить</button>
+                </form>
             </div>
         </div>
 
-        <!-- Support Section -->
-        <div id="support-section" class="form-container" style="display: none;">
-            <h2><i class="fas fa-headset"></i> Техническая поддержка</h2>
-            <form id="supportForm">
-                <textarea placeholder="Опишите вашу проблему..." required></textarea>
-                <button type="submit"><i class="fas fa-paper-plane"></i> Отправить</button>
-            </form>
+        <!-- Online Users Section - Always visible -->
+        <div class="sidebar">
+            <div id="online-users" class="users-container">
+                <h2><i class="fas fa-users"></i> Пользователи онлайн</h2>
+                <div id="users-list">
+                    <!-- Users will be dynamically added here -->
+                </div>
+            </div>
         </div>
     </div>
 

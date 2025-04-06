@@ -77,6 +77,18 @@ body {
     max-width: 1200px;
     margin: 100px auto;
     padding: 2rem;
+    display: flex;
+    gap: 2rem;
+}
+
+.main-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.sidebar {
+    width: 300px;
+    flex-shrink: 0;
 }
 
 .form-container {

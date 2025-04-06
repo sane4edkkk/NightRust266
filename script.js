@@ -322,4 +322,44 @@ function getOnlineUsers() {
         { id: 2, username: 'Пользователь2' },
         { id: 3, username: 'Пользователь3' }
     ];
+}
+
+// Инициализация при загрузке страницы
+document.addEventListener('DOMContentLoaded', () => {
+    // Показываем форму входа по умолчанию
+    showSection('login');
+    
+    // Загружаем список пользователей онлайн
+    updateOnlineUsers();
+    
+    // Обновляем список пользователей каждые 30 секунд
+    setInterval(updateOnlineUsers, 30000);
+});
+
+// Функция обновления списка пользователей онлайн
+async function updateOnlineUsers() {
+    try {
+        const users = await mockGetOnlineUsers();
+        const usersList = document.getElementById('users-list');
+        
+        if (users.length === 0) {
+            usersList.innerHTML = '<div class="no-users">Нет пользователей онлайн</div>';
+            return;
+        }
+        
+        usersList.innerHTML = users.map(user => `
+            <div class="user-card">
+                <div class="user-avatar">${user.name.charAt(0)}</div>
+                <div class="user-info">
+                    <div class="user-name">${user.name}</div>
+                    <div class="user-status">
+                        <span class="status-indicator online"></span>
+                        <span>В сети</span>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    } catch (error) {
+        console.error('Ошибка при загрузке пользователей:', error);
+        const usersList = document.getElementById('users-list');
 } 
