@@ -3,630 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ForestDesign - Форум</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>FileShare - Обмен файлами</title>
+    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #00a651;
-            --primary-dark: #008c44;
-            --secondary: #2c3e50;
-            --accent: #3498db;
-            --background: #0f172a;
-            --surface: #1e293b;
-            --surface-light: #334155;
-            --text: #f8fafc;
-            --text-secondary: #94a3b8;
-            --success: #22c55e;
-            --error: #ef4444;
-            --warning: #f59e0b;
-            --info: #3b82f6;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--background);
-            color: var(--text);
-            line-height: 1.6;
-            min-height: 100vh;
-        }
-
-        .navbar {
-            background: rgba(30, 41, 59, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 1rem 0;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .navbar-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            text-decoration: none;
-            color: var(--text);
-        }
-
-        .logo-icon {
-            font-size: 1.75rem;
-            color: var(--primary);
-            filter: drop-shadow(0 0 8px rgba(0, 166, 81, 0.3));
-        }
-
-        .logo-text {
-            font-size: 1.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 1.5rem;
-            align-items: center;
-        }
-
-        .nav-link {
-            color: var(--text-secondary);
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .nav-link:hover {
-            color: var(--text);
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-link.active {
-            color: var(--text);
-            background: var(--primary);
-        }
-
-        .main-content {
-            margin-top: 6rem;
-            padding: 2rem 0;
-        }
-
-        .forum-header {
-            text-align: center;
-            margin-bottom: 4rem;
-            padding: 3rem;
-            background: linear-gradient(135deg, rgba(0, 166, 81, 0.1), rgba(52, 152, 219, 0.1));
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .forum-title {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .forum-description {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .categories-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 4rem;
-        }
-
-        .category-card {
-            background: var(--surface);
-            border-radius: 16px;
-            padding: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .category-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-            border-color: var(--primary);
-        }
-
-        .category-icon {
-            font-size: 2rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-
-        .category-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--text);
-        }
-
-        .category-description {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .category-stats {
-            display: flex;
-            gap: 1.5rem;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .stat {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .stat i {
-            color: var(--primary);
-        }
-
-        .latest-topics {
-            background: var(--surface);
-            border-radius: 16px;
-            padding: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            color: var(--text);
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .section-title i {
-            color: var(--primary);
-        }
-
-        .topic-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .topic-item {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            padding: 1rem;
-            background: var(--surface-light);
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .topic-item:hover {
-            transform: translateX(5px);
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .topic-icon {
-            width: 48px;
-            height: 48px;
-            background: var(--primary);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: white;
-        }
-
-        .topic-content {
-            flex-grow: 1;
-        }
-
-        .topic-title {
-            font-weight: 500;
-            color: var(--text);
-            text-decoration: none;
-            margin-bottom: 0.25rem;
-            display: block;
-        }
-
-        .topic-meta {
-            display: flex;
-            gap: 1rem;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .topic-author {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .author-avatar {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: var(--surface-light);
-        }
-
-        .topic-stats {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-        }
-
-        .create-topic-btn {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background: var(--primary);
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            box-shadow: 0 4px 12px rgba(0, 166, 81, 0.3);
-            transition: all 0.3s ease;
-        }
-
-        .create-topic-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0, 166, 81, 0.4);
-        }
-
-        .user-menu {
-            position: relative;
-        }
-
-        .user-button {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.5rem 1rem;
-            background: var(--surface-light);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .user-button:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .user-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 600;
-        }
-
-        .user-info {
-            text-align: left;
-        }
-
-        .user-name {
-            color: var(--text);
-            font-weight: 500;
-        }
-
-        .user-role {
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-        }
-
-        .user-dropdown {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            margin-top: 0.5rem;
-            background: var(--surface);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            padding: 0.5rem;
-            min-width: 200px;
-            display: none;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        .user-menu:hover .user-dropdown {
-            display: block;
-        }
-
-        .dropdown-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1rem;
-            color: var(--text);
-            text-decoration: none;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-        }
-
-        .dropdown-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .dropdown-item i {
-            color: var(--primary);
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <nav class="navbar">
-        <div class="container">
-            <div class="navbar-content">
-                <a href="index.html" class="logo">
-                    <i class="fas fa-tree logo-icon"></i>
-                    <span class="logo-text">ForestDesign</span>
-                </a>
-                <div class="nav-links">
-                    <a href="index.html" class="nav-link active">
-                        <i class="fas fa-home"></i>
-                        Форум
-                    </a>
-                    <a href="plugins.html" class="nav-link">
-                        <i class="fas fa-puzzle-piece"></i>
-                        Плагины
-                    </a>
-                    <a href="support.html" class="nav-link">
-                        <i class="fas fa-headset"></i>
-                        Поддержка
-                    </a>
-                    <div class="user-menu" id="userMenu">
-                        <!-- Динамическое добавление меню пользователя -->
+        <div class="logo">FileShare</div>
+        <div class="nav-links">
+            <a href="#" id="home-link"><i class="fas fa-home"></i> Главная</a>
+            <a href="#" id="files-link"><i class="fas fa-file-upload"></i> Файлы</a>
+            <a href="#" id="support-link"><i class="fas fa-headset"></i> Поддержка</a>
+            <div class="user-section">
+                <span id="user-status" class="status-indicator"></span>
+                <span id="username-display">Гость</span>
+                <div class="dropdown">
+                    <button class="dropbtn"><i class="fas fa-user"></i></button>
+                    <div class="dropdown-content">
+                        <a href="#" id="login-link"><i class="fas fa-sign-in-alt"></i> Войти</a>
+                        <a href="#" id="register-link"><i class="fas fa-user-plus"></i> Регистрация</a>
+                        <a href="#" id="profile-link" style="display: none;"><i class="fas fa-user-cog"></i> Профиль</a>
+                        <a href="#" id="logout-link" style="display: none;"><i class="fas fa-sign-out-alt"></i> Выйти</a>
                     </div>
                 </div>
             </div>
         </div>
     </nav>
 
-    <main class="main-content">
-        <div class="container">
-            <div class="forum-header">
-                <h1 class="forum-title">Добро пожаловать на форум</h1>
-                <p class="forum-description">
-                    Обсуждайте плагины, делитесь опытом и получайте помощь от сообщества
-                </p>
-            </div>
+    <div class="container">
+        <!-- Login Form -->
+        <div id="login-form" class="form-container" style="display: none;">
+            <h2><i class="fas fa-sign-in-alt"></i> Вход в систему</h2>
+            <form id="loginForm">
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Пароль" required>
+                <button type="submit">Войти</button>
+            </form>
+        </div>
 
-            <div class="categories-grid">
-                <div class="category-card">
-                    <i class="fas fa-comments category-icon"></i>
-                    <h2 class="category-title">Общие обсуждения</h2>
-                    <p class="category-description">
-                        Обсуждение любых тем, связанных с разработкой и использованием плагинов
-                    </p>
-                    <div class="category-stats">
-                        <div class="stat">
-                            <i class="fas fa-message"></i>
-                            <span>125 тем</span>
-                        </div>
-                        <div class="stat">
-                            <i class="fas fa-reply"></i>
-                            <span>1.2K ответов</span>
-                        </div>
-                    </div>
-                </div>
+        <!-- Registration Form -->
+        <div id="register-form" class="form-container" style="display: none;">
+            <h2><i class="fas fa-user-plus"></i> Регистрация</h2>
+            <form id="registerForm">
+                <input type="text" placeholder="Имя пользователя" required>
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Пароль" required>
+                <input type="password" placeholder="Подтвердите пароль" required>
+                <button type="submit">Зарегистрироваться</button>
+            </form>
+        </div>
 
-                <div class="category-card">
-                    <i class="fas fa-code category-icon"></i>
-                    <h2 class="category-title">Разработка</h2>
-                    <p class="category-description">
-                        Вопросы по разработке плагинов, API и программированию
-                    </p>
-                    <div class="category-stats">
-                        <div class="stat">
-                            <i class="fas fa-message"></i>
-                            <span>89 тем</span>
-                        </div>
-                        <div class="stat">
-                            <i class="fas fa-reply"></i>
-                            <span>543 ответа</span>
-                        </div>
-                    </div>
-                </div>
+        <!-- Profile Settings -->
+        <div id="profile-settings" class="form-container" style="display: none;">
+            <h2><i class="fas fa-user-cog"></i> Настройки профиля</h2>
+            <form id="profileForm">
+                <input type="text" placeholder="Имя пользователя" required>
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Новый пароль (необязательно)">
+                <input type="file" id="profile-picture" accept="image/*">
+                <button type="submit">Сохранить изменения</button>
+            </form>
+        </div>
 
-                <div class="category-card">
-                    <i class="fas fa-question-circle category-icon"></i>
-                    <h2 class="category-title">Помощь</h2>
-                    <p class="category-description">
-                        Техническая поддержка и помощь в решении проблем
-                    </p>
-                    <div class="category-stats">
-                        <div class="stat">
-                            <i class="fas fa-message"></i>
-                            <span>234 темы</span>
-                        </div>
-                        <div class="stat">
-                            <i class="fas fa-reply"></i>
-                            <span>1.5K ответов</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <!-- File Upload Section -->
+        <div id="file-upload" class="form-container">
+            <h2><i class="fas fa-file-upload"></i> Загрузка файлов</h2>
+            <form id="uploadForm">
+                <input type="file" id="file-input" multiple>
+                <button type="submit"><i class="fas fa-upload"></i> Загрузить</button>
+            </form>
+        </div>
 
-            <div class="latest-topics">
-                <h2 class="section-title">
-                    <i class="fas fa-clock"></i>
-                    Последние обсуждения
-                </h2>
-                <div class="topic-list" id="latestTopics">
-                    <!-- Динамическая загрузка тем -->
-                </div>
+        <!-- Online Users Section -->
+        <div id="online-users" class="users-container">
+            <h2><i class="fas fa-users"></i> Пользователи онлайн</h2>
+            <div id="users-list">
+                <!-- Users will be dynamically added here -->
             </div>
         </div>
-    </main>
 
-    <a href="create-topic.html" class="create-topic-btn">
-        <i class="fas fa-plus"></i>
-        Создать тему
-    </a>
+        <!-- Support Section -->
+        <div id="support-section" class="form-container" style="display: none;">
+            <h2><i class="fas fa-headset"></i> Техническая поддержка</h2>
+            <form id="supportForm">
+                <textarea placeholder="Опишите вашу проблему..." required></textarea>
+                <button type="submit"><i class="fas fa-paper-plane"></i> Отправить</button>
+            </form>
+        </div>
+    </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const user = JSON.parse(localStorage.getItem('user'));
-            const userMenu = document.getElementById('userMenu');
-
-            if (user) {
-                const initials = user.nickname.substring(0, 2).toUpperCase();
-                userMenu.innerHTML = `
-                    <div class="user-button">
-                        <div class="user-avatar">${initials}</div>
-                        <div class="user-info">
-                            <div class="user-name">${user.nickname}</div>
-                            <div class="user-role">${user.isAdmin ? 'Администратор' : 'Пользователь'}</div>
-                        </div>
-                    </div>
-                    <div class="user-dropdown">
-                        <a href="profile.html" class="dropdown-item">
-                            <i class="fas fa-user"></i>
-                            Профиль
-                        </a>
-                        <a href="settings.html" class="dropdown-item">
-                            <i class="fas fa-cog"></i>
-                            Настройки
-                        </a>
-                        ${user.isAdmin ? `
-                            <a href="admin.html" class="dropdown-item">
-                                <i class="fas fa-shield-alt"></i>
-                                Панель админа
-                            </a>
-                        ` : ''}
-                        <a href="#" class="dropdown-item" onclick="logout()">
-                            <i class="fas fa-sign-out-alt"></i>
-                            Выйти
-                        </a>
-                    </div>
-                `;
-            } else {
-                userMenu.innerHTML = `
-                    <a href="login.html" class="nav-link">
-                        <i class="fas fa-sign-in-alt"></i>
-                        Войти
-                    </a>
-                `;
-            }
-
-            loadLatestTopics();
-        });
-
-        function loadLatestTopics() {
-            const topics = [
-                {
-                    id: 1,
-                    title: 'Как создать свой первый плагин?',
-                    author: 'Alex',
-                    date: '2 часа назад',
-                    replies: 12,
-                    views: 156,
-                    category: 'help'
-                },
-                {
-                    id: 2,
-                    title: 'Обновление API: новые возможности',
-                    author: 'Admin',
-                    date: '5 часов назад',
-                    replies: 8,
-                    views: 234,
-                    category: 'dev'
-                },
-                {
-                    id: 3,
-                    title: 'Предложения по улучшению форума',
-                    author: 'Maria',
-                    date: '1 день назад',
-                    replies: 25,
-                    views: 412,
-                    category: 'general'
-                }
-            ];
-
-            const topicList = document.getElementById('latestTopics');
-            topicList.innerHTML = topics.map(topic => `
-                <div class="topic-item">
-                    <div class="topic-icon">
-                        <i class="fas ${getCategoryIcon(topic.category)}"></i>
-                    </div>
-                    <div class="topic-content">
-                        <a href="topic.html?id=${topic.id}" class="topic-title">${topic.title}</a>
-                        <div class="topic-meta">
-                            <div class="topic-author">
-                                <div class="author-avatar"></div>
-                                <span>${topic.author}</span>
-                            </div>
-                            <span>${topic.date}</span>
-                        </div>
-                    </div>
-                    <div class="topic-stats">
-                        <div class="stat">
-                            <i class="fas fa-reply"></i>
-                            <span>${topic.replies}</span>
-                        </div>
-                        <div class="stat">
-                            <i class="fas fa-eye"></i>
-                            <span>${topic.views}</span>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function getCategoryIcon(category) {
-            switch(category) {
-                case 'help': return 'fa-question-circle';
-                case 'dev': return 'fa-code';
-                default: return 'fa-comments';
-            }
-        }
-
-        function logout() {
-            localStorage.removeItem('user');
-            window.location.reload();
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html> 
