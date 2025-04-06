@@ -32,6 +32,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Настройка обработчиков событий
     setupEventListeners();
+    
+    // Показываем пользователей онлайн сразу при загрузке
+    updateOnlineStatus();
 });
 
 function setupEventListeners() {
@@ -220,7 +223,15 @@ function updateOnlineStatus() {
 }
 
 function updateUsersList(onlineUsers) {
+    if (!usersList) return; // Проверка на существование элемента
+    
     usersList.innerHTML = '';
+    
+    if (onlineUsers.length === 0) {
+        usersList.innerHTML = '<div class="no-users">Нет пользователей онлайн</div>';
+        return;
+    }
+    
     onlineUsers.forEach(user => {
         const userCard = document.createElement('div');
         userCard.className = 'user-card';
@@ -228,7 +239,10 @@ function updateUsersList(onlineUsers) {
             <div class="user-avatar">${user.username.charAt(0).toUpperCase()}</div>
             <div class="user-info">
                 <div class="user-name">${user.username}</div>
-                <div class="user-status">В сети</div>
+                <div class="user-status">
+                    <span class="status-indicator online"></span>
+                    <span>В сети</span>
+                </div>
             </div>
         `;
         usersList.appendChild(userCard);
