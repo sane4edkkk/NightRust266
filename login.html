@@ -3,338 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Вход - ForestDesign</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Вход - GameHost</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #00a651;
-            --primary-dark: #008c44;
-            --secondary: #2c3e50;
-            --accent: #3498db;
-            --background: #0f172a;
-            --surface: #1e293b;
-            --surface-light: #334155;
-            --text: #f8fafc;
-            --text-secondary: #94a3b8;
-            --success: #22c55e;
-            --error: #ef4444;
-            --warning: #f59e0b;
-            --info: #3b82f6;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--background);
-            color: var(--text);
-            line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
             padding: 2rem;
-            position: relative;
-            overflow: hidden;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-        /* Анимированный фон */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, 
-                rgba(0, 166, 81, 0.2),
-                rgba(52, 152, 219, 0.2),
-                rgba(155, 89, 182, 0.2)
-            );
-            z-index: -1;
-            animation: gradientBG 15s ease infinite;
-            background-size: 400% 400%;
-        }
-
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .auth-card {
-            background: rgba(30, 41, 59, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 2rem;
-            width: 100%;
-            max-width: 420px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-        }
-
-        .auth-header {
+        .login-header {
             text-align: center;
             margin-bottom: 2rem;
         }
 
-        .auth-title {
-            font-size: 2rem;
-            font-weight: 700;
+        .login-header h1 {
+            color: var(--primary-color);
             margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
 
-        .auth-subtitle {
-            color: var(--text-secondary);
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
         }
 
-        .form-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .form-input {
-            width: 100%;
-            background: var(--surface-light);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text);
-            padding: 0.75rem 1rem;
-            border-radius: 8px;
-            font-family: 'Inter', sans-serif;
-            transition: all 0.3s ease;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 2px rgba(0, 166, 81, 0.2);
-        }
-
-        .password-group {
-            position: relative;
-        }
-
-        .password-toggle {
-            position: absolute;
-            right: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: color 0.3s ease;
-        }
-
-        .password-toggle:hover {
-            color: var(--text);
-        }
-
-        .submit-btn {
-            width: 100%;
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.75rem;
-            border-radius: 8px;
+        .form-group label {
+            color: var(--text-color);
             font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 1rem;
         }
 
-        .submit-btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
+        .form-group input {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
         }
 
-        .auth-links {
-            text-align: center;
-            margin-top: 1.5rem;
-            color: var(--text-secondary);
-        }
-
-        .auth-links a {
-            color: var(--primary);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .auth-links a:hover {
-            color: var(--primary-dark);
-        }
-
-        .error-message {
-            color: var(--error);
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-            display: none;
-            animation: shake 0.5s ease-in-out;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-        }
-
-        .form-input.error {
-            border-color: var(--error);
-        }
-
-        .form-input.error + .error-message {
-            display: block;
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
         }
 
         .remember-me {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            margin-top: 1rem;
-            color: var(--text-secondary);
-            cursor: pointer;
+            margin: 1rem 0;
         }
 
-        .remember-me input[type="checkbox"] {
-            width: 16px;
-            height: 16px;
-            border-radius: 4px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: var(--surface-light);
+        .remember-me input {
+            width: auto;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-bottom: 1rem;
+        }
+
+        .forgot-password a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .login-button {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
             cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .login-button:hover {
+            background: var(--secondary-color);
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .register-link a {
+            color: var(--primary-color);
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
-    <div class="auth-card">
-        <div class="auth-header">
-            <h1 class="auth-title">Вход в аккаунт</h1>
-            <p class="auth-subtitle">Войдите для доступа к форуму</p>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>GameHost</h1>
+            <p>Вход в панель управления</p>
         </div>
-
-        <form id="loginForm" onsubmit="handleLogin(event)">
+        <form class="login-form">
             <div class="form-group">
-                <label class="form-label">Email</label>
-                <input type="email" class="form-input" id="email" required
-                    placeholder="Введите ваш email">
-                <div class="error-message" id="emailError"></div>
+                <label for="email">Email</label>
+                <input type="email" id="email" required>
             </div>
-
             <div class="form-group">
-                <label class="form-label">Пароль</label>
-                <div class="password-group">
-                    <input type="password" class="form-input" id="password" required
-                        placeholder="Введите ваш пароль">
-                    <i class="fas fa-eye password-toggle" onclick="togglePassword('password')"></i>
-                </div>
-                <div class="error-message" id="passwordError"></div>
+                <label for="password">Пароль</label>
+                <input type="password" id="password" required>
             </div>
-
-            <label class="remember-me">
-                <input type="checkbox" id="rememberMe">
-                Запомнить меня
-            </label>
-
-            <button type="submit" class="submit-btn">
-                <i class="fas fa-sign-in-alt"></i> Войти
-            </button>
+            <div class="remember-me">
+                <input type="checkbox" id="remember">
+                <label for="remember">Запомнить меня</label>
+            </div>
+            <div class="forgot-password">
+                <a href="#">Забыли пароль?</a>
+            </div>
+            <button type="submit" class="login-button">Войти</button>
+            <div class="register-link">
+                <p>Нет аккаунта? <a href="register.html">Зарегистрироваться</a></p>
+            </div>
         </form>
-
-        <div class="auth-links">
-            Нет аккаунта? <a href="register.html">Зарегистрироваться</a>
-        </div>
     </div>
-
-    <script>
-        function togglePassword(inputId) {
-            const input = document.getElementById(inputId);
-            const icon = input.nextElementSibling;
-            
-            if (input.type === 'password') {
-                input.type = 'text';
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
-            } else {
-                input.type = 'password';
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
-            }
-        }
-
-        function showError(inputId, message) {
-            const input = document.getElementById(inputId);
-            const error = document.getElementById(inputId + 'Error');
-            input.classList.add('error');
-            error.textContent = message;
-            error.style.display = 'block';
-        }
-
-        function clearError(inputId) {
-            const input = document.getElementById(inputId);
-            const error = document.getElementById(inputId + 'Error');
-            input.classList.remove('error');
-            error.style.display = 'none';
-        }
-
-        function handleLogin(event) {
-            event.preventDefault();
-            
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            
-            // Получаем список пользователей
-            const users = JSON.parse(localStorage.getItem('users')) || [];
-            
-            // Ищем пользователя
-            const user = users.find(u => u.email === email && u.password === password);
-            
-            if (!user) {
-                alert('Неверный email или пароль');
-                return;
-            }
-
-            if (user.banned) {
-                alert('Ваш аккаунт заблокирован');
-                return;
-            }
-
-            // Проверяем, является ли пользователь администратором
-            if (email === 'sasaaleskevic65@gmail.com') {
-                user.role = 'admin';
-                // Обновляем пользователя в списке пользователей
-                const userIndex = users.findIndex(u => u.id === user.id);
-                if (userIndex !== -1) {
-                    users[userIndex] = user;
-                    localStorage.setItem('users', JSON.stringify(users));
-                }
-            }
-
-            // Сохраняем информацию о текущем пользователе
-            localStorage.setItem('user', JSON.stringify(user));
-            
-            // Перенаправляем на главную страницу
-            window.location.href = user.role === 'admin' ? 'admin.html' : 'index.html';
-        }
-
-        // Добавляем обработчик события при загрузке страницы
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.querySelector('form');
-            if (form) {
-                form.addEventListener('submit', handleLogin);
-            }
-        });
-    </script>
 </body>
 </html> 

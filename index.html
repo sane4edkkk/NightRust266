@@ -3,441 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GMAEHOST - Игровой хостинг</title>
+    <title>GameHost - Игровой хостинг</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <style>
-        .hero {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-            padding: 120px 0 60px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at center, rgba(33, 150, 243, 0.1) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .hero h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            text-align: center;
-            color: var(--text-color);
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .hero p {
-            font-size: 20px;
-            color: var(--light-text);
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .game-card {
-            background-color: var(--card-bg);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-            transition: all 0.3s;
-            border: 1px solid var(--border-color);
-            position: relative;
-        }
-
-        .game-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.7) 100%);
-            pointer-events: none;
-        }
-
-        .game-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 12px rgba(0,0,0,0.3);
-            border-color: var(--primary-color);
-        }
-
-        .game-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            transition: transform 0.3s;
-        }
-
-        .game-card:hover img {
-            transform: scale(1.05);
-        }
-
-        .game-card h3 {
-            padding: 20px;
-            font-size: 24px;
-            color: var(--text-color);
-            position: relative;
-            z-index: 1;
-        }
-
-        .game-card p {
-            padding: 0 20px;
-            color: var(--light-text);
-            position: relative;
-            z-index: 1;
-        }
-
-        .game-card button {
-            margin: 20px;
-            width: calc(100% - 40px);
-            position: relative;
-            z-index: 1;
-        }
-
-        .features {
-            padding: 60px 0;
-            background-color: var(--background-color);
-        }
-
-        .features h2 {
-            text-align: center;
-            font-size: 36px;
-            margin-bottom: 40px;
-            color: var(--text-color);
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-
-        .feature {
-            text-align: center;
-            padding: 30px;
-            background-color: var(--card-bg);
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-            border: 1px solid var(--border-color);
-            transition: all 0.3s;
-        }
-
-        .feature:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 12px rgba(0,0,0,0.3);
-            border-color: var(--primary-color);
-        }
-
-        .feature img {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 20px;
-            filter: invert(1) brightness(0.8);
-        }
-
-        .feature h3 {
-            font-size: 20px;
-            margin-bottom: 10px;
-            color: var(--text-color);
-        }
-
-        .feature p {
-            color: var(--light-text);
-        }
-
-        .footer {
-            background-color: var(--footer-bg);
-            padding: 40px 0;
-            margin-top: 60px;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-
-        .footer-section h4 {
-            margin-bottom: 20px;
-            font-size: 18px;
-            color: var(--text-color);
-        }
-
-        .footer-section p {
-            color: var(--light-text);
-            margin-bottom: 10px;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="header">
-        <div class="container">
-            <a href="/" class="logo">GMAEHOST</a>
-            <nav class="nav">
-                <a href="/" class="nav-link active">Главная</a>
-                <a href="/order.html" class="nav-link">Заказать сервер</a>
-                <a href="/servers.html" class="nav-link">Мои серверы</a>
-                <a href="/profile.html" class="nav-link">Профиль</a>
-                <a href="/balance.html" class="nav-link">Баланс</a>
-                <div class="auth-buttons">
-                    <button class="btn btn-outline" onclick="showAuthModal('login')">Войти</button>
-                    <button class="btn btn-primary" onclick="showAuthModal('register')">Регистрация</button>
-                </div>
-            </nav>
+        <nav class="nav">
+            <div class="logo">GameHost</div>
+            <div class="nav-links">
+                <a href="#games">Игры</a>
+                <a href="#pricing">Цены</a>
+                <a href="#features">Возможности</a>
+                <a href="#support">Поддержка</a>
+                <a href="login.html" class="btn-login">Войти</a>
+            </div>
+        </nav>
+        <div class="hero">
+            <h1>Мощный хостинг для ваших игровых серверов</h1>
+            <p>Быстрые серверы, низкий пинг, круглосуточная поддержка</p>
+            <a href="#pricing" class="btn-primary">Начать сейчас</a>
         </div>
     </header>
 
-    <main>
-        <section class="hero">
-            <div class="container">
-                <h1>GMAEHOST - мощный и надёжный хостинг</h1>
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-content">
-                            <h3>Высокая скорость</h3>
-                            <p>Современные сервера Intel i7-i9, AMD Ryzen, NVMe SSD диски, максимальная производительность и низкий пинг</p>
-                        </div>
-                        <div class="feature-image">
-                            <img src="images/speed.svg" alt="Высокая скорость">
-                        </div>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-content">
-                            <h3>Техническая поддержка 24/7</h3>
-                            <p>Удобная система обращений и telegram чат позволяют максимально быстро и качественно решить Вашу проблему</p>
-                        </div>
-                        <div class="feature-image">
-                            <img src="images/support.svg" alt="Поддержка">
-                        </div>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-content">
-                            <h3>Хорошая защита от DDOS-атак</h3>
-                            <p>Мы защищаем от всех типов атак: по UDP/ICMP-протоколам, SYN/ACK, DNS/NTP-amplification и 7-го уровня OSI</p>
-                        </div>
-                        <div class="feature-image">
-                            <img src="images/shield.svg" alt="Защита">
-                        </div>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-content">
-                            <h3>Своя панель управления</h3>
-                            <p>Удобная и интуитивно понятная панель управления для полного контроля над сервером</p>
-                        </div>
-                        <div class="feature-image">
-                            <img src="images/panel.svg" alt="Панель управления">
-                        </div>
-                    </div>
-                </div>
+    <section id="games" class="games">
+        <h2>Поддерживаемые игры</h2>
+        <div class="game-grid">
+            <div class="game-card">
+                <img src="images/minecraft.png" alt="Minecraft">
+                <h3>Minecraft</h3>
+                <p>От 1.8 до последней версии</p>
+            </div>
+            <div class="game-card">
+                <img src="images/csgo.png" alt="CS:GO">
+                <h3>CS:GO</h3>
+                <p>Серверы с SourceMod</p>
+            </div>
+            <div class="game-card">
+                <img src="images/rust.png" alt="Rust">
+                <h3>Rust</h3>
+                <p>С поддержкой плагинов</p>
+            </div>
+            <div class="game-card">
+                <img src="images/ark.png" alt="ARK">
+                <h3>ARK</h3>
+                <p>Выделенные серверы</p>
+            </div>
+        </div>
+    </section>
 
-                <div class="games-grid">
-                    <div class="game-card">
-                        <img src="images/cs2.svg" alt="Counter-Strike 2">
-                        <h3>Counter-Strike 2</h3>
-                        <p>от 196 ₽/слот</p>
-                        <button class="btn btn-primary" onclick="location.href='/order'">Заказать</button>
-                    </div>
-                    <div class="game-card">
-                        <img src="images/rust.svg" alt="Rust">
-                        <h3>Rust</h3>
-                        <p>от 203 ₽/слот</p>
-                        <button class="btn btn-primary" onclick="location.href='/order'">Заказать</button>
-                    </div>
-                    <div class="game-card">
-                        <img src="images/samp.svg" alt="SA:MP">
-                        <h3>SA:MP</h3>
-                        <p>от 207 ₽/слот</p>
-                        <button class="btn btn-primary" onclick="location.href='/order'">Заказать</button>
-                    </div>
+    <section id="pricing" class="pricing">
+        <h2>Тарифные планы</h2>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>Старт</h3>
+                <div class="price">299₽<span>/месяц</span></div>
+                <ul>
+                    <li>1GB RAM</li>
+                    <li>1 vCPU</li>
+                    <li>20GB SSD</li>
+                    <li>Неограниченный трафик</li>
+                </ul>
+                <a href="#" class="btn-primary">Выбрать</a>
+            </div>
+            <div class="pricing-card popular">
+                <h3>Профи</h3>
+                <div class="price">599₽<span>/месяц</span></div>
+                <ul>
+                    <li>4GB RAM</li>
+                    <li>2 vCPU</li>
+                    <li>50GB SSD</li>
+                    <li>Неограниченный трафик</li>
+                </ul>
+                <a href="#" class="btn-primary">Выбрать</a>
+            </div>
+            <div class="pricing-card">
+                <h3>Премиум</h3>
+                <div class="price">999₽<span>/месяц</span></div>
+                <ul>
+                    <li>8GB RAM</li>
+                    <li>4 vCPU</li>
+                    <li>100GB SSD</li>
+                    <li>Неограниченный трафик</li>
+                </ul>
+                <a href="#" class="btn-primary">Выбрать</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <h2>Наши преимущества</h2>
+        <div class="features-grid">
+            <div class="feature">
+                <img src="images/speed.png" alt="Скорость">
+                <h3>Высокая скорость</h3>
+                <p>SSD диски и оптимизированная сеть</p>
+            </div>
+            <div class="feature">
+                <img src="images/support.png" alt="Поддержка">
+                <h3>24/7 Поддержка</h3>
+                <p>Круглосуточная техническая поддержка</p>
+            </div>
+            <div class="feature">
+                <img src="images/backup.png" alt="Бэкапы">
+                <h3>Автоматические бэкапы</h3>
+                <p>Ежедневное резервное копирование</p>
+            </div>
+            <div class="feature">
+                <img src="images/panel.png" alt="Панель">
+                <h3>Удобная панель</h3>
+                <p>Простое управление сервером</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>GameHost</h4>
+                <p>Лучший хостинг для игровых серверов</p>
+            </div>
+            <div class="footer-section">
+                <h4>Контакты</h4>
+                <p>Email: support@gamehost.ru</p>
+                <p>Discord: discord.gg/gamehost</p>
+            </div>
+            <div class="footer-section">
+                <h4>Соцсети</h4>
+                <div class="social-links">
+                    <a href="#">VK</a>
+                    <a href="#">Telegram</a>
+                    <a href="#">Discord</a>
                 </div>
             </div>
-        </section>
-
-        <section class="features">
-            <div class="container">
-                <h2>Наши преимущества</h2>
-                <div class="features-grid">
-                    <div class="feature">
-                        <span class="material-icons feature-icon">speed</span>
-                        <h3>Быстрый запуск</h3>
-                        <p>Автоматическая установка сервера за 60 секунд</p>
-                    </div>
-                    <div class="feature">
-                        <span class="material-icons feature-icon">security</span>
-                        <h3>Защита от DDoS</h3>
-                        <p>Защита от атак до 1000 Гбит/с</p>
-                    </div>
-                    <div class="feature">
-                        <span class="material-icons feature-icon">support_agent</span>
-                        <h3>Техподдержка 24/7</h3>
-                        <p>Среднее время ответа 15 минут</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Модальное окно входа -->
-    <div id="loginModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal('loginModal')">&times;</span>
-            <h2>Вход в панель управления</h2>
-            <form id="loginForm" onsubmit="handleLogin(event)">
-                <div class="form-group">
-                    <label for="loginEmail">Email</label>
-                    <input type="email" id="loginEmail" required>
-                </div>
-                <div class="form-group">
-                    <label for="loginPassword">Пароль</label>
-                    <input type="password" id="loginPassword" required>
-                </div>
-                <button type="submit" class="btn btn-primary">
-                    <span class="material-symbols-outlined">login</span>
-                    Войти
-                </button>
-            </form>
-            <p style="margin-top: 20px; text-align: center; color: var(--light-text);">
-                Нет аккаунта? <a href="#" onclick="closeModal('loginModal'); showRegisterModal()" style="color: var(--primary-color);">Зарегистрируйтесь</a>
-            </p>
         </div>
-    </div>
-
-    <!-- Модальное окно регистрации -->
-    <div id="registerModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal('registerModal')">&times;</span>
-            <h2>Регистрация</h2>
-            <form id="registerForm" onsubmit="handleRegister(event)">
-                <div class="form-group">
-                    <label for="registerName">Имя</label>
-                    <input type="text" id="registerName" required>
-                </div>
-                <div class="form-group">
-                    <label for="registerEmail">Email</label>
-                    <input type="email" id="registerEmail" required>
-                </div>
-                <div class="form-group">
-                    <label for="registerPassword">Пароль</label>
-                    <input type="password" id="registerPassword" required minlength="6">
-                </div>
-                <button type="submit" class="btn btn-primary">
-                    <span class="material-symbols-outlined">person_add</span>
-                    Зарегистрироваться
-                </button>
-            </form>
-            <p style="margin-top: 20px; text-align: center; color: var(--light-text);">
-                Уже есть аккаунт? <a href="#" onclick="closeModal('registerModal'); showLoginModal()" style="color: var(--primary-color);">Войдите</a>
-            </p>
+        <div class="footer-bottom">
+            <p>&copy; 2025 GameHost. Все права защищены.</p>
         </div>
-    </div>
-
-    <script>
-        // Проверяем авторизацию при загрузке страницы
-        document.addEventListener('DOMContentLoaded', () => {
-            const token = localStorage.getItem('token');
-            if (token) {
-                updateAuthButtons(true);
-            }
-        });
-
-        function showLoginModal() {
-            document.getElementById('loginModal').style.display = 'flex';
-        }
-
-        function showRegisterModal() {
-            document.getElementById('registerModal').style.display = 'flex';
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-        }
-
-        function updateAuthButtons(isLoggedIn) {
-            const authButtons = document.querySelector('.auth-buttons');
-            if (isLoggedIn) {
-                authButtons.innerHTML = `
-                    <button class="btn btn-outline" onclick="logout()">
-                        <span class="material-symbols-outlined">logout</span>
-                        Выйти
-                    </button>
-                `;
-            } else {
-                authButtons.innerHTML = `
-                    <button class="btn btn-outline" onclick="showLoginModal()">
-                        <span class="material-symbols-outlined">login</span>
-                        Войти
-                    </button>
-                    <button class="btn btn-primary" onclick="showRegisterModal()">
-                        <span class="material-symbols-outlined">person_add</span>
-                        Регистрация
-                    </button>
-                `;
-            }
-        }
-
-        async function handleLogin(event) {
-            event.preventDefault();
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-
-            try {
-                // Здесь должен быть реальный запрос к вашему API
-                // Для демонстрации используем временное решение
-                localStorage.setItem('token', 'demo_token');
-                localStorage.setItem('user', JSON.stringify({
-                    email: email,
-                    name: email.split('@')[0]
-                }));
-                
-                updateAuthButtons(true);
-                closeModal('loginModal');
-                window.location.href = '/dashboard.html';
-            } catch (error) {
-                console.error('Ошибка:', error);
-                alert('Произошла ошибка при входе');
-            }
-        }
-
-        async function handleRegister(event) {
-            event.preventDefault();
-            const name = document.getElementById('registerName').value;
-            const email = document.getElementById('registerEmail').value;
-            const password = document.getElementById('registerPassword').value;
-
-            try {
-                // Здесь должен быть реальный запрос к вашему API
-                // Для демонстрации используем временное решение
-                alert('Регистрация успешна! Теперь вы можете войти.');
-                closeModal('registerModal');
-                showLoginModal();
-            } catch (error) {
-                console.error('Ошибка:', error);
-                alert('Произошла ошибка при регистрации');
-            }
-        }
-
-        function logout() {
-            localStorage.removeItem('token');
-            localStorage.removeItem('user');
-            updateAuthButtons(false);
-            window.location.href = '/';
-        }
-    </script>
+    </footer>
 </body>
 </html> 

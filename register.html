@@ -3,400 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Регистрация - ForestDesign</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Регистрация - GameHost</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #00a651;
-            --primary-dark: #008c44;
-            --secondary: #2c3e50;
-            --accent: #3498db;
-            --background: #0f172a;
-            --surface: #1e293b;
-            --surface-light: #334155;
-            --text: #f8fafc;
-            --text-secondary: #94a3b8;
-            --success: #22c55e;
-            --error: #ef4444;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--background);
-            color: var(--text);
-            line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .register-container {
+            max-width: 500px;
+            margin: 50px auto;
             padding: 2rem;
-            position: relative;
-            overflow: hidden;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-        /* Анимированный фон */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, 
-                rgba(0, 166, 81, 0.2),
-                rgba(52, 152, 219, 0.2),
-                rgba(155, 89, 182, 0.2)
-            );
-            z-index: -1;
-            animation: gradientBG 15s ease infinite;
-            background-size: 400% 400%;
-        }
-
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .auth-card {
-            background: rgba(30, 41, 59, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 2rem;
-            width: 100%;
-            max-width: 420px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-        }
-
-        .auth-header {
+        .register-header {
             text-align: center;
             margin-bottom: 2rem;
         }
 
-        .auth-title {
-            font-size: 2rem;
-            font-weight: 700;
+        .register-header h1 {
+            color: var(--primary-color);
             margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
 
-        .auth-subtitle {
-            color: var(--text-secondary);
+        .register-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
         }
 
-        .form-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .form-input {
-            width: 100%;
-            background: var(--surface-light);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text);
-            padding: 0.75rem 1rem;
-            border-radius: 8px;
-            font-family: 'Inter', sans-serif;
-            transition: all 0.3s ease;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 2px rgba(0, 166, 81, 0.2);
-        }
-
-        .password-group {
-            position: relative;
-        }
-
-        .password-toggle {
-            position: absolute;
-            right: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: color 0.3s ease;
-        }
-
-        .password-toggle:hover {
-            color: var(--text);
-        }
-
-        .submit-btn {
-            width: 100%;
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.75rem;
-            border-radius: 8px;
+        .form-group label {
+            color: var(--text-color);
             font-weight: 500;
+        }
+
+        .form-group input {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .register-button {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: background 0.3s;
             margin-top: 1rem;
         }
 
-        .submit-btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
+        .register-button:hover {
+            background: var(--secondary-color);
         }
 
-        .auth-links {
+        .login-link {
             text-align: center;
-            margin-top: 1.5rem;
-            color: var(--text-secondary);
+            margin-top: 1rem;
         }
 
-        .auth-links a {
-            color: var(--primary);
+        .login-link a {
+            color: var(--primary-color);
             text-decoration: none;
-            transition: color 0.3s ease;
         }
 
-        .auth-links a:hover {
-            color: var(--primary-dark);
-        }
-
-        .error-message {
-            color: var(--error);
+        .terms {
+            margin-top: 1rem;
             font-size: 0.9rem;
-            margin-top: 0.5rem;
-            display: none;
+            color: var(--text-color);
         }
 
-        .error-message.show {
-            display: block;
-            animation: shake 0.5s ease;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-        }
-
-        .form-input.error {
-            border-color: var(--error);
-        }
-
-        .form-input.error + .error-message {
-            display: block;
-        }
-
-        .password-requirements {
-            margin-top: 0.5rem;
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
-
-        .requirement {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-top: 0.25rem;
-        }
-
-        .requirement i {
-            font-size: 0.75rem;
-        }
-
-        .requirement.valid {
-            color: var(--success);
-        }
-
-        .requirement.invalid {
-            color: var(--error);
+        .terms a {
+            color: var(--primary-color);
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
-    <div class="auth-card">
-        <div class="auth-header">
-            <h1 class="auth-title">Регистрация</h1>
-            <p class="auth-subtitle">Создайте аккаунт для доступа к форуму</p>
+    <div class="register-container">
+        <div class="register-header">
+            <h1>GameHost</h1>
+            <p>Создание нового аккаунта</p>
         </div>
-
-        <form id="registerForm" onsubmit="handleRegister(event)">
+        <form class="register-form">
             <div class="form-group">
-                <label class="form-label">Никнейм</label>
-                <input type="text" class="form-input" id="nickname" required
-                    placeholder="Введите ваш никнейм">
-                <div class="error-message" id="nicknameError"></div>
+                <label for="username">Имя пользователя</label>
+                <input type="text" id="username" required>
             </div>
-
             <div class="form-group">
-                <label class="form-label">Email</label>
-                <input type="email" class="form-input" id="email" required
-                    placeholder="Введите ваш email">
-                <div class="error-message" id="emailError"></div>
+                <label for="email">Email</label>
+                <input type="email" id="email" required>
             </div>
-
             <div class="form-group">
-                <label class="form-label">Пароль</label>
-                <div class="password-group">
-                    <input type="password" class="form-input" id="password" required
-                        placeholder="Придумайте пароль">
-                    <i class="fas fa-eye password-toggle" onclick="togglePassword('password')"></i>
-                </div>
-                <div class="error-message" id="passwordError"></div>
-                <div class="password-requirements">
-                    <div class="requirement" id="lengthReq">
-                        <i class="fas fa-circle"></i>
-                        Минимум 8 символов
-                    </div>
-                    <div class="requirement" id="upperReq">
-                        <i class="fas fa-circle"></i>
-                        Заглавная буква
-                    </div>
-                    <div class="requirement" id="numberReq">
-                        <i class="fas fa-circle"></i>
-                        Цифра
-                    </div>
-                </div>
+                <label for="password">Пароль</label>
+                <input type="password" id="password" required>
             </div>
-
             <div class="form-group">
-                <label class="form-label">Подтверждение пароля</label>
-                <div class="password-group">
-                    <input type="password" class="form-input" id="confirmPassword" required
-                        placeholder="Повторите пароль">
-                    <i class="fas fa-eye password-toggle" onclick="togglePassword('confirmPassword')"></i>
-                </div>
-                <div class="error-message" id="confirmPasswordError"></div>
+                <label for="confirm-password">Подтверждение пароля</label>
+                <input type="password" id="confirm-password" required>
             </div>
-
-            <button type="submit" class="submit-btn">
-                <i class="fas fa-user-plus"></i> Зарегистрироваться
-            </button>
+            <div class="terms">
+                <input type="checkbox" id="terms" required>
+                <label for="terms">Я согласен с <a href="#">условиями использования</a> и <a href="#">политикой конфиденциальности</a></label>
+            </div>
+            <button type="submit" class="register-button">Зарегистрироваться</button>
+            <div class="login-link">
+                <p>Уже есть аккаунт? <a href="login.html">Войти</a></p>
+            </div>
         </form>
-
-        <div class="auth-links">
-            Уже есть аккаунт? <a href="login.html">Войти</a>
-        </div>
     </div>
-
-    <script>
-        function togglePassword(inputId) {
-            const input = document.getElementById(inputId);
-            const icon = input.nextElementSibling;
-            
-            if (input.type === 'password') {
-                input.type = 'text';
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
-            } else {
-                input.type = 'password';
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
-            }
-        }
-
-        function validatePassword(password) {
-            const lengthReq = document.getElementById('lengthReq');
-            const upperReq = document.getElementById('upperReq');
-            const numberReq = document.getElementById('numberReq');
-
-            const hasLength = password.length >= 8;
-            const hasUpper = /[A-Z]/.test(password);
-            const hasNumber = /[0-9]/.test(password);
-
-            lengthReq.className = `requirement ${hasLength ? 'valid' : 'invalid'}`;
-            upperReq.className = `requirement ${hasUpper ? 'valid' : 'invalid'}`;
-            numberReq.className = `requirement ${hasNumber ? 'valid' : 'invalid'}`;
-
-            lengthReq.firstElementChild.className = `fas ${hasLength ? 'fa-check-circle' : 'fa-circle'}`;
-            upperReq.firstElementChild.className = `fas ${hasUpper ? 'fa-check-circle' : 'fa-circle'}`;
-            numberReq.firstElementChild.className = `fas ${hasNumber ? 'fa-check-circle' : 'fa-circle'}`;
-
-            return hasLength && hasUpper && hasNumber;
-        }
-
-        document.getElementById('password').addEventListener('input', function(e) {
-            validatePassword(e.target.value);
-        });
-
-        function showError(inputId, message) {
-            const input = document.getElementById(inputId);
-            const error = document.getElementById(inputId + 'Error');
-            input.classList.add('error');
-            error.textContent = message;
-            error.style.display = 'block';
-        }
-
-        function clearError(inputId) {
-            const input = document.getElementById(inputId);
-            const error = document.getElementById(inputId + 'Error');
-            input.classList.remove('error');
-            error.style.display = 'none';
-        }
-
-        function handleRegister(event) {
-            event.preventDefault();
-            
-            const nickname = document.getElementById('nickname').value;
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            
-            // Получаем существующих пользователей или создаем пустой массив
-            let users = JSON.parse(localStorage.getItem('users')) || [];
-            if (!Array.isArray(users)) {
-                users = [];
-            }
-            
-            // Проверяем, не существует ли уже пользователь с таким email
-            if (users.some(user => user.email === email)) {
-                alert('Пользователь с таким email уже существует');
-                return;
-            }
-            
-            // Создаем нового пользователя
-            const newUser = {
-                id: 'user_' + Date.now(),
-                nickname: nickname,
-                email: email,
-                password: password, // В реальном приложении пароль должен быть захеширован
-                registrationDate: new Date().toISOString(),
-                role: 'user',
-                banned: false
-            };
-            
-            // Добавляем пользователя в массив
-            users.push(newUser);
-            
-            // Сохраняем обновленный список пользователей
-            localStorage.setItem('users', JSON.stringify(users));
-            
-            // Также сохраняем текущего пользователя в сессию
-            localStorage.setItem('user', JSON.stringify(newUser));
-            
-            // Перенаправляем на главную страницу
-            window.location.href = 'index.html';
-        }
-
-        // Добавляем обработчик события при загрузке страницы
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.querySelector('form');
-            if (form) {
-                form.addEventListener('submit', handleRegister);
-            }
-        });
-    </script>
 </body>
 </html> 
