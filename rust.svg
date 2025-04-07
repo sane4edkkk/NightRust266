@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="300" height="200" viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="300" height="200" fill="#1A1A1A"/>
+    <path d="M100 80H200M100 120H200" stroke="#CD412B" stroke-width="8" stroke-linecap="round"/>
+    <text x="150" y="100" fill="#CD412B" font-family="Arial" font-size="48" text-anchor="middle" dominant-baseline="middle">RUST</text>
+</svg> 

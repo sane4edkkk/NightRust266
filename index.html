@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GameHosting - Игровой хостинг</title>
+    <title>GMAEHOST - Игровой хостинг</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
@@ -188,20 +188,14 @@
 <body>
     <header class="header">
         <div class="container">
-            <a href="/" class="logo">GameHosting</a>
+            <a href="/" class="logo">GMAEHOST</a>
             <nav class="nav">
                 <a href="/" class="nav-link active">Главная</a>
                 <a href="/servers" class="nav-link">Мои серверы</a>
                 <a href="/balance" class="nav-link">Баланс</a>
                 <div class="auth-buttons">
-                    <button class="btn btn-outline" onclick="showLoginModal()">
-                        <span class="material-symbols-outlined">login</span>
-                        Войти
-                    </button>
-                    <button class="btn btn-primary" onclick="showRegisterModal()">
-                        <span class="material-symbols-outlined">person_add</span>
-                        Регистрация
-                    </button>
+                    <button class="btn btn-outline" onclick="showAuthModal('login')">Войти</button>
+                    <button class="btn btn-primary" onclick="showAuthModal('register')">Регистрация</button>
                 </div>
             </nav>
         </div>
@@ -218,38 +212,56 @@
                             <p>Современные сервера Intel i7-i9, AMD Ryzen, NVMe SSD диски, максимальная производительность и низкий пинг</p>
                         </div>
                         <div class="feature-image">
-                            <img src="images/speed.png" alt="Высокая скорость">
+                            <img src="images/speed.svg" alt="Высокая скорость">
                         </div>
                     </div>
-
                     <div class="feature-card">
                         <div class="feature-content">
                             <h3>Техническая поддержка 24/7</h3>
                             <p>Удобная система обращений и telegram чат позволяют максимально быстро и качественно решить Вашу проблему</p>
                         </div>
                         <div class="feature-image">
-                            <img src="images/support.png" alt="Поддержка">
+                            <img src="images/support.svg" alt="Поддержка">
                         </div>
                     </div>
-
                     <div class="feature-card">
                         <div class="feature-content">
                             <h3>Хорошая защита от DDOS-атак</h3>
                             <p>Мы защищаем от всех типов атак: по UDP/ICMP-протоколам, SYN/ACK, DNS/NTP-amplification и 7-го уровня OSI</p>
                         </div>
                         <div class="feature-image">
-                            <img src="images/security.png" alt="Защита">
+                            <img src="images/shield.svg" alt="Защита">
                         </div>
                     </div>
-
                     <div class="feature-card">
                         <div class="feature-content">
                             <h3>Своя панель управления</h3>
                             <p>Удобная и интуитивно понятная панель управления для полного контроля над сервером</p>
                         </div>
                         <div class="feature-image">
-                            <img src="images/control.png" alt="Панель управления">
+                            <img src="images/panel.svg" alt="Панель управления">
                         </div>
+                    </div>
+                </div>
+
+                <div class="games-grid">
+                    <div class="game-card">
+                        <img src="images/cs2.svg" alt="Counter-Strike 2">
+                        <h3>Counter-Strike 2</h3>
+                        <p>от 196 ₽/слот</p>
+                        <button class="btn btn-primary" onclick="location.href='/order'">Заказать</button>
+                    </div>
+                    <div class="game-card">
+                        <img src="images/rust.svg" alt="Rust">
+                        <h3>Rust</h3>
+                        <p>от 203 ₽/слот</p>
+                        <button class="btn btn-primary" onclick="location.href='/order'">Заказать</button>
+                    </div>
+                    <div class="game-card">
+                        <img src="images/samp.svg" alt="SA:MP">
+                        <h3>SA:MP</h3>
+                        <p>от 207 ₽/слот</p>
+                        <button class="btn btn-primary" onclick="location.href='/order'">Заказать</button>
                     </div>
                 </div>
             </div>
