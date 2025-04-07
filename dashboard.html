@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Панель управления - GameHosting</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="/" class="logo">GameHosting</a>
+            <nav class="nav">
+                <a href="/" class="nav-link">Главная</a>
+                <a href="/servers" class="nav-link">Мои серверы</a>
+                <a href="/balance" class="nav-link">Баланс</a>
+                <div class="user-info">
+                    <span id="username">Загрузка...</span>
+                    <span id="balance" class="balance">0 ₽</span>
+                    <button class="btn btn-outline" onclick="logout()">
+                        <span class="material-icons">logout</span>
+                        Выйти
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="dashboard">
+        <div class="container">
+            <div class="dashboard-header">
+                <div class="user-welcome">
+                    <div class="user-avatar">
+                        <span id="userInitials">U</span>
+                    </div>
+                    <div>
+                        <h1>Добро пожаловать, <span id="welcomeName">Пользователь</span>!</h1>
+                        <p>Управляйте вашими серверами и настройками</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <span class="material-icons">dns</span>
+                    <h3 id="activeServers">0</h3>
+                    <p>Активных серверов</p>
+                </div>
+                <div class="stat-card">
+                    <span class="material-icons">account_balance_wallet</span>
+                    <h3 id="currentBalance">0 ₽</h3>
+                    <p>Текущий баланс</p>
+                </div>
+                <div class="stat-card">
+                    <span class="material-icons">schedule</span>
+                    <h3 id="daysLeft">0</h3>
+                    <p>Дней до окончания</p>
+                </div>
+            </div>
+
+            <div class="servers-section">
+                <div class="section-header">
+                    <h2>Мои серверы</h2>
+                    <button class="btn btn-primary" onclick="location.href='/order'">
+                        <span class="material-icons">add</span>
+                        Заказать сервер
+                    </button>
+                </div>
+
+                <div id="serversList" class="servers-grid">
+                    <!-- Серверы будут добавлены через JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                window.location.href = '/';
+                return;
+            }
+
+            try {
+                // Получение информации о пользователе
+                const userResponse = await fetch('/api/auth/me', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (userResponse.ok) {
+                    const user = await userResponse.json();
+                    document.getElementById('username').textContent = user.username;
+                    document.getElementById('welcomeName').textContent = user.username;
+                    document.getElementById('balance').textContent = `${user.balance} ₽`;
+                    document.getElementById('currentBalance').textContent = `${user.balance} ₽`;
+                    document.getElementById('userInitials').textContent = user.username.charAt(0).toUpperCase();
+                }
+
+                // Получение списка серверов
+                const serversResponse = await fetch('/api/servers', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (serversResponse.ok) {
+                    const servers = await serversResponse.json();
+                    document.getElementById('activeServers').textContent = servers.length;
+                    renderServers(servers);
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+            }
+        });
+
+        function renderServers(servers) {
+            const serversList = document.getElementById('serversList');
+            
+            if (servers.length === 0) {
+                serversList.innerHTML = `
+                    <div class="empty-state">
+                        <span class="material-icons">dns</span>
+                        <h3>У вас пока нет серверов</h3>
+                        <p>Закажите свой первый сервер прямо сейчас</p>
+                        <button class="btn btn-primary" onclick="location.href='/order'">
+                            <span class="material-icons">add</span>
+                            Заказать сервер
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            serversList.innerHTML = servers.map(server => `
+                <div class="server-card">
+                    <div class="server-header">
+                        <div class="server-info">
+                            <h3>${server.name}</h3>
+                            <span class="status status-${server.status}">${getStatusText(server.status)}</span>
+                        </div>
+                        <div class="server-actions">
+                            <button class="btn btn-icon" onclick="controlServer('${server.id}', 'start')" ${server.status === 'active' ? 'disabled' : ''}>
+                                <span class="material-icons">play_arrow</span>
+                            </button>
+                            <button class="btn btn-icon" onclick="controlServer('${server.id}', 'stop')" ${server.status === 'stopped' ? 'disabled' : ''}>
+                                <span class="material-icons">stop</span>
+                            </button>
+                            <button class="btn btn-icon" onclick="controlServer('${server.id}', 'restart')">
+                                <span class="material-icons">refresh</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="server-details">
+                        <div class="detail-item">
+                            <span class="material-icons">public</span>
+                            <span>${server.ip}:${server.port}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="material-icons">memory</span>
+                            <span>${server.slots} слотов</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="material-icons">schedule</span>
+                            <span>До ${new Date(server.expiresAt).toLocaleDateString()}</span>
+                        </div>
+                    </div>
+                    <div class="server-stats">
+                        <div class="stat-item">
+                            <div class="stat-label">CPU</div>
+                            <div class="stat-value">${server.stats.cpu}%</div>
+                            <div class="stat-bar">
+                                <div class="stat-bar-fill" style="width: ${server.stats.cpu}%"></div>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">RAM</div>
+                            <div class="stat-value">${server.stats.ram}%</div>
+                            <div class="stat-bar">
+                                <div class="stat-bar-fill" style="width: ${server.stats.ram}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getStatusText(status) {
+            const statusMap = {
+                'active': 'Активен',
+                'stopped': 'Остановлен',
+                'suspended': 'Приостановлен',
+                'expired': 'Истек'
+            };
+            return statusMap[status] || status;
+        }
+
+        async function controlServer(serverId, action) {
+            const token = localStorage.getItem('token');
+            try {
+                const response = await fetch(`/api/servers/${serverId}/${action}`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (response.ok) {
+                    // Обновляем информацию о серверах
+                    const serversResponse = await fetch('/api/servers', {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    const servers = await serversResponse.json();
+                    renderServers(servers);
+                } else {
+                    const error = await response.json();
+                    alert(error.message);
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                alert('Произошла ошибка при управлении сервером');
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('token');
+            window.location.href = '/';
+        }
+    </script>
+</body>
+</html> 

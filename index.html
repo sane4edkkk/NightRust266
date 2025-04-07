@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GameHosting - Панель управления игровыми серверами</title>
+    <title>GameHosting - Игровой хостинг</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
         .hero {
             background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
@@ -187,42 +188,80 @@
 <body>
     <header class="header">
         <div class="container">
-            <div class="logo">GameHosting</div>
+            <a href="/" class="logo">GameHosting</a>
             <nav class="nav">
-                <a href="/" class="nav-link">Главная</a>
+                <a href="/" class="nav-link active">Главная</a>
                 <a href="/servers" class="nav-link">Мои серверы</a>
                 <a href="/balance" class="nav-link">Баланс</a>
                 <div class="auth-buttons">
-                    <button id="loginBtn" class="btn btn-outline">Войти</button>
-                    <button id="registerBtn" class="btn btn-primary">Регистрация</button>
+                    <button class="btn btn-outline" onclick="showLoginModal()">
+                        <span class="material-icons">login</span>
+                        Войти
+                    </button>
+                    <button class="btn btn-primary" onclick="showRegisterModal()">
+                        <span class="material-icons">person_add</span>
+                        Регистрация
+                    </button>
                 </div>
             </nav>
         </div>
     </header>
 
-    <main class="main">
+    <main>
         <section class="hero">
             <div class="container">
-                <h1>Игровые серверы для CS2, Rust и SAMP</h1>
-                <p>Надежный хостинг с мгновенной активацией</p>
+                <h1>Игровые серверы для ваших проектов</h1>
+                <p>Быстрые и надежные серверы для CS2, Rust и SAMP с защитой от DDoS</p>
                 <div class="games-grid">
                     <div class="game-card">
-                        <img src="images/cs2.jpg" alt="CS2">
-                        <h3>CS2</h3>
-                        <p>От 500₽/мес</p>
-                        <button class="btn btn-primary">Заказать</button>
+                        <img src="images/cs2.jpg" alt="Counter-Strike 2">
+                        <h3>Counter-Strike 2</h3>
+                        <p>От 100 ₽/слот</p>
+                        <div class="game-features">
+                            <div class="feature-item">
+                                <span class="material-icons">memory</span>
+                                <span>128 тик</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="material-icons">shield</span>
+                                <span>Защита от DDoS</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="location.href='/order/cs2'">Заказать</button>
                     </div>
+
                     <div class="game-card">
                         <img src="images/rust.jpg" alt="Rust">
                         <h3>Rust</h3>
-                        <p>От 1000₽/мес</p>
-                        <button class="btn btn-primary">Заказать</button>
+                        <p>От 150 ₽/слот</p>
+                        <div class="game-features">
+                            <div class="feature-item">
+                                <span class="material-icons">storage</span>
+                                <span>SSD диски</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="material-icons">backup</span>
+                                <span>Бэкапы</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="location.href='/order/rust'">Заказать</button>
                     </div>
+
                     <div class="game-card">
                         <img src="images/samp.jpg" alt="SAMP">
-                        <h3>SAMP</h3>
-                        <p>От 300₽/мес</p>
-                        <button class="btn btn-primary">Заказать</button>
+                        <h3>SA:MP</h3>
+                        <p>От 50 ₽/слот</p>
+                        <div class="game-features">
+                            <div class="feature-item">
+                                <span class="material-icons">dns</span>
+                                <span>MySQL</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="material-icons">code</span>
+                                <span>Установка модов</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="location.href='/order/samp'">Заказать</button>
                     </div>
                 </div>
             </div>
@@ -230,44 +269,138 @@
 
         <section class="features">
             <div class="container">
-                <h2>Преимущества нашего хостинга</h2>
+                <h2>Наши преимущества</h2>
                 <div class="features-grid">
                     <div class="feature">
-                        <img src="images/performance.svg" alt="Производительность">
-                        <h3>Высокая производительность</h3>
-                        <p>Мощные серверы с SSD накопителями</p>
+                        <span class="material-icons feature-icon">speed</span>
+                        <h3>Быстрый запуск</h3>
+                        <p>Автоматическая установка сервера за 60 секунд</p>
                     </div>
                     <div class="feature">
-                        <img src="images/support.svg" alt="Поддержка">
-                        <h3>Круглосуточная поддержка</h3>
-                        <p>Помощь 24/7 от опытных специалистов</p>
-                    </div>
-                    <div class="feature">
-                        <img src="images/security.svg" alt="Безопасность">
+                        <span class="material-icons feature-icon">security</span>
                         <h3>Защита от DDoS</h3>
-                        <p>Мощная защита от атак</p>
+                        <p>Защита от атак до 1000 Гбит/с</p>
+                    </div>
+                    <div class="feature">
+                        <span class="material-icons feature-icon">support_agent</span>
+                        <h3>Техподдержка 24/7</h3>
+                        <p>Среднее время ответа 15 минут</p>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>О компании</h4>
-                    <p>GameHosting - надежный провайдер игровых серверов с 2024 года</p>
+    <!-- Модальное окно входа -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('loginModal')">&times;</span>
+            <h2>Вход в панель управления</h2>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" required>
                 </div>
-                <div class="footer-section">
-                    <h4>Контакты</h4>
-                    <p>Email: support@gamehosting.ru</p>
-                    <p>Телефон: +7 (XXX) XXX-XX-XX</p>
+                <div class="form-group">
+                    <label for="loginPassword">Пароль</label>
+                    <input type="password" id="loginPassword" required>
                 </div>
-            </div>
+                <button type="submit" class="btn btn-primary">Войти</button>
+            </form>
         </div>
-    </footer>
+    </div>
 
-    <script src="script.js"></script>
+    <!-- Модальное окно регистрации -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('registerModal')">&times;</span>
+            <h2>Регистрация</h2>
+            <form id="registerForm" onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label for="registerName">Имя</label>
+                    <input type="text" id="registerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Email</label>
+                    <input type="email" id="registerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Пароль</label>
+                    <input type="password" id="registerPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function showLoginModal() {
+            document.getElementById('loginModal').style.display = 'flex';
+        }
+
+        function showRegisterModal() {
+            document.getElementById('registerModal').style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    localStorage.setItem('token', data.token);
+                    window.location.href = '/dashboard';
+                } else {
+                    alert('Неверный email или пароль');
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                alert('Произошла ошибка при входе');
+            }
+        }
+
+        async function handleRegister(event) {
+            event.preventDefault();
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+
+            try {
+                const response = await fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name, email, password })
+                });
+
+                if (response.ok) {
+                    alert('Регистрация успешна! Теперь вы можете войти.');
+                    closeModal('registerModal');
+                    showLoginModal();
+                } else {
+                    const error = await response.json();
+                    alert(error.message);
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                alert('Произошла ошибка при регистрации');
+            }
+        }
+    </script>
 </body>
 </html> 
