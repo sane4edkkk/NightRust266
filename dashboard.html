@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Панель управления - GameHosting</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 <body>
     <header class="header">
@@ -20,7 +20,7 @@
                     <span id="username">Загрузка...</span>
                     <span id="balance" class="balance">0 ₽</span>
                     <button class="btn btn-outline" onclick="logout()">
-                        <span class="material-icons">logout</span>
+                        <span class="material-symbols-outlined">logout</span>
                         Выйти
                     </button>
                 </div>
@@ -44,17 +44,17 @@
 
             <div class="dashboard-stats">
                 <div class="stat-card">
-                    <span class="material-icons">dns</span>
+                    <span class="material-symbols-outlined">dns</span>
                     <h3 id="activeServers">0</h3>
                     <p>Активных серверов</p>
                 </div>
                 <div class="stat-card">
-                    <span class="material-icons">account_balance_wallet</span>
+                    <span class="material-symbols-outlined">account_balance_wallet</span>
                     <h3 id="currentBalance">0 ₽</h3>
                     <p>Текущий баланс</p>
                 </div>
                 <div class="stat-card">
-                    <span class="material-icons">schedule</span>
+                    <span class="material-symbols-outlined">schedule</span>
                     <h3 id="daysLeft">0</h3>
                     <p>Дней до окончания</p>
                 </div>
@@ -64,7 +64,7 @@
                 <div class="section-header">
                     <h2>Мои серверы</h2>
                     <button class="btn btn-primary" onclick="location.href='/order'">
-                        <span class="material-icons">add</span>
+                        <span class="material-symbols-outlined">add</span>
                         Заказать сервер
                     </button>
                 </div>
@@ -124,11 +124,11 @@
             if (servers.length === 0) {
                 serversList.innerHTML = `
                     <div class="empty-state">
-                        <span class="material-icons">dns</span>
+                        <span class="material-symbols-outlined">dns</span>
                         <h3>У вас пока нет серверов</h3>
                         <p>Закажите свой первый сервер прямо сейчас</p>
                         <button class="btn btn-primary" onclick="location.href='/order'">
-                            <span class="material-icons">add</span>
+                            <span class="material-symbols-outlined">add</span>
                             Заказать сервер
                         </button>
                     </div>
@@ -145,27 +145,27 @@
                         </div>
                         <div class="server-actions">
                             <button class="btn btn-icon" onclick="controlServer('${server.id}', 'start')" ${server.status === 'active' ? 'disabled' : ''}>
-                                <span class="material-icons">play_arrow</span>
+                                <span class="material-symbols-outlined">play_arrow</span>
                             </button>
                             <button class="btn btn-icon" onclick="controlServer('${server.id}', 'stop')" ${server.status === 'stopped' ? 'disabled' : ''}>
-                                <span class="material-icons">stop</span>
+                                <span class="material-symbols-outlined">stop</span>
                             </button>
                             <button class="btn btn-icon" onclick="controlServer('${server.id}', 'restart')">
-                                <span class="material-icons">refresh</span>
+                                <span class="material-symbols-outlined">refresh</span>
                             </button>
                         </div>
                     </div>
                     <div class="server-details">
                         <div class="detail-item">
-                            <span class="material-icons">public</span>
+                            <span class="material-symbols-outlined">public</span>
                             <span>${server.ip}:${server.port}</span>
                         </div>
                         <div class="detail-item">
-                            <span class="material-icons">memory</span>
+                            <span class="material-symbols-outlined">memory</span>
                             <span>${server.slots} слотов</span>
                         </div>
                         <div class="detail-item">
-                            <span class="material-icons">schedule</span>
+                            <span class="material-symbols-outlined">schedule</span>
                             <span>До ${new Date(server.expiresAt).toLocaleDateString()}</span>
                         </div>
                     </div>
