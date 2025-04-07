@@ -12,7 +12,14 @@
             border-radius: 8px;
             padding: 30px;
             margin: 20px 0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+        }
+
+        .balance-card:hover {
+            box-shadow: 0 8px 12px rgba(0,0,0,0.3);
+            border-color: var(--primary-color);
         }
 
         .current-balance {
@@ -20,6 +27,7 @@
             font-weight: 700;
             color: var(--primary-color);
             margin: 20px 0;
+            text-shadow: 0 0 10px rgba(33, 150, 243, 0.3);
         }
 
         .payment-methods {
@@ -36,15 +44,19 @@
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
+            background-color: var(--card-bg);
         }
 
         .payment-method:hover {
             border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
 
         .payment-method.selected {
             border-color: var(--primary-color);
             background-color: rgba(33, 150, 243, 0.1);
+            box-shadow: 0 4px 8px rgba(33, 150, 243, 0.2);
         }
 
         .payment-method img {
@@ -52,6 +64,7 @@
             height: 60px;
             object-fit: contain;
             margin-bottom: 10px;
+            filter: invert(1) brightness(0.8);
         }
 
         .amount-input {
@@ -65,6 +78,15 @@
             border-radius: 4px;
             font-size: 18px;
             text-align: center;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            transition: all 0.3s;
+        }
+
+        .amount-input input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+            outline: none;
         }
 
         .amount-presets {
@@ -81,19 +103,28 @@
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
+            background-color: var(--card-bg);
         }
 
         .amount-preset:hover {
             border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
 
         .amount-preset.selected {
             border-color: var(--primary-color);
             background-color: rgba(33, 150, 243, 0.1);
+            box-shadow: 0 4px 8px rgba(33, 150, 243, 0.2);
         }
 
         .payment-history {
             margin-top: 40px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            border: 1px solid var(--border-color);
         }
 
         .payment-history table {
@@ -116,14 +147,22 @@
 
         .status-success {
             color: #4CAF50;
+            text-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
         }
 
         .status-pending {
             color: #FFC107;
+            text-shadow: 0 0 5px rgba(255, 193, 7, 0.3);
         }
 
         .status-failed {
             color: #F44336;
+            text-shadow: 0 0 5px rgba(244, 67, 54, 0.3);
+        }
+
+        h1, h2, h3 {
+            color: var(--text-color);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
     </style>
 </head>

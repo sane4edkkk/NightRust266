@@ -1,13 +1,14 @@
 :root {
     --primary-color: #2196F3;
     --secondary-color: #1976D2;
-    --text-color: #333;
-    --light-text: #666;
-    --background-color: #fff;
-    --header-bg: #fff;
-    --footer-bg: #f5f5f5;
-    --card-bg: #fff;
-    --border-color: #e0e0e0;
+    --text-color: #E0E0E0;
+    --light-text: #B0B0B0;
+    --background-color: #121212;
+    --header-bg: #1E1E1E;
+    --footer-bg: #1E1E1E;
+    --card-bg: #2D2D2D;
+    --border-color: #404040;
+    --hover-color: #3D3D3D;
 }
 
 * {
@@ -20,6 +21,7 @@ body {
     font-family: 'Roboto', sans-serif;
     color: var(--text-color);
     line-height: 1.6;
+    background-color: var(--background-color);
 }
 
 .container {
@@ -31,11 +33,12 @@ body {
 /* Header */
 .header {
     background-color: var(--header-bg);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
     position: fixed;
     width: 100%;
     top: 0;
     z-index: 1000;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .header .container {
@@ -49,6 +52,7 @@ body {
     font-size: 24px;
     font-weight: 700;
     color: var(--primary-color);
+    text-shadow: 0 0 10px rgba(33, 150, 243, 0.3);
 }
 
 .nav {
@@ -61,11 +65,19 @@ body {
     text-decoration: none;
     color: var(--text-color);
     font-weight: 500;
-    transition: color 0.3s;
+    transition: all 0.3s;
+    padding: 8px 16px;
+    border-radius: 4px;
 }
 
 .nav-link:hover {
     color: var(--primary-color);
+    background-color: var(--hover-color);
+}
+
+.nav-link.active {
+    color: var(--primary-color);
+    background-color: var(--hover-color);
 }
 
 /* Buttons */
@@ -81,10 +93,13 @@ body {
 .btn-primary {
     background-color: var(--primary-color);
     color: white;
+    box-shadow: 0 2px 4px rgba(33, 150, 243, 0.3);
 }
 
 .btn-primary:hover {
     background-color: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(33, 150, 243, 0.4);
 }
 
 .btn-outline {
@@ -96,18 +111,21 @@ body {
 .btn-outline:hover {
     background-color: var(--primary-color);
     color: white;
+    transform: translateY(-2px);
 }
 
 /* Hero Section */
 .hero {
     padding: 120px 0 60px;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
 }
 
 .hero h1 {
     font-size: 48px;
     margin-bottom: 20px;
     text-align: center;
+    color: var(--text-color);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
 .hero p {
@@ -128,12 +146,15 @@ body {
     background-color: var(--card-bg);
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    transition: transform 0.3s;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    transition: all 0.3s;
+    border: 1px solid var(--border-color);
 }
 
 .game-card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0,0,0,0.3);
+    border-color: var(--primary-color);
 }
 
 .game-card img {
@@ -145,6 +166,7 @@ body {
 .game-card h3 {
     padding: 20px;
     font-size: 24px;
+    color: var(--text-color);
 }
 
 .game-card p {
@@ -167,6 +189,7 @@ body {
     text-align: center;
     font-size: 36px;
     margin-bottom: 40px;
+    color: var(--text-color);
 }
 
 .features-grid {
@@ -178,17 +201,30 @@ body {
 .feature {
     text-align: center;
     padding: 30px;
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    border: 1px solid var(--border-color);
+    transition: all 0.3s;
+}
+
+.feature:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0,0,0,0.3);
+    border-color: var(--primary-color);
 }
 
 .feature img {
     width: 80px;
     height: 80px;
     margin-bottom: 20px;
+    filter: invert(1) brightness(0.8);
 }
 
 .feature h3 {
     font-size: 20px;
     margin-bottom: 10px;
+    color: var(--text-color);
 }
 
 .feature p {
@@ -200,6 +236,7 @@ body {
     background-color: var(--footer-bg);
     padding: 40px 0;
     margin-top: 60px;
+    border-top: 1px solid var(--border-color);
 }
 
 .footer-content {
@@ -211,6 +248,7 @@ body {
 .footer-section h4 {
     margin-bottom: 20px;
     font-size: 18px;
+    color: var(--text-color);
 }
 
 .footer-section p {
