@@ -1,64 +1,87 @@
-// Функция проверки авторизации
-function checkAuth() {
-    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-    if (isLoggedIn) {
-        return JSON.parse(localStorage.getItem('user'));
+const express = require('express');
+const router = express.Router();
+const jwt = require('jsonwebtoken');
+const User = require('../models/User');
+
+// Регистрация
+router.post('/register', async (req, res) => {
+  try {
+    const { username, email, password } = req.body;
+
+    // Проверка существования пользователя
+    let user = await User.findOne({ $or: [{ email }, { username }] });
+    if (user) {
+      return res.status(400).json({ message: 'Пользователь уже существует' });
     }
-    return null;
-}
 
-// Функция обновления навигации
-function updateNavigation() {
-    const userData = checkAuth();
-    const authButtons = document.querySelector('.auth-buttons');
-    
-    if (userData && authButtons) {
-        authButtons.innerHTML = `
-            <div style="display: flex; align-items: center; gap: 1rem;">
-                <div class="user-avatar" style="width: 32px; height: 32px; border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center; background: #333; cursor: pointer;">
-                    ${userData.avatarImage ? 
-                        `<img src="${userData.avatarImage}" style="width: 100%; height: 100%; object-fit: cover;">` :
-                        `<span style="color: white; font-weight: bold;">${userData.avatar}</span>`
-                    }
-                </div>
-                <span style="color: #fff;">${userData.username}</span>
-                <div class="user-menu" style="display: flex; gap: 1rem;">
-                    <a href="account-settings.html" class="nav-link" style="color: #fff; text-decoration: none; padding: 0.5rem 1rem; border-radius: 4px; transition: background-color 0.3s;">
-                        <i class="fas fa-cog"></i> Настройки
-                    </a>
-                    <a href="#" class="nav-link" onclick="logout(); return false;" style="color: #fff; text-decoration: none; padding: 0.5rem 1rem; border-radius: 4px; transition: background-color 0.3s;">
-                        <i class="fas fa-sign-out-alt"></i> Выйти
-                    </a>
-                </div>
-            </div>
-        `;
+    // Создание нового пользователя
+    user = new User({
+      username,
+      email,
+      password
+    });
 
-        // Добавляем стили для эффекта при наведении
-        const navLinks = document.querySelectorAll('.nav-link');
-        navLinks.forEach(link => {
-            link.addEventListener('mouseover', function() {
-                this.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
-            });
-            link.addEventListener('mouseout', function() {
-                this.style.backgroundColor = 'transparent';
-            });
-        });
-    } else if (authButtons) {
-        authButtons.innerHTML = `
-            <a href="login.html" class="login-btn">Войти</a>
-            <a href="register.html" class="register-btn">Регистрация</a>
-        `;
+    await user.save();
+
+    // Создание JWT токена
+    const token = jwt.sign(
+      { userId: user._id },
+      process.env.JWT_SECRET || 'your-secret-key',
+      { expiresIn: '24h' }
+    );
+
+    res.status(201).json({
+      token,
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        balance: user.balance
+      }
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Ошибка сервера' });
+  }
+});
+
+// Вход
+router.post('/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Поиск пользователя
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: 'Неверные учетные данные' });
     }
-}
 
-// Функция выхода
-function logout() {
-    localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('user');
-    window.location.href = 'login.html';
-}
+    // Проверка пароля
+    const isMatch = await user.comparePassword(password);
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Неверные учетные данные' });
+    }
 
-// Инициализация при загрузке страницы
-document.addEventListener('DOMContentLoaded', function() {
-    updateNavigation();
-}); 
+    // Создание JWT токена
+    const token = jwt.sign(
+      { userId: user._id },
+      process.env.JWT_SECRET || 'your-secret-key',
+      { expiresIn: '24h' }
+    );
+
+    res.json({
+      token,
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        balance: user.balance
+      }
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Ошибка сервера' });
+  }
+});
+
+module.exports = router; 
