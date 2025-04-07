@@ -116,16 +116,19 @@ body {
 
 /* Hero Section */
 .hero {
-    padding: 120px 0 60px;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    padding: 60px 0;
+    background-color: var(--background-color);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
 }
 
 .hero h1 {
-    font-size: 48px;
-    margin-bottom: 20px;
+    font-size: 42px;
+    margin-bottom: 60px;
     text-align: center;
     color: var(--text-color);
-    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    font-weight: 700;
 }
 
 .hero p {
@@ -194,41 +197,60 @@ body {
 
 .features-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 30px;
+    margin-top: 40px;
 }
 
-.feature {
-    text-align: center;
+.feature-card {
+    background: linear-gradient(135deg, rgba(33, 33, 33, 0.9) 0%, rgba(45, 45, 45, 0.9) 100%);
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
     padding: 30px;
-    background-color: var(--card-bg);
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-    border: 1px solid var(--border-color);
-    transition: all 0.3s;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
 }
 
-.feature:hover {
+.feature-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 12px rgba(0,0,0,0.3);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
     border-color: var(--primary-color);
 }
 
-.feature img {
-    width: 80px;
-    height: 80px;
-    margin-bottom: 20px;
-    filter: invert(1) brightness(0.8);
+.feature-content {
+    flex: 1;
+    padding-right: 20px;
 }
 
-.feature h3 {
-    font-size: 20px;
-    margin-bottom: 10px;
+.feature-content h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
     color: var(--text-color);
+    font-weight: 600;
 }
 
-.feature p {
+.feature-content p {
     color: var(--light-text);
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.feature-image {
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.feature-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 0 10px rgba(33, 150, 243, 0.3));
 }
 
 /* Footer */
@@ -272,6 +294,29 @@ body {
     
     .games-grid {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 1024px) {
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .feature-card {
+        padding: 20px;
+    }
+
+    .feature-content h3 {
+        font-size: 20px;
+    }
+
+    .feature-content p {
+        font-size: 14px;
+    }
+
+    .feature-image {
+        width: 100px;
+        height: 100px;
     }
 }
 
