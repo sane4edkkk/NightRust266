@@ -3,143 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GameHost - Игровой хостинг</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <title>Заказ плагинов</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header class="header">
-        <nav class="nav">
-            <div class="logo">GameHost</div>
-            <div class="nav-links">
-                <a href="#games">Игры</a>
-                <a href="#pricing">Цены</a>
-                <a href="#features">Возможности</a>
-                <a href="#support">Поддержка</a>
-                <a href="login.html" class="btn-login">Войти</a>
+    <div class="container">
+        <h1>Сервис заказа плагинов</h1>
+        <div id="auth-section">
+            <div id="register-form">
+                <h2>Регистрация</h2>
+                <input type="text" id="reg-username" placeholder="Имя пользователя">
+                <input type="password" id="reg-password" placeholder="Пароль">
+                <button onclick="register()">Зарегистрироваться</button>
+                <p id="reg-message"></p>
             </div>
-        </nav>
-        <div class="hero">
-            <h1>Мощный хостинг для ваших игровых серверов</h1>
-            <p>Быстрые серверы, низкий пинг, круглосуточная поддержка</p>
-            <a href="#pricing" class="btn-primary">Начать сейчас</a>
-        </div>
-    </header>
-
-    <section id="games" class="games">
-        <h2>Поддерживаемые игры</h2>
-        <div class="game-grid">
-            <div class="game-card">
-                <img src="images/minecraft.png" alt="Minecraft">
-                <h3>Minecraft</h3>
-                <p>От 1.8 до последней версии</p>
-            </div>
-            <div class="game-card">
-                <img src="images/csgo.png" alt="CS:GO">
-                <h3>CS:GO</h3>
-                <p>Серверы с SourceMod</p>
-            </div>
-            <div class="game-card">
-                <img src="images/rust.png" alt="Rust">
-                <h3>Rust</h3>
-                <p>С поддержкой плагинов</p>
-            </div>
-            <div class="game-card">
-                <img src="images/ark.png" alt="ARK">
-                <h3>ARK</h3>
-                <p>Выделенные серверы</p>
+            <div id="login-form">
+                <h2>Вход</h2>
+                <input type="text" id="login-username" placeholder="Имя пользователя">
+                <input type="password" id="login-password" placeholder="Пароль">
+                <button onclick="login()">Войти</button>
+                <p id="login-message"></p>
             </div>
         </div>
-    </section>
-
-    <section id="pricing" class="pricing">
-        <h2>Тарифные планы</h2>
-        <div class="pricing-grid">
-            <div class="pricing-card">
-                <h3>Старт</h3>
-                <div class="price">299₽<span>/месяц</span></div>
-                <ul>
-                    <li>1GB RAM</li>
-                    <li>1 vCPU</li>
-                    <li>20GB SSD</li>
-                    <li>Неограниченный трафик</li>
-                </ul>
-                <a href="#" class="btn-primary">Выбрать</a>
-            </div>
-            <div class="pricing-card popular">
-                <h3>Профи</h3>
-                <div class="price">599₽<span>/месяц</span></div>
-                <ul>
-                    <li>4GB RAM</li>
-                    <li>2 vCPU</li>
-                    <li>50GB SSD</li>
-                    <li>Неограниченный трафик</li>
-                </ul>
-                <a href="#" class="btn-primary">Выбрать</a>
-            </div>
-            <div class="pricing-card">
-                <h3>Премиум</h3>
-                <div class="price">999₽<span>/месяц</span></div>
-                <ul>
-                    <li>8GB RAM</li>
-                    <li>4 vCPU</li>
-                    <li>100GB SSD</li>
-                    <li>Неограниченный трафик</li>
-                </ul>
-                <a href="#" class="btn-primary">Выбрать</a>
-            </div>
+        <div id="user-section" style="display:none;">
+            <h2>Личный кабинет</h2>
+            <p id="welcome"></p>
+            <button onclick="logout()">Выйти</button>
+            <h3>Оформить заказ</h3>
+            <form id="order-form" onsubmit="submitOrder(event)">
+                <select id="service-type">
+                    <option value="Оформление плагина">Оформление плагина</option>
+                    <option value="Самопис плагин">Самопис плагин</option>
+                    <option value="Доработка плагина">Доработка плагина</option>
+                    <option value="Консультация">Консультация</option>
+                </select>
+                <input type="text" id="order-desc" placeholder="Описание заказа" required>
+                <button type="submit">Оформить заказ</button>
+            </form>
+            <h3>Мои заказы</h3>
+            <ul id="orders-list"></ul>
         </div>
-    </section>
-
-    <section id="features" class="features">
-        <h2>Наши преимущества</h2>
-        <div class="features-grid">
-            <div class="feature">
-                <img src="images/speed.png" alt="Скорость">
-                <h3>Высокая скорость</h3>
-                <p>SSD диски и оптимизированная сеть</p>
-            </div>
-            <div class="feature">
-                <img src="images/support.png" alt="Поддержка">
-                <h3>24/7 Поддержка</h3>
-                <p>Круглосуточная техническая поддержка</p>
-            </div>
-            <div class="feature">
-                <img src="images/backup.png" alt="Бэкапы">
-                <h3>Автоматические бэкапы</h3>
-                <p>Ежедневное резервное копирование</p>
-            </div>
-            <div class="feature">
-                <img src="images/panel.png" alt="Панель">
-                <h3>Удобная панель</h3>
-                <p>Простое управление сервером</p>
-            </div>
-        </div>
-    </section>
-
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>GameHost</h4>
-                <p>Лучший хостинг для игровых серверов</p>
-            </div>
-            <div class="footer-section">
-                <h4>Контакты</h4>
-                <p>Email: support@gamehost.ru</p>
-                <p>Discord: discord.gg/gamehost</p>
-            </div>
-            <div class="footer-section">
-                <h4>Соцсети</h4>
-                <div class="social-links">
-                    <a href="#">VK</a>
-                    <a href="#">Telegram</a>
-                    <a href="#">Discord</a>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 GameHost. Все права защищены.</p>
-        </div>
-    </footer>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html> 
