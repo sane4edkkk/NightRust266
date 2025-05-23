@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Заказ плагинов</title>
+    <title>Форум плагинов</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Сервис заказа плагинов</h1>
+        <h1>Форум плагинов</h1>
         <div id="auth-section">
             <div id="register-form">
                 <h2>Регистрация</h2>
@@ -25,23 +25,30 @@
                 <p id="login-message"></p>
             </div>
         </div>
-        <div id="user-section" style="display:none;">
-            <h2>Личный кабинет</h2>
-            <p id="welcome"></p>
-            <button onclick="logout()">Выйти</button>
-            <h3>Оформить заказ</h3>
-            <form id="order-form" onsubmit="submitOrder(event)">
-                <select id="service-type">
-                    <option value="Оформление плагина">Оформление плагина</option>
-                    <option value="Самопис плагин">Самопис плагин</option>
-                    <option value="Доработка плагина">Доработка плагина</option>
-                    <option value="Консультация">Консультация</option>
-                </select>
-                <input type="text" id="order-desc" placeholder="Описание заказа" required>
-                <button type="submit">Оформить заказ</button>
-            </form>
-            <h3>Мои заказы</h3>
-            <ul id="orders-list"></ul>
+        <div id="forum-section" style="display:none;">
+            <div class="forum-header">
+                <div>
+                    <span id="welcome"></span>
+                    <button onclick="logout()">Выйти</button>
+                </div>
+                <div class="online-users">
+                    <b>Онлайн:</b>
+                    <span id="online-list"></span>
+                </div>
+            </div>
+            <div class="publish-plugin">
+                <h3>Опубликовать плагин</h3>
+                <form id="plugin-form" onsubmit="publishPlugin(event)">
+                    <input type="text" id="plugin-title" placeholder="Название плагина" required>
+                    <textarea id="plugin-desc" placeholder="Описание" required></textarea>
+                    <input type="url" id="plugin-link" placeholder="Ссылка (например, на GitHub или файл)" required>
+                    <button type="submit">Опубликовать</button>
+                </form>
+            </div>
+            <div class="plugins-list-section">
+                <h3>Опубликованные плагины</h3>
+                <div id="plugins-list"></div>
+            </div>
         </div>
     </div>
     <script src="script.js"></script>
