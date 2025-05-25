@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сервис заказов</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Сервис заказов</h1>
+        <div id="auth-section">
+            <form id="login-form" autocomplete="off" onsubmit="event.preventDefault(); login();">
+                <h2>Вход</h2>
+                <input id="login-username" type="text" placeholder="Имя пользователя" required minlength="3">
+                <input id="login-password" type="password" placeholder="Пароль" required minlength="4">
+                <button type="submit">Войти</button>
+                <div id="login-message"></div>
+            </form>
+            <form id="register-form" autocomplete="off" onsubmit="event.preventDefault(); register();">
+                <h2>Регистрация</h2>
+                <input id="reg-username" type="text" placeholder="Имя пользователя" required minlength="3">
+                <input id="reg-password" type="password" placeholder="Пароль" required minlength="4">
+                <button type="submit">Зарегистрироваться</button>
+                <div id="reg-message"></div>
+            </form>
+        </div>
+        <div id="user-section" style="display:none">
+            <div id="welcome"></div>
+            <button onclick="logout()" style="margin-bottom:18px;">Выйти</button>
+            <form id="order-form" onsubmit="submitOrder(event)">
+                <h2>Оформить заказ</h2>
+                <select id="service-type" required>
+                    <option value="">Выберите услугу</option>
+                    <option value="Дизайн">Дизайн</option>
+                    <option value="Разработка">Разработка</option>
+                    <option value="Консультация">Консультация</option>
+                </select>
+                <input id="order-desc" type="text" placeholder="Описание заказа" required>
+                <button type="submit">Отправить заказ</button>
+            </form>
+            <h3>Ваши заказы</h3>
+            <ul id="orders-list"></ul>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 
