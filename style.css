@@ -1,77 +1,144 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
 
 body {
-    font-family: sans-serif;
+    font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #1a1a1a;
-    color: #ffffff;
+    background-color: #181a1b;
+    color: #f1f1f1;
+    line-height: 1.6;
 }
 
 header {
-    background-color: #333;
-    padding: 10px 0;
+    background-color: #2a2a2a;
+    padding: 15px 0;
     text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+header h1 {
+    margin: 0;
+    color: #e74c3c;
 }
 
 nav ul {
     list-style: none;
     padding: 0;
+    margin: 10px 0 0 0;
 }
 
 nav ul li {
-    display: inline;
-    margin: 0 10px;
+    display: inline-block;
+    margin: 0 15px;
 }
 
 nav ul li a {
-    color: #ffffff;
+    color: #f1f1f1;
     text-decoration: none;
+    font-size: 1.1em;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #e74c3c;
 }
 
 #hero {
     text-align: center;
-    padding: 50px 20px;
-    background-color: #222;
+    padding: 80px 20px;
+    background: url('placeholder_bg.jpg') no-repeat center center/cover;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#hero h2 {
+    color: #ffffff;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+#hero p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
 }
 
 .button {
     display: inline-block;
     background-color: #e74c3c;
     color: white;
-    padding: 10px 20px;
+    padding: 12px 25px;
     text-decoration: none;
     border-radius: 5px;
+    font-size: 1.1em;
     margin-top: 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.button:hover {
+    background-color: #c0392b;
+    transform: scale(1.05);
 }
 
 #promo {
     text-align: center;
-    padding: 30px 20px;
-    background-color: #333;
-    margin-top: 20px;
+    padding: 40px 20px;
+    background-color: #222;
+    margin-top: 30px;
+}
+
+#promo h3 {
+    color: #e74c3c;
+    margin-bottom: 15px;
 }
 
 .promo-code {
-    font-size: 1.2em;
-    margin: 10px 0;
-    padding: 10px;
-    background-color: #444;
+    font-size: 1.5em;
+    margin: 15px 0;
+    padding: 10px 20px;
+    background-color: #333;
     display: inline-block;
     border-radius: 4px;
+    font-weight: bold;
+}
+
+#promo button {
+    background-color: #555;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#promo button:hover {
+    background-color: #777;
+    transform: scale(1.05);
 }
 
 footer {
     text-align: center;
-    padding: 20px 0;
-    background-color: #333;
-    margin-top: 20px;
+    padding: 25px 0;
+    background-color: #2a2a2a;
+    margin-top: 40px;
 }
 
 .social-links a {
-    color: #ffffff;
-    margin: 0 10px;
+    color: #f1f1f1;
+    margin: 0 15px;
     text-decoration: none;
+    font-size: 1.2em;
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: #e74c3c;
 }
 
 .container {
