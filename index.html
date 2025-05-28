@@ -1,46 +1,122 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NightRust</title>
+    <title>NightRust - Проект игровых серверов</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
     <header>
-        <h1>NightRust</h1>
-        <nav>
-            <ul>
-                <li><a href="#play">Start Playing</a></li>
-                <li><a href="#rules">Rules</a></li>
-                <li><a href="#api">API</a></li>
-                <li><a href="#shop">Shop</a></li>
-            </ul>
-        </nav>
+        <div class="container">
+            <div class="logo">NightRust</div>
+            <nav>
+                <ul>
+                    <li><a href="#hero">Главная</a></li>
+                    <li><a href="#news">Новости</a></li>
+                    <li><a href="#how-to-play">Начать играть</a></li>
+                    <li><a href="#social">Соц. сети</a></li>
+                    <li><a href="#shop">Магазин</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
     <section id="hero">
-        <h2>Dive into the Virtual World</h2>
-        <p>Start playing free RUST now! Download our client in just a couple of clicks.</p>
-        <a href="#" class="button">Start Playing</a>
-        <p>Available only on Windows</p>
-        <!-- Placeholder for devblog/server status -->
+        <div class="container">
+            <h2>Проект игровых серверов</h2>
+            <h1>NightRust</h1>
+            <h3>Искали самый балансный и оптимизированный сервер? Вы его нашли!</h3>
+            <a href="#how-to-play" class="button">Начать играть</a>
+            <!-- Placeholder for Wipe Timer -->
+            <div class="wipe-timer">
+                <p>Следующий вайп через</p>
+                <div id="countdown">0д 0ч 0м 0с</div>
+            </div>
+        </div>
     </section>
 
-    <section id="promo">
-        <h3>Starting Promo Code for you!</h3>
-        <p>Get 30₽ balance in the shop</p>
-        <div class="promo-code">NIGHT-START</div>
-        <button>Copy Code</button>
+    <section id="news">
+        <div class="container">
+            <h2>Новости Проекта</h2>
+            <div class="news-items">
+                <div class="news-item">
+                    <h3>ГЛОБАЛЬНОЕ ОБНОВЛЕНИЕ</h3>
+                    <p>В этом обновлении мы обновили наш бустер, добавили прицеллы и звуки</p>
+                </div>
+                <div class="news-item">
+                    <h3>РЕЙДИМ?</h3>
+                    <p>Скидки на все товары в магазине!</p>
+                </div>
+                <div class="news-item">
+                    <h3>ПОКОПАЕМ?</h3>
+                    <p>Добвили огненный бур и кирку</p>
+                </div>
+                <div class="news-item">
+                    <h3>ФИКСИМ БАГИ</h3>
+                    <p>Исправили все баги на сервере, сделали дополнительную оптимизацию</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="how-to-play">
+        <div class="container">
+            <h2>Как начать играть?</h2>
+            <p>Следуя шагам, у Вас все получится</p>
+            <div class="steps">
+                <div class="step-item">
+                    <div class="step-number">#1</div>
+                    <h3>Скачать игру</h3>
+                    <p>Скачайте игру одним из удобных способов</p>
+                    <a href="#" class="button">Скачать игру</a>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">#2</div>
+                    <h3>Запустить Стим</h3>
+                    <p>Для корректной работы нужно запустить стим</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">#3</div>
+                    <h3>Запустите Лаунчер</h3>
+                    <p>В лаунчере дождитесь загрузки и нажмите кнопку "Играть"</p>
+                </div>
+            </div>
+            <div class="support">
+                <p>Возникли вопросы?</p>
+                <a href="#" class="button">Тех.Поддержка</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="social">
+        <div class="container">
+            <h2>Наши соц.сети</h2>
+            <div class="social-links">
+                <a href="#" class="social-button">ВКонтакте</a>
+                <a href="#" class="social-button">Telegram</a>
+                <a href="#" class="social-button">Discord</a>
+                <a href="#" class="social-button">Игровой</a>
+            </div>
+        </div>
     </section>
 
     <footer>
-        <p>&copy; 2023 NightRust. All rights reserved.</p>
-        <div class="social-links">
-            <a href="#">VK</a>
-            <a href="#">Telegram</a>
-            <a href="#">Discord</a>
+        <div class="container">
+            <div class="footer-logo">NightRust</div>
+            <div class="footer-links">
+                <a href="#">Главная</a>
+                <a href="#">Новости</a>
+                <a href="#">Начать играть</a>
+                <a href="#">Соц.сети</a>
+            </div>
+            <div class="footer-copyright">&copy; 2023 DREAM INC</div>
+             <!-- TODO: Replace with your contact info -->
+            <div class="footer-contact">email@example.com</div>
         </div>
     </footer>
+
+    <script src="script.js"></script> <!-- Placeholder for potential future JavaScript -->
 </body>
 </html>
