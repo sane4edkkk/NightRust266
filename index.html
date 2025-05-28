@@ -1,84 +1,46 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Your Rusty Story — Играй в Rust бесплатно!</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body { margin:0; font-family: 'Segoe UI', Arial, sans-serif; background: #181c23; color: #fff; }
-    header { background: #232a34; padding: 20px 0; }
-    .nav { display: flex; justify-content: center; gap: 30px; }
-    .nav a { color: #fff; text-decoration: none; font-weight: 500; padding: 8px 16px; border-radius: 6px; transition: background 0.2s; }
-    .nav a:hover { background: #2d3642; }
-    .banner { text-align: center; padding: 60px 20px 40px 20px; background: linear-gradient(90deg, #4f8cff 0%, #232a34 100%); }
-    .banner h1 { font-size: 2.5em; margin-bottom: 10px; }
-    .banner p { font-size: 1.2em; margin-bottom: 30px; }
-    .play-btn { background: #ffb347; color: #232a34; font-size: 1.1em; padding: 14px 36px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: background 0.2s; }
-    .play-btn:hover { background: #ffd580; }
-    .servers { display: flex; justify-content: center; gap: 30px; margin: 40px 0; flex-wrap: wrap; }
-    .server-card { background: #232a34; border-radius: 12px; padding: 24px 32px; min-width: 220px; box-shadow: 0 4px 16px rgba(0,0,0,0.15); text-align: center; }
-    .server-card h3 { margin: 0 0 10px 0; }
-    .server-card .devblog { color: #4f8cff; font-weight: bold; }
-    .server-card .online { color: #ffb347; }
-    .promo { background: #2d3642; margin: 40px auto; max-width: 400px; border-radius: 10px; padding: 24px; text-align: center; }
-    .promo h2 { margin-top: 0; }
-    .promo-code { font-size: 1.5em; background: #181c23; padding: 10px 20px; border-radius: 8px; margin: 10px 0; display: inline-block; letter-spacing: 2px; }
-    .copy-btn { background: #4f8cff; color: #fff; border: none; padding: 8px 18px; border-radius: 6px; cursor: pointer; margin-left: 10px; }
-    .copy-btn:hover { background: #6fa8ff; }
-    .socials { text-align: center; margin: 40px 0 20px 0; }
-    .socials a { display: inline-block; margin: 0 12px; color: #fff; text-decoration: none; font-size: 1.1em; background: #232a34; padding: 10px 18px; border-radius: 8px; transition: background 0.2s; }
-    .socials a:hover { background: #4f8cff; color: #232a34; }
-    footer { text-align: center; color: #888; padding: 20px 0; background: #232a34; margin-top: 40px; }
-  </style>
-  <script>
-    function copyPromo() {
-      const code = document.getElementById('promo-code').innerText;
-      navigator.clipboard.writeText(code);
-      alert('Промокод скопирован: ' + code);
-    }
-  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NightRust</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <nav class="nav">
-      <a href="#">Главная</a>
-      <a href="#">Начать играть</a>
-      <a href="#">Магазин</a>
-      <a href="#">Правила</a>
-      <a href="#">API</a>
-    </nav>
-  </header>
-  <section class="banner">
-    <h1>ПОГРУЗИСЬ В ВИРТУАЛЬНЫЙ МИР</h1>
-    <p>Начни играть в бесплатный RUST уже сейчас! Скачай наш клиент всего за пару кликов</p>
-    <button class="play-btn">Начать играть</button>
-    <div style="margin-top:20px; color:#ffd580;">Доступно только на Windows</div>
-  </section>
-  <section class="servers">
-    <div class="server-card">
-      <h3>196 Devblog</h3>
-      <div class="devblog">Devblog 196</div>
-      <div class="online">31 / 100 игроков</div>
-    </div>
-    <div class="server-card">
-      <h3>217 Devblog</h3>
-      <div class="devblog">Devblog 217</div>
-      <div class="online">32 / 100 игроков</div>
-    </div>
-  </section>
-  <section class="promo">
-    <h2>Стартовый промокод для тебя!</h2>
-    <div id="promo-code" class="promo-code">YRS-START</div>
-    <button class="copy-btn" onclick="copyPromo()">Скопировать</button>
-    <p>Получи на баланс 30₽ в магазине</p>
-  </section>
-  <div class="socials">
-    <a href="#">ВКонтакте</a>
-    <a href="#">Telegram</a>
-    <a href="#">Discord</a>
-  </div>
-  <footer>
-    &copy; 2024 Your Rusty Story. Все права защищены.
-  </footer>
+    <header>
+        <h1>NightRust</h1>
+        <nav>
+            <ul>
+                <li><a href="#play">Start Playing</a></li>
+                <li><a href="#rules">Rules</a></li>
+                <li><a href="#api">API</a></li>
+                <li><a href="#shop">Shop</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="hero">
+        <h2>Dive into the Virtual World</h2>
+        <p>Start playing free RUST now! Download our client in just a couple of clicks.</p>
+        <a href="#" class="button">Start Playing</a>
+        <p>Available only on Windows</p>
+        <!-- Placeholder for devblog/server status -->
+    </section>
+
+    <section id="promo">
+        <h3>Starting Promo Code for you!</h3>
+        <p>Get 30₽ balance in the shop</p>
+        <div class="promo-code">NIGHT-START</div>
+        <button>Copy Code</button>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 NightRust. All rights reserved.</p>
+        <div class="social-links">
+            <a href="#">VK</a>
+            <a href="#">Telegram</a>
+            <a href="#">Discord</a>
+        </div>
+    </footer>
 </body>
-</html> 
+</html>
