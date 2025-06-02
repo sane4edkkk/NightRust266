@@ -3,56 +3,131 @@
 body {
     font-family: sans-serif;
     margin: 0;
-    background-color: #1a1a1a;
-    color: #ffffff;
+    background-color: #f4f4f4;
+    color: #333;
 }
 
 .container {
-    width: 90%;
+    width: 80%;
     margin: 0 auto;
-    max-width: 1200px;
+    padding: 20px;
 }
 
 header {
     background-color: #333;
+    color: #fff;
     padding: 10px 0;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
-}
-
-header .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    text-align: center;
 }
 
 header h1 {
     margin: 0;
-    color: #ffffff;
 }
 
-header nav ul {
+nav ul {
     list-style: none;
-    margin: 0;
     padding: 0;
-    display: flex;
 }
 
-header nav ul li {
-    margin-left: 20px;
+nav ul li {
+    display: inline;
+    margin: 0 10px;
 }
 
-header nav ul li a {
-    color: #ffffff;
+nav ul li a {
+    color: #fff;
     text-decoration: none;
-    font-weight: bold;
 }
 
 section {
-    padding: 80px 0 40px 0;
+    padding: 40px 0;
     text-align: center;
+}
+
+#home {
+    background-color: #eee;
+}
+
+#roulette-wheel {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    border: 5px solid #333;
+    margin: 20px auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.wheel-segment {
+    width: 100%; /* Adjust later with JS for actual segments */
+    height: 50px; /* Adjust later with JS for actual segments */
+    line-height: 50px;
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+    position: absolute; /* Will adjust positioning with JS */
+    transform-origin: 50% 100%; /* Will adjust origin with JS */
+}
+
+/* Example background colors for segments - cycle through these */
+.wheel-segment:nth-child(odd) {
+    background-color: #f00;
+}
+
+.wheel-segment:nth-child(even) {
+    background-color: #00f;
+}
+
+#spin-button {
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Basic styles for news and social sections */
+.news-items,
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.news-item,
+.social-button {
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 8px;
+    width: 200px; /* Example width */
+    text-align: center;
+    text-decoration: none;
+    color: #333;
+    background-color: #fff;
+    transition: transform 0.3s ease;
+}
+
+.social-button {
+    display: block;
+}
+
+.news-item:hover,
+.social-button:hover {
+    transform: translateY(-5px);
 }
 
 #home {
@@ -331,22 +406,23 @@ nav ul li a:hover {
 
 .button {
     display: inline-block;
-    background-color: #3498db;
-    color: white;
-    padding: 15px 30px;
+    background: linear-gradient(90deg, #F1C40F 60%, #E67E22 100%); /* Using gradient from general button style */
+    color: white; /* Setting text color to white */
+    padding: 10px 20px; /* Reduced padding for smaller size */
     text-decoration: none;
     border-radius: 5px;
-    font-size: 1.2em;
-    margin-top: 20px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-size: 1.1em; /* Slightly reduced font size */
+    margin-top: 15px; /* Adjusted margin */
+    transition: background 0.2s, transform 0.1s; /* Using transitions from general button style */
     border: none;
     cursor: pointer;
-    font-weight: bold;
+    font-weight: 600; /* Using font weight from general button style */
+    box-shadow: 0 2px 8px #0002; /* Using box shadow from general button style */
 }
 
 .button:hover {
-    background-color: #2980b9;
-    transform: scale(1.05);
+    background: linear-gradient(90deg, #E67E22 60%, #F1C40F 100%); /* Hover effect from general button style */
+    transform: translateY(-2px) scale(1.03); /* Hover effect from general button style */
 }
 
 .wipe-timer {
@@ -583,13 +659,18 @@ input:focus, select:focus {
     box-shadow: 0 0 0 2px #F1C40F44;
 }
 
+/* Adjusted general button style */
 button {
     background: linear-gradient(90deg, #F1C40F 60%, #E67E22 100%);
-    color: #181A1B;
+    color: white; /* Changed to white */
     font-weight: 600;
     cursor: pointer;
     box-shadow: 0 2px 8px #0002;
     transition: background 0.2s, transform 0.1s;
+    padding: 10px 20px; /* Adjusted padding */
+    border-radius: 5px; /* Added border-radius for consistency */
+    border: none; /* Added border: none */
+    font-size: 1.1em; /* Adjusted font size */
 }
 
 button:hover {
@@ -669,4 +750,96 @@ button:hover {
 @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: none; }
+}
+
+/* Styles for the roulette section */
+#roulette {
+    padding: 60px 0;
+    background-color: #1a1a1a;
+}
+
+#roulette h2 {
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+#roulette p {
+    margin-bottom: 30px;
+}
+
+#roulette-wheel {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    border: 5px solid #fff;
+    margin: 20px auto;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    /* Added styles for the wheel segments */
+    display: flex; /* Use flexbox or grid for segment layout */
+    flex-wrap: wrap; /* Allow segments to wrap */
+}
+
+.wheel-segment {
+    width: calc(100% / 3); /* Divide based on number of segments */
+    height: 50%; /* Example height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-weight: bold;
+    position: relative; /* Position segments */
+    transform-origin: 50% 100%; /* Pivot point for rotation */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+    border: 1px solid #333; /* Add border between segments */
+}
+
+.wheel-segment span {
+    display: block;
+    transform: translateY(-50%); /* Adjust text position */
+}
+
+/* Example background colors for segments - cycle through these */
+.wheel-segment:nth-child(1) {
+    background-color: #e74c3c;
+}
+
+.wheel-segment:nth-child(2) {
+    background-color: #3498db;
+}
+
+.wheel-segment:nth-child(3) {
+    background-color: #2ecc71;
+}
+
+.wheel-segment:nth-child(4) {
+    background-color: #f1c40f;
+}
+
+.wheel-segment:nth-child(5) {
+    background-color: #9b59b6;
+}
+
+.wheel-segment:nth-child(6) {
+    background-color: #1abc9c;
+}
+
+#spin-button {
+    padding: 12px 25px; /* Adjusted padding */
+    font-size: 1.2em; /* Adjusted font size */
+    cursor: pointer;
+    background: linear-gradient(90deg, #F1C40F 60%, #E67E22 100%); /* Using gradient */
+    color: white; /* White text */
+    border: none;
+    border-radius: 5px;
+    margin-top: 30px; /* Adjusted margin */
+    transition: background 0.2s, transform 0.1s;
+    font-weight: 600;
+    box-shadow: 0 2px 8px #0002;
+}
+
+#spin-button:hover {
+     background: linear-gradient(90deg, #E67E22 60%, #F1C40F 100%);
+    transform: translateY(-2px) scale(1.03);
 } 
