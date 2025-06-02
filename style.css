@@ -58,11 +58,38 @@ section {
 #home {
     background: url('Dream Rust_files/05T4ED.png') no-repeat center center/cover; /* Использование найденного фонового изображения */
     color: #ffffff;
-    padding-top: 150px; /* Учитываем фиксированный хедер */
+    padding-top: 0; /* Убираем отступ сверху, так как секция будет занимать всю высоту */
+    min-height: 100vh; /* Секция занимает всю высоту viewport */
+    display: flex; /* Используем flexbox для центрирования содержимого */
+    flex-direction: column;
+    justify-content: center; /* Центрирование по вертикали */
+    align-items: center; /* Центрирование по горизонтали */
+    position: relative; /* Для псевдоэлемента затемнения */
+    z-index: 1; /* Убедимся, что контент над затемнением */
+}
+
+#home::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Темный полупрозрачный цвет для затемнения */
+    z-index: -1; /* Располагаем затемнение под контентом */
+}
+
+#home h1 {
+    font-size: 4em; /* Увеличиваем размер заголовка для акцента */
+    margin-bottom: 20px;
+    color: #ffffff; /* Белый или светлый цвет для контраста */
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); /* Тень для читаемости */
 }
 
 #home h2 {
-    margin-top: 0;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: #ffffff;
 }
 
 #home button {
