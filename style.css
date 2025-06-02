@@ -1,16 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
 
 body {
-    font-family: sans-serif;
+    font-family: 'Montserrat', sans-serif;
     margin: 0;
-    background-color: #f4f4f4;
-    color: #333;
+    background-color: #121212; /* Dark background */
+    color: #f1f1f1; /* Light text color */
+    /* Adding a subtle dotted background pattern */
+    background-image: radial-gradient(#333 1px, transparent 1px);
+    background-size: 15px 15px; /* Adjust size of dots and spacing */
 }
 
 .container {
-    width: 80%;
+    width: 90%;
     margin: 0 auto;
-    padding: 20px;
+    max-width: 1200px;
 }
 
 header {
@@ -79,14 +82,22 @@ section {
 }
 
 #spin-button {
-    padding: 10px 20px;
-    font-size: 18px;
+    padding: 12px 25px; /* Adjusted padding */
+    font-size: 1.2em; /* Adjusted font size */
     cursor: pointer;
-    background-color: #5cb85c;
-    color: white;
+    background: linear-gradient(to right, #e74c3c, #c0392b); /* Red gradient for Spin button */
+    color: white; /* White text */
     border: none;
     border-radius: 5px;
-    margin-top: 20px;
+    margin-top: 30px; /* Adjusted margin */
+    transition: background 0.2s, transform 0.1s;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+#spin-button:hover {
+     background: linear-gradient(to right, #c0392b, #e74c3c); /* Hover effect for red gradient */
+    transform: translateY(-2px) scale(1.03);
 }
 
 footer {
@@ -406,23 +417,23 @@ nav ul li a:hover {
 
 .button {
     display: inline-block;
-    background: linear-gradient(90deg, #F1C40F 60%, #E67E22 100%); /* Using gradient from general button style */
+    background: linear-gradient(90deg, #F1C40F 60%, #E67E22 100%); /* Orange-yellow gradient for Play button */
     color: white; /* Setting text color to white */
-    padding: 10px 20px; /* Reduced padding for smaller size */
+    padding: 15px 30px; /* Larger padding for main buttons */
     text-decoration: none;
     border-radius: 5px;
-    font-size: 1.1em; /* Slightly reduced font size */
-    margin-top: 15px; /* Adjusted margin */
-    transition: background 0.2s, transform 0.1s; /* Using transitions from general button style */
+    font-size: 1.2em; /* Larger font size for main buttons */
+    margin-top: 30px; /* Adjusted margin */
+    transition: background 0.3s ease, transform 0.2s ease; /* Smooth transitions */
     border: none;
     cursor: pointer;
-    font-weight: 600; /* Using font weight from general button style */
-    box-shadow: 0 2px 8px #0002; /* Using box shadow from general button style */
+    font-weight: bold; /* Bold text */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Added shadow */
 }
 
 .button:hover {
-    background: linear-gradient(90deg, #E67E22 60%, #F1C40F 100%); /* Hover effect from general button style */
-    transform: translateY(-2px) scale(1.03); /* Hover effect from general button style */
+    background: linear-gradient(90deg, #E67E22 60%, #F1C40F 100%); /* Hover effect changes gradient */
+    transform: scale(1.05); /* Slightly enlarge on hover */
 }
 
 .wipe-timer {
@@ -560,18 +571,72 @@ nav ul li a:hover {
 }
 
 .social-button {
-    display: inline-block;
-    background-color: #3498db;
-    color: white;
-    padding: 12px 25px;
-    border-radius: 5px;
-    font-size: 1.1em;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    font-weight: bold;
+    background-color: #4a525c; /* Dark grey background by default */
+    color: #ffffff; /* White text */
+    padding: 8px 12px; /* Reduced padding for smaller size */
+    border: none;
+    border-radius: 8px; /* Rounded corners */
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
 }
 
 .social-button:hover {
-    background-color: #2980b9;
+    background-color: #5a626c; /* Slightly lighter on hover */
+}
+
+/* Specific button colors based on image (approximate) */
+.social-button.vk {
+    background-color: #5181b8; /* VK color */
+}
+
+.social-button.discord {
+    background-color: #4a525c; /* Use default grey for Discord */
+}
+
+.social-button.telegram {
+    background-color: #0088cc; /* Telegram color */
+}
+
+.social-button.shop {
+    background-color: #4a525c; /* Use default grey for Shop */
+}
+
+/* Styles for the technical support section */
+#support {
+    padding: 60px 0;
+    background-color: #22262b; /* Slightly different dark background */
+    text-align: center;
+    color: #ffffff;
+}
+
+#support h2 {
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+#support p {
+    margin-bottom: 30px;
+}
+
+.support-button {
+    display: inline-block;
+    background: linear-gradient(to right, #2ecc71, #27ae60); /* Green gradient for Support button */
+    color: white;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+    margin-top: 15px;
+    transition: background 0.2s, transform 0.1s;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.support-button:hover {
+    background: linear-gradient(to right, #27ae60, #2ecc71); /* Hover effect for green gradient */
     transform: scale(1.05);
 }
 
@@ -657,25 +722,6 @@ input:focus, select:focus {
     outline: none;
     background: #23272A;
     box-shadow: 0 0 0 2px #F1C40F44;
-}
-
-/* Adjusted general button style */
-button {
-    background: linear-gradient(90deg, #F1C40F 60%, #E67E22 100%);
-    color: white; /* Changed to white */
-    font-weight: 600;
-    cursor: pointer;
-    box-shadow: 0 2px 8px #0002;
-    transition: background 0.2s, transform 0.1s;
-    padding: 10px 20px; /* Adjusted padding */
-    border-radius: 5px; /* Added border-radius for consistency */
-    border: none; /* Added border: none */
-    font-size: 1.1em; /* Adjusted font size */
-}
-
-button:hover {
-    background: linear-gradient(90deg, #E67E22 60%, #F1C40F 100%);
-    transform: translateY(-2px) scale(1.03);
 }
 
 #auth-section {
@@ -829,18 +875,18 @@ button:hover {
     padding: 12px 25px; /* Adjusted padding */
     font-size: 1.2em; /* Adjusted font size */
     cursor: pointer;
-    background: linear-gradient(90deg, #F1C40F 60%, #E67E22 100%); /* Using gradient */
+    background: linear-gradient(to right, #e74c3c, #c0392b); /* Red gradient for Spin button */
     color: white; /* White text */
     border: none;
     border-radius: 5px;
     margin-top: 30px; /* Adjusted margin */
     transition: background 0.2s, transform 0.1s;
     font-weight: 600;
-    box-shadow: 0 2px 8px #0002;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 #spin-button:hover {
-     background: linear-gradient(90deg, #E67E22 60%, #F1C40F 100%);
+     background: linear-gradient(to right, #c0392b, #e74c3c); /* Hover effect for red gradient */
     transform: translateY(-2px) scale(1.03);
 }
 
@@ -946,21 +992,21 @@ button:hover {
 .support-button {
     /* Using existing .button styles */
     display: inline-block;
-    background: linear-gradient(90deg, #F1C40F 60%, #E67E22 100%);
+    background: linear-gradient(to right, #2ecc71, #27ae60); /* Green gradient for Support button */
     color: white;
-    padding: 10px 20px;
+    padding: 15px 30px;
     text-decoration: none;
     border-radius: 5px;
-    font-size: 1.1em;
+    font-size: 1.2em;
     margin-top: 15px;
     transition: background 0.2s, transform 0.1s;
     border: none;
     cursor: pointer;
-    font-weight: 600;
-    box-shadow: 0 2px 8px #0002;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
 .support-button:hover {
-    background: linear-gradient(90deg, #E67E22 60%, #F1C40F 100%);
-    transform: translateY(-2px) scale(1.03);
+    background: linear-gradient(to right, #27ae60, #2ecc71); /* Hover effect for green gradient */
+    transform: scale(1.05);
 } 
