@@ -842,4 +842,86 @@ button:hover {
 #spin-button:hover {
      background: linear-gradient(90deg, #E67E22 60%, #F1C40F 100%);
     transform: translateY(-2px) scale(1.03);
+}
+
+/* Styles for the social media section */
+#social {
+    padding: 60px 0;
+    background-color: #1a1a1a; /* Dark background */
+    text-align: center;
+}
+
+#social h2 {
+    margin-bottom: 40px;
+    font-size: 2em;
+    color: #ffffff; /* White text for heading */
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Space between social blocks */
+    flex-wrap: wrap;
+}
+
+.social-link {
+    background-color: #22262b; /* Darker background for blocks */
+    padding: 20px;
+    border-radius: 12px; /* More rounded corners */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); /* Added shadow */
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Space out info and button */
+    width: 300px; /* Example width, adjust as needed */
+}
+
+.social-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align text to the left */
+    color: #ffffff; /* White text */
+}
+
+.social-label {
+    font-size: 0.9em;
+    color: #cccccc; /* Lighter color for label */
+    margin-bottom: 5px;
+}
+
+.social-name span {
+    font-size: 1.2em;
+    font-weight: bold;
+    /* Placeholder for icon styling if needed */
+}
+
+.social-button {
+    background-color: #4a525c; /* Dark grey background for button */
+    color: #ffffff; /* White text */
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px; /* Rounded corners for button */
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+.social-button:hover {
+    background-color: #5a626c; /* Slightly lighter on hover */
+}
+
+/* Specific button colors based on image (approximate) */
+.social-button.vk {
+    background-color: #5181b8;
+}
+
+.social-button.discord {
+    background-color: #7289da;
+}
+
+.social-button.telegram {
+    background-color: #0088cc;
+}
+
+.social-button.shop {
+    background-color: #e67e22; /* Orange color */
 } 
