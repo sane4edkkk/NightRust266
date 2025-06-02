@@ -924,4 +924,43 @@ button:hover {
 
 .social-button.shop {
     background-color: #4a525c; /* Use default grey for Shop */
+}
+
+/* Styles for the technical support section */
+#support {
+    padding: 60px 0;
+    background-color: #22262b; /* Slightly different dark background */
+    text-align: center;
+    color: #ffffff;
+}
+
+#support h2 {
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+#support p {
+    margin-bottom: 30px;
+}
+
+.support-button {
+    /* Using existing .button styles */
+    display: inline-block;
+    background: linear-gradient(90deg, #F1C40F 60%, #E67E22 100%);
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    margin-top: 15px;
+    transition: background 0.2s, transform 0.1s;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 2px 8px #0002;
+}
+
+.support-button:hover {
+    background: linear-gradient(90deg, #E67E22 60%, #F1C40F 100%);
+    transform: translateY(-2px) scale(1.03);
 } 
