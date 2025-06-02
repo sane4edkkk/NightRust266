@@ -56,7 +56,7 @@ section {
 }
 
 #home {
-    background: url('placeholder_background.jpg') no-repeat center center/cover; /* Замените на реальное фоновое изображение */
+    background: url('Dream Rust_files/05T4ED.png') no-repeat center center/cover; /* Использование найденного фонового изображения */
     color: #ffffff;
     padding-top: 150px; /* Учитываем фиксированный хедер */
 }
