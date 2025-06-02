@@ -417,7 +417,7 @@ nav ul li a:hover {
 
 .button {
     display: inline-block;
-    background: linear-gradient(90deg, #F1C40F 60%, #E67E22 100%); /* Orange-yellow gradient for Play button */
+    background: linear-gradient(to right, #9b59b6, #8e44ad); /* Purple gradient for Play button */
     color: white; /* Setting text color to white */
     padding: 15px 30px; /* Larger padding for main buttons */
     text-decoration: none;
@@ -432,7 +432,7 @@ nav ul li a:hover {
 }
 
 .button:hover {
-    background: linear-gradient(90deg, #E67E22 60%, #F1C40F 100%); /* Hover effect changes gradient */
+    background: linear-gradient(to right, #8e44ad, #9b59b6); /* Hover effect changes gradient */
     transform: scale(1.05); /* Slightly enlarge on hover */
 }
 
