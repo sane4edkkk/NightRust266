@@ -1071,5 +1071,6 @@ input:focus, select:focus {
 
 .download-button:hover {
     background: linear-gradient(to right, #0072ff, #00c6ff); /* Изменение градиента при наведении */
-    transform: scale(1.03); /* Небольшое увеличение */
+    transform: translateY(-5px) scale(1.05); /* Кнопка немного поднимается и увеличивается */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6); /* Увеличенная тень при наведении */
 } 
