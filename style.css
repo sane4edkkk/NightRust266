@@ -5,6 +5,9 @@ body {
     margin: 0;
     background-color: #1e1e1e;
     color: #ffffff;
+    /* Adding a subtle dotted background pattern */
+    background-image: radial-gradient(#333 1px, transparent 1px);
+    background-size: 15px 15px; /* Adjust size of dots and spacing */
 }
 
 .container {
@@ -139,10 +142,10 @@ footer {
 }
 
 #home {
-    background: url('Dream Rust_files/05T4ED.png') no-repeat center center/cover; /* Использование найденного фонового изображения */
+    background: url('placeholder_background_image.jpg') no-repeat center center/cover; /* Placeholder для фонового изображения */
     color: #ffffff;
-    padding-top: 0; /* Убираем отступ сверху, так как секция будет занимать всю высоту */
-    min-height: 100vh; /* Секция занимает всю высоту viewport */
+    padding: 100px 20px; /* Отступы сверху и снизу */
+    min-height: 80vh; /* Минимальная высота секции */
     display: flex; /* Используем flexbox для центрирования содержимого */
     flex-direction: column;
     justify-content: center; /* Центрирование по вертикали */
@@ -158,21 +161,22 @@ footer {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6); /* Темный полупрозрачный цвет для затемнения */
+    background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачное затемнение */
     z-index: -1; /* Располагаем затемнение под контентом */
 }
 
-#home h1 {
-    font-size: 4em; /* Увеличиваем размер заголовка для акцента */
-    margin-bottom: 20px;
-    color: #ffffff; /* Белый или светлый цвет для контраста */
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); /* Тень для читаемости */
-}
-
 #home h2 {
-    font-size: 1.5em;
+    font-size: 2.5em; /* Размер заголовка */
     margin-bottom: 10px;
     color: #ffffff;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6); /* Тень для читаемости */
+}
+
+#home p {
+    font-size: 1.2em; /* Размер текста */
+    margin-bottom: 30px;
+    color: #ffffff;
+    text-align: center;
 }
 
 #home button {
@@ -551,28 +555,59 @@ nav ul li a:hover {
 
 #social {
     padding: 60px 0;
-    background-color: #1a1a1a;
+    background-color: #1a1a1a; /* Dark background */
     text-align: center;
 }
 
 #social h2 {
     margin-bottom: 40px;
     font-size: 2em;
+    color: #ffffff; /* White text for heading */
 }
 
 .social-links {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 20px; /* Space between social blocks */
     flex-wrap: wrap;
 }
 
+.social-link {
+    background-color: #22262b; /* Darker background for blocks */
+    padding: 20px;
+    border-radius: 12px; /* More rounded corners */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); /* Added shadow */
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Space out info and button */
+    width: 300px; /* Example width, adjust as needed */
+}
+
+.social-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align text to the left */
+    color: #ffffff; /* White text */
+}
+
+.social-label {
+    font-size: 0.9em;
+    color: #cccccc; /* Lighter color for label */
+    margin-bottom: 5px;
+}
+
+.social-name span {
+    font-size: 1.2em;
+    font-weight: bold;
+    /* Placeholder for icon styling if needed */
+}
+
 .social-button {
-    background-color: #4a525c; /* Dark grey background by default */
+    background-color: #4a525c; /* Dark grey background for button */
     color: #ffffff; /* White text */
     padding: 8px 12px; /* Reduced padding for smaller size */
     border: none;
-    border-radius: 8px; /* Rounded corners */
+    border-radius: 8px; /* Rounded corners for button */
     cursor: pointer;
     font-size: 1em;
     transition: background-color 0.3s ease;
@@ -584,7 +619,7 @@ nav ul li a:hover {
 
 /* Specific button colors based on image (approximate) */
 .social-button.vk {
-    background-color: #5181b8; /* VK color */
+    background-color: #5181b8; /* Keep VK color */
 }
 
 .social-button.discord {
@@ -592,7 +627,7 @@ nav ul li a:hover {
 }
 
 .social-button.telegram {
-    background-color: #0088cc; /* Telegram color */
+    background-color: #0088cc; /* Keep Telegram color */
 }
 
 .social-button.shop {
@@ -617,6 +652,7 @@ nav ul li a:hover {
 }
 
 .support-button {
+    /* Using existing .button styles */
     display: inline-block;
     background: linear-gradient(to right, #2ecc71, #27ae60); /* Green gradient for Support button */
     color: white;
@@ -1012,20 +1048,28 @@ input:focus, select:focus {
     display: flex;
     justify-content: center; /* Центрируем кнопки */
     gap: 20px; /* Расстояние между кнопками */
-    margin-top: 20px; /* Отступ сверху */
+    margin-top: 30px; /* Увеличиваем отступ сверху */
 }
 
 .download-button {
     display: inline-block;
-    background-color: #8e44ad; /* Пример фиолетового цвета из изображения */
+    background: linear-gradient(to right, #00c6ff, #0072ff); /* Синий градиент как на скриншоте */
     color: white;
-    padding: 10px 15px; /* Уменьшенные отступы */
+    padding: 12px 25px; /* Отступы как на скриншоте */
     text-decoration: none;
-    border-radius: 5px;
-    font-size: 0.9em; /* Уменьшенный размер шрифта */
-    transition: background-color 0.3s ease;
+    border-radius: 5px; /* Скругленные углы */
+    font-size: 1.1em; /* Размер шрифта */
+    transition: background 0.3s ease, transform 0.2s ease;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Тень */
+    display: flex; /* Используем flexbox для размещения текста и иконки */
+    align-items: center; /* Выравниваем по центру вертикально */
+    gap: 8px; /* Расстояние между иконкой и текстом */
 }
 
 .download-button:hover {
-    background-color: #9b59b6; /* Цвет при наведении */
+    background: linear-gradient(to right, #0072ff, #00c6ff); /* Изменение градиента при наведении */
+    transform: scale(1.03); /* Небольшое увеличение */
 } 
