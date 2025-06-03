@@ -1073,4 +1073,51 @@ input:focus, select:focus {
     background: linear-gradient(to right, #0072ff, #00c6ff); /* Изменение градиента при наведении */
     transform: translateY(-5px) scale(1.05); /* Кнопка немного поднимается и увеличивается */
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6); /* Увеличенная тень при наведении */
+}
+
+/* Styles for the testimonials section */
+#testimonials {
+    padding: 60px 0;
+    background-color: #1a1a1a; /* Темный фон */
+    text-align: center;
+    color: #ffffff;
+}
+
+#testimonials h2 {
+    font-size: 2.5em;
+    margin-bottom: 40px;
+    color: #ffffff;
+}
+
+.testimonials-list {
+    display: flex;
+    justify-content: center; /* Центрируем отзывы */
+    gap: 30px; /* Расстояние между отзывами */
+    flex-wrap: wrap; /* Перенос на новую строку при необходимости */
+}
+
+.testimonial-item {
+    background-color: #2a2a2a; /* Цвет фона отзыва */
+    padding: 25px;
+    border-radius: 10px; /* Скругленные углы */
+    max-width: 300px; /* Максимальная ширина отзыва */
+    text-align: left;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Тень */
+    transition: transform 0.3s ease;
+}
+
+.testimonial-item:hover {
+    transform: translateY(-10px); /* Эффект при наведении */
+}
+
+.testimonial-item p {
+    font-size: 1.1em;
+    margin-bottom: 15px;
+    font-style: italic; /* Курсив для текста отзыва */
+}
+
+.testimonial-item span {
+    display: block;
+    font-weight: bold;
+    color: #cccccc; /* Цвет имени игрока */
 } 
