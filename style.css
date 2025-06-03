@@ -1006,4 +1006,26 @@ input:focus, select:focus {
 .support-button:hover {
     background: linear-gradient(to right, #27ae60, #2ecc71); /* Hover effect for green gradient */
     transform: scale(1.05);
+}
+
+.download-buttons {
+    display: flex;
+    justify-content: center; /* Центрируем кнопки */
+    gap: 20px; /* Расстояние между кнопками */
+    margin-top: 20px; /* Отступ сверху */
+}
+
+.download-button {
+    display: inline-block;
+    background-color: #8e44ad; /* Пример фиолетового цвета из изображения */
+    color: white;
+    padding: 10px 15px; /* Уменьшенные отступы */
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 0.9em; /* Уменьшенный размер шрифта */
+    transition: background-color 0.3s ease;
+}
+
+.download-button:hover {
+    background-color: #9b59b6; /* Цвет при наведении */
 } 
