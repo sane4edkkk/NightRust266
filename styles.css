@@ -7,4 +7,49 @@ body {
 
 .header, .news-section, .projects-section, .about-section, .contact-section, .footer {
   background: #000 !important;
+}
+
+/* Системные требования */
+.requirements-section {
+  padding: 2.5rem 0 2rem 0;
+  background: #000;
+}
+.requirements-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  background: #161616;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px 0 rgba(0,0,0,0.25);
+  padding: 2.2rem 2.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.requirements-col {
+  flex: 1 1 0;
+  min-width: 220px;
+  text-align: center;
+}
+.requirements-title {
+  color: #b2becd;
+  font-size: 1.15rem;
+  margin-bottom: 0.7rem;
+  font-weight: 400;
+}
+.requirements-value {
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+@media (max-width: 700px) {
+  .requirements-box {
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.2rem 0.7rem;
+  }
+  .requirements-col {
+    min-width: 0;
+  }
 } 
