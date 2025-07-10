@@ -3,103 +3,385 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NightRust 266 Devblog</title>
-    <link rel="stylesheet" href="style.css">
+    <title>NIGHT RUST - Проекты и новости</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <header>
+    <!-- Фоновые частицы -->
+    <div id="particles-js"></div>
+    
+    <!-- Header -->
+    <header class="header">
         <div class="container">
-            <h1>NightRust 266 Devblog</h1>
-            <nav>
-                <ul>
-                    <li><a href="#home">Главная</a></li>
-                    <li><a href="#news">Новости</a></li>
-                    <li><a href="#social">Соц. сети</a></li>
-                    <li><a href="#roulette">Рулетка</a></li>
-                    <li><a href="#testimonials">Отзывы</a></li>
-                    <li><a href="#support">Поддержка</a></li>
-                </ul>
-            </nav>
+            <div class="header-content">
+                <div class="logo">
+                    <h1 class="logo-text">NIGHT RUST</h1>
+                    <div class="logo-subtitle">Проекты и разработка</div>
+                </div>
+                <nav class="nav">
+                    <ul class="nav-list">
+                        <li><a href="#news" class="nav-link active">Новости</a></li>
+                        <li><a href="#projects" class="nav-link">Проекты</a></li>
+                        <li><a href="#about" class="nav-link">О нас</a></li>
+                        <li><a href="#contact" class="nav-link">Контакты</a></li>
+                    </ul>
+                </nav>
+                <div class="mobile-menu-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
         </div>
     </header>
-    <main>
-        <section id="home">
-            <div class="container">
-                <h2>СТАРЫЙ RUST ЖДЁТ ТЕБЯ</h2>
-                <p>Покоряй мир ржавчины и радиации, объединяйся с<br>игроками, рейди соседей и забирай их ресурсы</p>
-                <div class="download-buttons">
-                    <a href="#" class="download-button">Скачать клиент</a>
-                    <a href="#" class="download-button">Скачать скины</a>
-                </div>
-            </div>
-        </section>
 
-        <section id="news">
-            <div class="container">
-                <h2>НОВОСТИ ПРОЕКТА</h2>
-                <div class="news-items">
-                    <!-- Примеры новостей будут здесь -->
-                    <article class="news-item">
-                        <h3>Новость 1</h3>
-                        <p>Краткое описание новости 1.</p>
-                    </article>
-                    <article class="news-item">
-                        <h3>Новость 2</h3>
-                        <p>Краткое описание новости 2.</p>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <section id="social">
-            <div class="container">
-                <h2>НАШИ СОЦ. СЕТИ</h2>
-                <div class="social-links">
-                     <!-- Ссылки на соц. сети будут здесь -->
-                </div>
-            </div>
-        </section>
-
-        <section id="roulette">
-            <div class="container">
-                <h2>Рулетка</h2>
-                <p>Испытайте удачу и выиграйте призы!</p>
-                <!-- Здесь будет место для колеса фортуны -->
-            </div>
-        </section>
-
-        <section id="testimonials">
-            <div class="container">
-                <h2>ОТЗЫВЫ ИГРОКОВ</h2>
-                <div class="testimonials-list">
-                    <!-- Отзывы будут здесь -->
-                    <div class="testimonial-item">
-                        <p>"Отличный сервер! Играю уже давно."</p>
-                        <span>- Игрок #1</span>
-                    </div>
-                     <div class="testimonial-item">
-                        <p>"Очень дружелюбное сообщество."</p>
-                        <span>- Игрок #2</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="support">
-            <div class="container">
-                <h2>Техническая поддержка</h2>
-                <p>Возникли проблемы или вопросы? Наша команда поддержки готова помочь!</p>
-                <a href="#" class="button support-button">Обратиться в поддержку</a>
-            </div>
-        </section>
-
-    </main>
-    <footer>
+    <!-- Hero Section -->
+    <section class="hero">
         <div class="container">
-            <p>&copy; 2023 NightRust</p>
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="hero-title-line">Добро пожаловать в</span>
+                    <span class="hero-title-main">NIGHT RUST</span>
+                    <span class="hero-title-sub">Инновационные проекты и разработка</span>
+                </h1>
+                <p class="hero-description">
+                    Мы создаем передовые решения для современного мира технологий. 
+                    Наши проекты объединяют креативность, инновации и качество.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn btn-primary">Наши проекты</a>
+                    <a href="#about" class="btn btn-secondary">Узнать больше</a>
+                </div>
+            </div>
+        </div>
+        <div class="hero-background">
+            <div class="hero-bg-element"></div>
+            <div class="hero-bg-element"></div>
+            <div class="hero-bg-element"></div>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section id="news" class="news-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Последние новости</h2>
+                <p class="section-subtitle">Будьте в курсе наших последних разработок и достижений</p>
+            </div>
+            <div class="news-grid">
+                <article class="news-card" data-aos="fade-up">
+                    <div class="news-image">
+                        <img src="https://via.placeholder.com/400x250/1a1a2e/ffffff?text=Night+Rust+News" alt="Новость 1">
+                        <div class="news-overlay">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                    <div class="news-content">
+                        <div class="news-meta">
+                            <span class="news-category">Проекты</span>
+                            <span class="news-date">15 декабря 2024</span>
+                        </div>
+                        <h3 class="news-title">Запуск нового проекта NightCore</h3>
+                        <p class="news-excerpt">
+                            Мы рады объявить о запуске нашего флагманского проекта NightCore - 
+                            инновационной платформы для разработки и управления проектами.
+                        </p>
+                        <div class="news-footer">
+                            <span class="news-author">Команда NIGHT RUST</span>
+                            <a href="#" class="news-link">Читать далее</a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="news-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="news-image">
+                        <img src="https://via.placeholder.com/400x250/16213e/ffffff?text=Security+Update" alt="Новость 2">
+                        <div class="news-overlay">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                    <div class="news-content">
+                        <div class="news-meta">
+                            <span class="news-category">Безопасность</span>
+                            <span class="news-date">12 декабря 2024</span>
+                        </div>
+                        <h3 class="news-title">Обновление системы безопасности</h3>
+                        <p class="news-excerpt">
+                            Вышло крупное обновление нашей системы безопасности NightShield, 
+                            включающее новые протоколы защиты и мониторинга.
+                        </p>
+                        <div class="news-footer">
+                            <span class="news-author">Отдел безопасности</span>
+                            <a href="#" class="news-link">Читать далее</a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="news-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="news-image">
+                        <img src="https://via.placeholder.com/400x250/0f3460/ffffff?text=New+Features" alt="Новость 3">
+                        <div class="news-overlay">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                    <div class="news-content">
+                        <div class="news-meta">
+                            <span class="news-category">Обновления</span>
+                            <span class="news-date">10 декабря 2024</span>
+                        </div>
+                        <h3 class="news-title">Новые возможности NightBoost</h3>
+                        <p class="news-excerpt">
+                            Добавлены революционные функции в NightBoost для оптимизации 
+                            производительности и улучшения пользовательского опыта.
+                        </p>
+                        <div class="news-footer">
+                            <span class="news-author">Команда разработки</span>
+                            <a href="#" class="news-link">Читать далее</a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="news-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="news-image">
+                        <img src="https://via.placeholder.com/400x250/e94560/ffffff?text=Partnership" alt="Новость 4">
+                        <div class="news-overlay">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                    <div class="news-content">
+                        <div class="news-meta">
+                            <span class="news-category">Партнерство</span>
+                            <span class="news-date">8 декабря 2024</span>
+                        </div>
+                        <h3 class="news-title">Стратегическое партнерство</h3>
+                        <p class="news-excerpt">
+                            Мы заключили стратегическое партнерство с ведущими компаниями 
+                            отрасли для развития инновационных технологий.
+                        </p>
+                        <div class="news-footer">
+                            <span class="news-author">Отдел партнерств</span>
+                            <a href="#" class="news-link">Читать далее</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Наши проекты</h2>
+                <p class="section-subtitle">Инновационные решения для будущего</p>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card" data-aos="zoom-in">
+                    <div class="project-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="project-title">NightCore</h3>
+                    <p class="project-description">
+                        Основная платформа для разработки и управления проектами. 
+                        Интегрированная среда для командной работы и автоматизации процессов.
+                    </p>
+                    <div class="project-features">
+                        <span class="feature">Автоматизация</span>
+                        <span class="feature">Аналитика</span>
+                        <span class="feature">Интеграция</span>
+                    </div>
+                    <a href="#" class="project-link">Подробнее</a>
+                </div>
+
+                <div class="project-card" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="project-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="project-title">NightShield</h3>
+                    <p class="project-description">
+                        Продвинутая система безопасности и защиты данных. 
+                        Многоуровневая защита с искусственным интеллектом.
+                    </p>
+                    <div class="project-features">
+                        <span class="feature">AI защита</span>
+                        <span class="feature">Мониторинг</span>
+                        <span class="feature">Шифрование</span>
+                    </div>
+                    <a href="#" class="project-link">Подробнее</a>
+                </div>
+
+                <div class="project-card" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="project-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3 class="project-title">NightBoost</h3>
+                    <p class="project-description">
+                        Система оптимизации производительности и скорости работы. 
+                        Умные алгоритмы для максимальной эффективности.
+                    </p>
+                    <div class="project-features">
+                        <span class="feature">Оптимизация</span>
+                        <span class="feature">Анализ</span>
+                        <span class="feature">Ускорение</span>
+                    </div>
+                    <a href="#" class="project-link">Подробнее</a>
+                </div>
+
+                <div class="project-card" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="project-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="project-title">NightAI</h3>
+                    <p class="project-description">
+                        Искусственный интеллект для бизнес-процессов. 
+                        Машинное обучение и предиктивная аналитика.
+                    </p>
+                    <div class="project-features">
+                        <span class="feature">Машинное обучение</span>
+                        <span class="feature">Предиктивная аналитика</span>
+                        <span class="feature">Автоматизация</span>
+                    </div>
+                    <a href="#" class="project-link">Подробнее</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text" data-aos="fade-right">
+                    <h2 class="section-title">О NIGHT RUST</h2>
+                    <p class="about-description">
+                        Мы - команда инноваторов и разработчиков, создающая передовые 
+                        технологические решения для современного мира. Наша миссия - 
+                        объединить креативность, инновации и качество в каждом проекте.
+                    </p>
+                    <div class="about-stats">
+                        <div class="stat">
+                            <span class="stat-number">50+</span>
+                            <span class="stat-label">Проектов</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">100+</span>
+                            <span class="stat-label">Клиентов</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">5+</span>
+                            <span class="stat-label">Лет опыта</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image" data-aos="fade-left">
+                    <img src="https://via.placeholder.com/500x400/1a1a2e/ffffff?text=NIGHT+RUST+Team" alt="Команда NIGHT RUST">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Свяжитесь с нами</h2>
+                <p class="section-subtitle">Готовы начать проект? Давайте обсудим ваши идеи</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info" data-aos="fade-right">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p>info@nightrust.ru</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>Телефон</h4>
+                            <p>+7 (XXX) XXX-XX-XX</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Адрес</h4>
+                            <p>Москва, Россия</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form" data-aos="fade-left">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" placeholder="Ваше имя" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="Сообщение" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Отправить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>NIGHT RUST</h3>
+                    <p>Инновационные решения для современного мира технологий</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-vk"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Проекты</h4>
+                    <ul>
+                        <li><a href="#">NightCore</a></li>
+                        <li><a href="#">NightShield</a></li>
+                        <li><a href="#">NightBoost</a></li>
+                        <li><a href="#">NightAI</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Услуги</h4>
+                    <ul>
+                        <li><a href="#">Разработка</a></li>
+                        <li><a href="#">Консалтинг</a></li>
+                        <li><a href="#">Поддержка</a></li>
+                        <li><a href="#">Обучение</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Компания</h4>
+                    <ul>
+                        <li><a href="#">О нас</a></li>
+                        <li><a href="#">Команда</a></li>
+                        <li><a href="#">Карьера</a></li>
+                        <li><a href="#">Контакты</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 NIGHT RUST. Все права защищены.</p>
+            </div>
         </div>
     </footer>
 
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="script.js"></script>
 </body>
-</html>
+</html> 
